@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Livewire\Backend\CareLevel;
+
+use App\Livewire\Forms\CareLevelForm;
+use App\Models\CareLevel;
+use App\Models\CareOption;
+use App\Models\Package;
+use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+
+class CreateCareLevel extends Component
+{
+    #[Title('Create Care Level')]
+
+    public CareLevelForm $form;
+
+    public function mount()
+    {
+        $this->form->packages = Package::select('id', 'name')->get();
+        $this->form->levels = [['hour' => '', 'price' => '']];
+    }
+
+    public function addLevel()
+    {
+        $this->form->levels[] = ['hour' => '', 'price' => ''];
+    }
+
+    public function removeLevel($index)
+    {
+        unset($this->form->levels[$index]);
+        $this->form->levels = array_values($this->form->levels); // reindex
+    }
+
+    public function store()
+    {
+        $this->validate();
+
+        DB::beginTransaction();
+
+        try {
+
+            // Create Care Level
+            $careLevel = CareLevel::create([
+                'package_id'  => $this->form->packageId,
+                'name'        => $this->form->name,
+                'description' => $this->form->description,
+            ]);
+
+            // Insert Hours & Price Rows
+            foreach ($this->form->levels as $level) {
+                CareOption::create([
+                    'care_level_id' => $careLevel->id,
+                    'hours'         => $level['hours'],
+                    'price'         => $level['price'],
+                ]);
+            }
+
+            DB::commit();
+
+            // Reset Form
+            $this->resetForm();
+
+            session()->flash('success', 'Care Level created successfully!');
+            return redirect()->route('care-level');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash('error', 'Something went wrong: ' . $e->getMessage());
+        }
+    }
+
+    private function resetForm()
+    {
+        $this->form->packageId = null;
+        $this->form->name = '';
+        $this->form->description = '';
+        $this->form->levels = [['hours' => '', 'price' => '']];
+    }
+
+    public function render()
+    {
+        return view('livewire.backend.care-level.create-care-level')->extends('livewire.backend.layouts.app');
+    }
+}

@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ .note-editor {
+    @apply border border-gray-200 rounded-md bg-white !important;
+}
+
+/* Toolbar */
+.note-editor .note-toolbar {
+    @apply bg-white border-b border-gray-200 p-2 !important;
+}
+
+ .note-editor .note-toolbar .note-btn-group {
+    @apply mr-2 !important;
+}
+
+
+/* Striped table inside Summernote */
+  /* .note-editable table tr:nth-child(odd) {
+    @apply bg-yellow-100; 
+  }
+
+  .note-editable table tr:nth-child(even) {
+    @apply bg-white;
+  } */
+
+/* Toolbar buttons */
+.note-editor .note-toolbar .note-btn {
+    @apply bg-white border-transparent text-gray-700 text-sm px-3 py-1 rounded transition ease-in-out duration-200 !important;
+}
+
+.note-editor .note-toolbar .note-btn:hover,
+.note-editor .note-toolbar .note-btn:focus {
+    @apply bg-gray-100  text-gray-800 !important;
+}
+
+/* Editable area */
+.note-editor .note-editable {
+    @apply min-h-[220px] px-5 py-4 text-sm leading-relaxed text-gray-800 bg-white !important;
+}
+
+.note-popover,
+.note-dropdown-menu {
+  @apply absolute z-[9999] !important;
+}
+
+
+.note-editor .note-editable p {
+    @apply mb-3;
+}
+
+.note-editor .note-editable h1 {
+    @apply text-3xl font-bold mt-4 mb-2;
+}
+
+.note-editor .note-editable h2 {
+    @apply text-2xl font-semibold mt-3 mb-2;
+}
+
+.note-editor .note-editable h3 {
+    @apply text-xl font-semibold mt-3 mb-2;
+}
+
+.note-editor .note-editable h4 {
+    @apply text-lg font-semibold mt-2 mb-2;
+}
+
+.note-editor .note-editable h5 {
+    @apply text-base font-semibold mt-2 mb-1;
+}
+
+.note-editor .note-editable h6 {
+    @apply text-sm font-semibold mt-2 mb-1 text-gray-600;
+}
+
+/* Links inside editor */
+.note-editor .note-editable a {
+    @apply text-blue-600 underline;
+}
+.note-editor .note-editable a:hover {
+    @apply text-blue-700;
+}
+
+/* Images inside editor */
+.note-editor .note-editable img {
+    @apply max-w-full rounded;
+}
+
+/* Status bar */
+.note-editor .note-statusbar {
+    @apply bg-white border-t border-gray-200 px-2 py-1 text-right text-xs text-gray-500 cursor-ns-resize;
+} 
+
+
+/* Tom Select */
+/* Light mode */
+.ts-control {
+    @apply bg-white border border-gray-200 text-sm px-4 rounded-md focus:outline-none focus:border-blue-600 transition duration-300 ease-in-out min-h-[42px] !important;
+    
+}
