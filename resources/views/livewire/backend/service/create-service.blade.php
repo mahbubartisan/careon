@@ -256,8 +256,8 @@
                     </div>
 
                     <!-- Package Dropdown -->
-                    <div>
-                        <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Package</label>
+                    {{-- <div>
+                        <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Package*</label>
                         <select wire:model="form.packageId"
                             class="mt-1 w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-[#0d1a28]">
                             <option value="">Select Package</option>
@@ -268,7 +268,7 @@
                         @error("form.packageId")
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     {{-- <!-- Badge -->
                     <div class="flex items-center gap-3 pt-6">
@@ -316,7 +316,7 @@
                             {{ $level["name"] }} Care Level
                         </h3> --}}
                         <div>
-                            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Package</label>
+                            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Care Level*</label>
                             <select wire:model="form.care_level_id"
                                 class="mt-1 w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-[#0d1a28]">
                                 <option value="">-- Select a Care Level --</option>
@@ -345,8 +345,7 @@
                             </label>
 
                             <div class="mt-2 space-y-3">
-
-                                @foreach ($level["options"] as $oIndex => $option)
+                                {{-- @foreach ($level["options"] as $oIndex => $option)
                                     <div class="grid grid-cols-1 items-center gap-3 md:grid-cols-5">
 
                                         <!-- Hours -->
@@ -366,8 +365,49 @@
                                             Remove
                                         </button>
                                     </div>
-                                @endforeach
+                                @endforeach --}}
+                                @foreach ($level["options"] as $oIndex => $option)
+                                    <div class="flex items-center gap-3">
+                                        <!-- Hour -->
+                                        <div class="flex-1">
+                                            <label class="mb-1 block text-sm text-gray-700 dark:text-gray-400">
+                                                Hours*
+                                            </label>
+                                            <input type="number" wire:model="form.care_levels.{{ $index }}.options.{{ $oIndex }}.hours"
+                                                placeholder="Hour (e.g. 8)"
+                                                class="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+                                            @error("form.levels.$index.hours")
+                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
+                                        <!-- Price -->
+                                        <div class="flex-1">
+                                            <label class="mb-1 block text-sm text-gray-700 dark:text-gray-400">
+                                                Price*
+                                            </label>
+                                            <input type="number" wire:model="form.care_levels.{{ $index }}.options.{{ $oIndex }}.price"
+                                                placeholder="Price"
+                                                class="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+                                            @error("form.levels.$index.price")
+                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <!-- Remove Button -->
+                                        {{-- @if (count($form->levels) > 1) --}}
+                                            <button type="button" wire:click="removeOption({{ $index }}, {{ $oIndex }})"
+                                                class="mt-5 flex h-[42px] w-10 items-center justify-center rounded-md bg-red-500 text-white hover:bg-red-600">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1
+                                                   0 00-1-1h-4a1 1 0 00-1 1v3m-4 0h14" />
+                                                </svg>
+                                            </button>
+                                        {{-- @endif --}}
+                                    </div>
+                                @endforeach
                             </div>
 
                             <!-- Add Option Button -->
