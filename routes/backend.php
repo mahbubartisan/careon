@@ -37,6 +37,9 @@ use App\Livewire\Backend\Profile\Profile;
 use App\Livewire\Backend\Role\CreateRole;
 use App\Livewire\Backend\Role\EditRole;
 use App\Livewire\Backend\Role\Roles;
+use App\Livewire\Backend\Service\CreateService;
+use App\Livewire\Backend\Service\EditService;
+use App\Livewire\Backend\Service\Service;
 use App\Livewire\Backend\Service\ServiceType;
 use App\Livewire\Backend\Settings\CreateSettings;
 use App\Livewire\Backend\Settings\EditSettings;
@@ -98,9 +101,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/service-type', ServiceType::class)->name('service-type');
 
     // Service Routes
-    // Route::get('/about', About::class)->name('about');
-    // Route::get('/create-about', CreateAbout::class)->name('create.about');
-    // Route::get('/about/{aboutId}/edit', EditAbout::class)->name('edit.about');
+    Route::get('/service', Service::class)->name('service');
+    Route::get('/create-service', CreateService::class)->name('create.service');
+    Route::get('/service/{serviceId}/edit', EditService::class)->name('edit.service');
 
     // Blog Routes
     Route::get('/blog', Blog::class)->name('blog');

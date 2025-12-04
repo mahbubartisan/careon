@@ -48,6 +48,8 @@ class Service extends Component
             ->where('name', 'like', '%' . $this->form->search . '%')
             ->latest()
             ->paginate($this->form->rowsPerPage);
-        return view('livewire.backend.service.service')->extends('livewire.backend.layouts.app');
+        return view('livewire.backend.service.service', [
+            'services' => $services,
+        ])->extends('livewire.backend.layouts.app');
     }
 }
