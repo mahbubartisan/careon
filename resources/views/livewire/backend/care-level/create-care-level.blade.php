@@ -21,7 +21,6 @@
             <!-- Package -->
             <div>
                 <label for="packageId" class="block text-sm text-gray-700 dark:text-gray-400">Package*</label>
-
                 <select wire:model="form.packageId" id="packageId"
                     class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
                 <option value="">-- Select a Package --</option>

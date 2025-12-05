@@ -44,7 +44,7 @@ class Service extends Component
 
     public function render()
     {
-        $services = ModelsService::with(['media', 'serviceType', 'careLevel'])
+        $services = ModelsService::with(['media'])
             ->where('name', 'like', '%' . $this->form->search . '%')
             ->latest()
             ->paginate($this->form->rowsPerPage);

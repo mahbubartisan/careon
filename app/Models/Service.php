@@ -16,11 +16,6 @@ class Service extends Model
         return $this->belongsTo(Media::class, 'image', 'id');
     }
     
-    public function serviceType()
-    {
-        return $this->belongsTo(ServiceType::class);
-    }
-    
     public function careLevel()
     {
         return $this->hasMany(CareLevel::class);
