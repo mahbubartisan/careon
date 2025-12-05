@@ -15,4 +15,5 @@ class CareOption extends Model
     {
         return $this->belongsTo(CareLevel::class);
     }
+
 }

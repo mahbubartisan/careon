@@ -44,10 +44,14 @@ class Service extends Component
 
     public function render()
     {
-        $services = ModelsService::with(['media'])
-            ->where('name', 'like', '%' . $this->form->search . '%')
+        $services = ModelsService::with('media')
+            ->where(function ($q) {
+                $q->where('service_id', 'like', '%' . $this->form->search . '%')
+                    ->orWhere('name', 'like', '%' . $this->form->search . '%');
+            })
             ->latest()
             ->paginate($this->form->rowsPerPage);
+
         return view('livewire.backend.service.service', [
             'services' => $services,
         ])->extends('livewire.backend.layouts.app');

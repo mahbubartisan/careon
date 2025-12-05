@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('image')->nullable();
             $table->unsignedBigInteger('service_type_id')->nullable();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->boolean('badge')->default(false);
             $table->text('short_desc');
             $table->boolean('status')->default(true);

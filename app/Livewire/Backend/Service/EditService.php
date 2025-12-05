@@ -3,7 +3,12 @@
 namespace App\Livewire\Backend\Service;
 
 use App\Livewire\Forms\ServiceForm;
+use App\Models\CareLevel;
+use App\Models\CareOption;
+use App\Models\Service;
+use App\Models\ServiceCareLevel;
 use App\Traits\MediaTrait;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,7 +20,147 @@ class EditService extends Component
     #[Title('Edit Service')]
 
     public ServiceForm $form;
+
+    public function mount($serviceId = null)
+    {
+        $this->form->serviceId = $serviceId;
+        $this->form->careLevels = CareLevel::select('id', 'name')->get();
     
+        if ($serviceId) {
+            $service = Service::with([
+                'serviceCareLevels.careLevel.careOptions'
+            ])->findOrFail($serviceId);
+    
+            $this->form->name = $service->name;
+            $this->form->short_desc = $service->short_desc;
+    
+            // Store into form.care_levels (IMPORTANT)
+            $this->form->care_levels = $service->serviceCareLevels->map(function ($item) {
+                return [
+                    'care_level_id' => $item->care_level_id,
+                    'desc'          => $item->description,
+                    'options'       => $item->careLevel->careOptions->map(fn($option) => [
+                        'id'    => $option->id,
+                        'hours' => $option->hours,
+                        'price' => $option->price,
+                    ])->toArray()
+                ];
+            })->toArray();
+    
+        } else {
+            // also store inside form
+            $this->form->care_levels = [
+                [
+                    'care_level_id' => '',
+                    'desc' => '',
+                    'options' => [
+                        ['hours' => '', 'price' => '']
+                    ]
+                ],
+                [
+                    'care_level_id' => '',
+                    'desc' => '',
+                    'options' => [
+                        ['hours' => '', 'price' => '']
+                    ]
+                ],
+                [
+                    'care_level_id' => '',
+                    'desc' => '',
+                    'options' => [
+                        ['hours' => '', 'price' => '']
+                    ]
+                ],
+            ];
+        }
+    }
+    
+    public function addOption($levelIndex)
+    {
+        $this->form->care_levels[$levelIndex]['options'][] = [
+            'hours' => null,
+            'price' => null
+        ];
+    }
+
+    public function removeOption($levelIndex, $oIndex)
+    {
+        array_splice($this->form->care_levels[$levelIndex]['options'], $oIndex, 1);
+    }
+
+    public function update()
+    {
+        $this->validate();
+
+        DB::beginTransaction();
+
+        try {
+
+            $service = Service::findOrFail($this->form->serviceId);
+
+            /* -------------------------
+            1. UPDATE SERVICE
+            -------------------------- */
+            if ($this->form->image) {
+                $image = $this->uploadMedia($this->form->image, 'images/service', 80);
+                $imagePath = $image->id;
+            } else {
+                $imagePath = $service->image;
+            }
+
+            $service->update([
+                'name'        => $this->form->name,
+                'slug'        => str()->slug($this->form->name),
+                'image'       => $imagePath,
+                'short_desc'  => $this->form->short_desc,
+                'badge'       => $this->form->badge ?? 0,
+            ]);
+
+
+            /* -------------------------
+            2. DELETE OLD CARE DATA
+            -------------------------- */
+            ServiceCareLevel::where('service_id', $service->id)->delete();
+            CareOption::whereIn(
+                'care_level_id',
+                $this->form->careLevels->pluck('id')
+            )->delete();
+
+
+            /* -------------------------
+            3. RE-INSERT CARE LEVELS
+            -------------------------- */
+            foreach ($this->form->care_levels as $level) {
+
+                $careLevel = ServiceCareLevel::create([
+                    'service_id'     => $service->id,
+                    'care_level_id'  => $level['care_level_id'],
+                    'description'    => $level['desc'],
+                ]);
+
+                /* -------------------------
+                4. RE-INSERT OPTIONS
+                -------------------------- */
+                foreach ($level['options'] as $opt) {
+                    CareOption::create([
+                        'care_level_id' => $level['care_level_id'],
+                        'hours' => $opt['hours'],
+                        'price' => $opt['price'],
+                    ]);
+                }
+            }
+
+
+            DB::commit();
+
+            session()->flash('success', 'Service updated successfully!');
+            return redirect()->route('service');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
     public function render()
     {
         return view('livewire.backend.service.edit-service')->extends('livewire.backend.layouts.app');

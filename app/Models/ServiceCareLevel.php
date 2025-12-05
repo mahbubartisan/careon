@@ -10,4 +10,14 @@ class ServiceCareLevel extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function careLevel()
+    {
+        return $this->belongsTo(CareLevel::class);
+    }
+
+    public function careOptions()
+    {
+        return $this->careLevel->careOptions();
+    }
 }

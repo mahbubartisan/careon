@@ -79,7 +79,9 @@ class CreateService extends Component
             }
 
             $service = Service::create([
+                'service_id'  => $this->generateServiceId($this->form->name),
                 'name' => $this->form->name,
+                'slug' => str()->slug($this->form->name),
                 'image' => $imagePath,
                 'short_desc' => $this->form->short_desc,
                 'badge' => $this->form->badge ?? 0,
@@ -112,7 +114,6 @@ class CreateService extends Component
                 }
             }
 
-
             DB::commit();
 
             // $this->reset();
@@ -124,6 +125,39 @@ class CreateService extends Component
         }
     }
 
+    private function generateServiceId($name)
+    {
+        // 1. Create prefix from first letters of each word
+        $words = preg_split('/[\s\/&]+/', $name);
+        $prefix = '';
+
+        foreach ($words as $w) {
+            if (strlen($w) > 0) {
+                $prefix .= strtoupper($w[0]);
+            }
+        }
+
+        // Fallback if prefix empty
+        if (!$prefix) {
+            $prefix = 'SRV';
+        }
+
+        // 2. Find the last service ID with this prefix
+        $last = Service::where('service_id', 'LIKE', $prefix . '%')
+            ->orderBy('service_id', 'DESC')
+            ->first();
+
+        // 3. Increase number
+        if ($last) {
+            $number = (int) substr($last->service_uid, strlen($prefix));
+            $number++;
+        } else {
+            $number = 1;
+        }
+
+        // 4. Format like 3-digit
+        return $prefix . str_pad($number, 3, '0', STR_PAD_LEFT);
+    }
 
     public function render()
     {

@@ -16,36 +16,40 @@
     </div>
 
     <div class="rounded-md bg-white px-6 pb-3 pt-6 shadow dark:bg-[#132337]">
-        <h2 class="mb-4 text-[15px] font-medium text-gray-900 dark:text-gray-300">Care Level Info</h2>
-        <form method="post" class="space-y-4">
-            <!-- Package -->
-            <div>
-                <label for="packageId" class="block text-sm text-gray-700 dark:text-gray-400">Package*</label>
-                <select wire:model="form.packageId" id="packageId"
-                    class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
-                <option value="">-- Select a Package --</option>
-                @foreach ($form->packages as $package)
-                    <option value="{{ $package->id }}">{{ $package->name }}</option>
-                @endforeach
-                </select>
+        <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-300">
+            Care Level Information
+        </h2>
+        <form method="post">
+            <div class="border rounded-xl p-4 space-y-4">
+                <!-- Package -->
+                <div>
+                    <label for="packageId" class="block text-sm text-gray-700 dark:text-gray-400">Package*</label>
+                    <select wire:model="form.packageId" id="packageId"
+                        class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+                    <option value="">-- Select a Package --</option>
+                    @foreach ($form->packages as $package)
+                        <option value="{{ $package->id }}">{{ $package->name }}</option>
+                    @endforeach
+                    </select>
 
-                @error("form.packageId")
-                    <span class="text-xs text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <!-- Care Level -->
-            <div>
-                <label for="name" class="block text-sm text-gray-700 dark:text-gray-400">
-                    Care Level*
-                </label>
-                <input type="text" wire:model="form.name" id="name" placeholder="Enter Care Level"
-                    class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
-                @error("form.name")
-                    <span class="text-xs text-red-500">{{ $message }}</span>
-                @enderror
+                    @error("form.packageId")
+                        <span class="text-xs text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+                <!-- Care Level -->
+                <div> 
+                    <label for="name" class="block text-sm text-gray-700 dark:text-gray-400">
+                        Care Level*
+                    </label>
+                    <input type="text" wire:model="form.name" id="name" placeholder="Enter Care Level"
+                        class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+                    @error("form.name")
+                        <span class="text-xs text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
             <!-- Description -->
-            <div>
+            {{-- <div>
                 <div wire:ignore>
                     <label for="editorDesc" class="mb-2 block text-sm text-gray-700 dark:text-gray-400">
                         Description*
@@ -58,9 +62,9 @@
                         <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
             <!-- Dynamic Hours & Price Inputs -->
-            <div class="space-y-4">
+            {{-- <div class="space-y-4">
                 @foreach ($form->levels as $index => $level)
                     <div class="flex items-start gap-3">
 
@@ -108,7 +112,7 @@
                     class="mt-3 rounded-md bg-blue-600 px-4 py-2.5 text-sm text-white">
                     + Add More
                 </button>
-            </div>
+            </div> --}}
 
             <!-- Create Button -->
             <div class="mt-5 flex justify-end space-x-3">
@@ -130,7 +134,7 @@
         </form>
     </div>
 
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    {{-- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <script>
@@ -155,5 +159,5 @@
         quill.on('text-change', function() {
             @this.set('form.description', quill.root.innerHTML);
         });
-    </script>
+    </script> --}}
 </div>

@@ -61,16 +61,13 @@
                 <thead class="bg-white dark:bg-[#132337]">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                            #
+                            Service ID
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                             Image
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                             Name
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                            Service Type
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                             Status
@@ -85,13 +82,12 @@
                 <tbody class="divide-y divide-gray-200 bg-white dark:divide-[#233A57] dark:bg-[#132337]">
                     @forelse ($services as $index => $service)
                         <tr>
-                            <td class="whitespace-nowrap px-6 py-4">{{ $services->firstItem() + $index }}</td>
+                            <td class="whitespace-nowrap px-6 py-4">{{ $service->service_id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <img src="{{ asset(@$service->media?->path) }}" alt="{{ $service->name }}"
                                     class="w-12 h-12 object-contain rounded-full border border-gray-300" />
                             </td>
                             <td class="whitespace-nowrap px-6 py-4">{{ $service->name }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">{{ @$service->seriveType?->name }}</td>
                             <td class="whitespace-nowrap px-6 py-4">
                                 <label class="inline-flex cursor-pointer items-center">
                                     <input type="checkbox" wire:click="toggleStatus({{ $service->id }})"
