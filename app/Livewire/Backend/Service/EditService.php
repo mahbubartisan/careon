@@ -26,15 +26,19 @@ class EditService extends Component
         $this->form->serviceId = $serviceId;
         $this->form->careLevels = CareLevel::select('id', 'name')->get();
 
-        if ($serviceId) {
+        if ($this->form->serviceId) {
             $service = Service::with([
-                'serviceCareLevels.careLevel.careOptions'
-            ])->findOrFail($serviceId);
+                'serviceCareLevels'
+            ])->findOrFail($this->form->serviceId);
+            // $service = Service::with([
+            //     'serviceCareLevels.careLevel.careOptions'
+            // ])->findOrFail($this->form->serviceId);
 
             $this->form->name = $service->name;
             $this->form->short_desc = $service->short_desc;
+            $this->form->badge = (bool) $service->badge;
 
-            // Store into form.care_levels (IMPORTANT)
+            // Store into form.care_levels
             $this->form->care_levels = $service->serviceCareLevels->map(function ($item) {
                 return [
                     'care_level_id' => $item->care_level_id,

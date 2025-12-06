@@ -63,7 +63,8 @@
                     </div>
                 </div>
 
-                <div class="space-y-4">
+                <!-- Care Information -->
+                <div class="space-y-2">
                     <h2 class="text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-300">
                         Care Level Information
                     </h2>
@@ -171,6 +172,24 @@
 
                         </div>
                     @endforeach
+                </div>
+
+                <!-- Featured Status -->
+                <div class="space-y-2">
+                    <h2 class="text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-300">
+                        Featured Status
+                    </h2>
+
+                    <!-- Most Popular Checkbox -->
+                    <div class="rounded-xl border p-4">
+                        <label class="flex cursor-pointer select-none items-center space-x-2">
+                            <input type="checkbox" wire:model="form.badge"
+                                class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700">
+                            <span class="text-sm text-gray-700 dark:text-gray-300">
+                                Most Popular
+                            </span>
+                        </label>
+                    </div>
                 </div>
             </div>
 

@@ -388,7 +388,7 @@
 
         <form method="post">
             <div class="space-y-4">
-                <div class="space-y-4 border p-4 rounded-xl dark:border-[#1b2f46] dark:bg-[#102030]">
+                <div class="space-y-4 rounded-xl border p-4 dark:border-[#1b2f46] dark:bg-[#102030]">
 
                     <!-- Service Name -->
                     <div>
@@ -431,7 +431,8 @@
                     </div>
                 </div>
 
-                <div class="space-y-4">
+                <!-- Care Information -->
+                <div class="space-y-2">
                     <h2 class="text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-300">
                         Care Level Information
                     </h2>
@@ -439,7 +440,7 @@
                     <!-- Add Care Level -->
                     @foreach ($form->care_levels as $index => $level)
                         <div wire:key="care-level-{{ $index }}"
-                            class="space-y-4 border p-4 rounded-xl dark:border-[#1b2f46] dark:bg-[#102030]">
+                            class="space-y-4 rounded-xl border p-4 dark:border-[#1b2f46] dark:bg-[#102030]">
                             <!-- Care Level Dropdown -->
                             <div>
                                 <label for="care_level_id_{{ $index }}"
@@ -514,7 +515,7 @@
                                             </div>
 
                                             <!-- Remove Option -->
-                                            @if(count($level['options']) > 1)
+                                            @if (count($level["options"]) > 1)
                                             <button type="button"
                                                 wire:click="removeOption({{ $index }}, {{ $oIndex }})"
                                                 class="mt-5 flex h-[42px] w-10 items-center justify-center rounded-md bg-red-500 text-white hover:bg-red-600">
@@ -539,6 +540,24 @@
 
                         </div>
                     @endforeach
+                </div>
+
+                <!-- Featured Status -->
+                <div class="space-y-2">
+                    <h2 class="text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-300">
+                        Featured Status
+                    </h2>
+
+                    <!-- Most Popular Checkbox -->
+                    <div class="rounded-xl border p-4">
+                        <label class="flex cursor-pointer select-none items-center space-x-2">
+                            <input type="checkbox" wire:model="form.badge"
+                                class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700">
+                            <span class="text-sm text-gray-700 dark:text-gray-300">
+                                Most Popular
+                            </span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
