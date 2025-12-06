@@ -13,7 +13,7 @@ class Blog extends Component
 {
     use WithPagination, MediaTrait;
 
-    #[Title('Blog')]
+    #[Title('Blogs')]
 
     public BlogForm $form;
 

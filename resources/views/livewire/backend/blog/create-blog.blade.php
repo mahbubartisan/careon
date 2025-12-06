@@ -1,7 +1,7 @@
 <div>
     <!-- Breadcrumb Start -->
     <div class="my-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-300">
+        <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-300">
             Create Blog
         </h2>
         <nav>
@@ -15,7 +15,9 @@
         </nav>
     </div>
     <div class="rounded-md bg-white px-6 pb-3 pt-6 shadow dark:bg-[#132337]">
-        <h2 class="mb-4 text-[15px] font-medium text-gray-900 dark:text-gray-300">Blog Info</h2>
+        <h2 class="mb-4 text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-300">
+            Blog Information
+        </h2>
         <form method="post" class="space-y-6">
             <!-- Image -->
             <div>
