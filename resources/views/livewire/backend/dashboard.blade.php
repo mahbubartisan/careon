@@ -6,62 +6,80 @@
         </h2>
     </div>
 
-    {{-- <div class="mt-6">
+    <div class="mt-6">
         <!-- card sections here -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Players -->
-            <div class="flex flex-col items-center justify-center bg-white dark:bg-[#132337] rounded-lg shadow-sm p-6">
-                <div class="flex items-center justify-center w-12 h-12 bg-indigo-600 text-white rounded-full">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 0115 0">
-                        </path>
-                    </svg>
-                </div>
-                <p class="text-xl font-medium mt-3">{{ $totalPlayers }}</p>
-                <p class="text-gray-500 text-sm">Players</p>
-            </div>
-
-            <!-- Teams -->
-            <div class="flex flex-col items-center justify-center bg-white dark:bg-[#132337] rounded-lg shadow-sm p-6">
-                <div class="flex items-center justify-center w-12 h-12 bg-yellow-600 text-white rounded-full">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <!-- Special Services -->
+            <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 dark:bg-[#132337]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-600 text-white">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M3 7h10v10h-10z" />
-                        <path d="M6 10h4" />
-                        <path d="M8 10v4" />
-                        <path d="M8.104 17c.47 2.274 2.483 4 4.896 4a5 5 0 0 0 5 -5v-7h-5" />
-                        <path d="M18 18a4 4 0 0 0 4 -4v-5h-4" />
-                        <path d="M13.003 8.83a3 3 0 1 0 -1.833 -1.833" />
-                        <path d="M15.83 8.36a2.5 2.5 0 1 0 .594 -4.117" />
+                        <path
+                            d="M19.5 13.572l-7.5 7.428l-2.896 -2.868m-6.117 -8.104a5 5 0 0 1 9.013 -3.022a5 5 0 1 1 7.5 6.572" />
+                        <path d="M3 13h2l2 3l2 -6l1 3h3" />
                     </svg>
                 </div>
-                <p class="text-xl font-medium mt-3">{{ $totalTeams }}</p>
-                <p class="text-gray-500 text-sm">Teams</p>
+                <p class="mt-3 text-xl font-medium">0</p>
+                <p class="text-sm text-gray-500">Special Services</p>
             </div>
 
-            <!-- Tournaments -->
-            <div class="flex flex-col items-center justify-center bg-white dark:bg-[#132337] rounded-lg shadow-sm p-6">
-                <div class="flex items-center justify-center w-12 h-12 bg-emerald-600 text-white rounded-full">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+            <!-- Medical Services -->
+            <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 dark:bg-[#132337]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-600 text-white">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M3 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                        <path d="M15 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                        <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                        <path d="M6 15v-1a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v1" />
-                        <path d="M12 9l0 3" />
+                        <path d="m18 2 4 4" />
+                        <path d="m17 7 3-3" />
+                        <path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5" />
+                        <path d="m9 11 4 4" />
+                        <path d="m5 19-3 3" />
+                        <path d="m14 4 6 6" />
                     </svg>
                 </div>
-                <p class="text-xl font-medium mt-3">{{ $totalTournaments }}</p>
-                <p class="text-gray-500 text-sm">Tournaments</p>
+                <p class="mt-3 text-xl font-medium">0</p>
+                <p class="text-sm text-gray-500">Medical Services</p>
             </div>
 
-            <!-- Matches -->
-            <div class="flex flex-col items-center justify-center bg-white dark:bg-[#132337] rounded-lg shadow-sm p-6">
-                <div class="flex items-center justify-center w-12 h-12 bg-violet-600 text-white rounded-full">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24" fill="none"
+            <!-- Health Tips -->
+            <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 dark:bg-[#132337]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-600 text-white">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 2v4"></path>
+                        <path d="M12 2v4"></path>
+                        <path d="M16 2v4"></path>
+                        <rect width="16" height="18" x="4" y="4" rx="2"></rect>
+                        <path d="M8 10h6"></path>
+                        <path d="M8 14h8"></path>
+                        <path d="M8 18h5"></path>
+                    </svg>
+                </div>
+                <p class="mt-3 text-xl font-medium">0</p>
+                <p class="text-sm text-gray-500">Health Tips</p>
+            </div>
+
+            <!-- Packages -->
+            <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 dark:bg-[#132337]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-lime-600 text-white">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+                        <path d="M12 22V12" />
+                        <polyline points="3.29 7 12 12 20.71 7" />
+                        <path d="m7.5 4.27 9 5.15" />
+                    </svg>
+                </div>
+                <p class="mt-3 text-xl font-medium">0</p>
+                <p class="text-sm text-gray-500">Packages</p>
+            </div>
+
+            {{-- <!-- Matches -->
+            <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 shadow-sm dark:bg-[#132337]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-violet-600 text-white">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M2 12c0 5.523 4.477 10 10 10s10 -4.477 10 -10s-4.477 -10 -10 -10s-10 4.477 -10 10" />
@@ -70,14 +88,14 @@
                         <path d="M7 9l2 6l2 -6" />
                     </svg>
                 </div>
-                <p class="text-xl font-medium mt-3">{{ $totalMatches }}</p>
-                <p class="text-gray-500 text-sm">Matches</p>
+                <p class="mt-3 text-xl font-medium">2</p>
+                <p class="text-sm text-gray-500">Locations</p>
             </div>
 
             <!-- News -->
-            <div class="flex flex-col items-center justify-center bg-white dark:bg-[#132337] rounded-lg shadow-sm p-6">
-                <div class="flex items-center justify-center w-12 h-12 bg-sky-600 text-white rounded-full">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+            <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 shadow-sm dark:bg-[#132337]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-sky-600 text-white">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path
@@ -87,14 +105,14 @@
                         <path d="M8 16l4 0" />
                     </svg>
                 </div>
-                <p class="text-xl font-medium mt-3">{{ $totalNews }}</p>
-                <p class="text-gray-500 text-sm">News</p>
+                <p class="mt-3 text-xl font-medium">5</p>
+                <p class="text-sm text-gray-500">Bookings</p>
             </div>
 
             <!-- Sponsors -->
-            <div class="flex flex-col items-center justify-center bg-white dark:bg-[#132337] rounded-lg shadow-sm p-6">
-                <div class="flex items-center justify-center w-12 h-12 bg-lime-600 text-white rounded-full">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+            <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 shadow-sm dark:bg-[#132337]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-lime-600 text-white">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
@@ -104,46 +122,24 @@
                         <path d="M15 13l2 2" />
                     </svg>
                 </div>
-                <p class="text-xl font-medium mt-3">{{ $totalSponsors }}</p>
-                <p class="text-gray-500 text-sm">Sponsors</p>
+                <p class="mt-3 text-xl font-medium">4</p>
+                <p class="text-sm text-gray-500">Advisors</p>
             </div>
-
-            <!-- Districts -->
-            <div class="flex flex-col items-center justify-center bg-white dark:bg-[#132337] rounded-lg shadow-sm p-6">
-                <div class="flex items-center justify-center w-12 h-12 bg-amber-600 text-white rounded-full">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+            <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 shadow-sm dark:bg-[#132337]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-lime-600 text-white">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5" />
-                        <path d="M9 4v13" />
-                        <path d="M15 7v5.5" />
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
                         <path
-                            d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879z" />
-                        <path d="M19 18v.01" />
+                            d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25" />
+                        <path d="M12.5 15.5l2 2" />
+                        <path d="M15 13l2 2" />
                     </svg>
                 </div>
-                <p class="text-xl font-medium mt-3">{{ $totalDistricts }}</p>
-                <p class="text-gray-500 text-sm">Districts</p>
-            </div>
-
-            <!-- Thana -->
-            <div class="flex flex-col items-center justify-center bg-white dark:bg-[#132337] rounded-lg shadow-sm p-6">
-                <div class="flex items-center justify-center w-12 h-12 bg-teal-600 text-white rounded-full">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round"
-                        >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
-                        <path d="M13 7l0 .01" />
-                        <path d="M17 7l0 .01" />
-                        <path d="M17 11l0 .01" />
-                        <path d="M17 15l0 .01" />
-                    </svg>
-                </div>
-                <p class="text-xl font-medium mt-3">{{ $totalThanas }}</p>
-                <p class="text-gray-500 text-sm">Thana</p>
-            </div>
+                <p class="mt-3 text-xl font-medium">4</p>
+                <p class="text-sm text-gray-500">Advisors</p>
+            </div> --}}
         </div>
-    </div> --}}
+    </div>
 </div>

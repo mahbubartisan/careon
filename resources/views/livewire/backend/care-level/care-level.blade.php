@@ -15,7 +15,7 @@
         </nav>
     </div>
     <!-- Breadcrumb End -->
-    <div class="my-9 flex justify-end">
+    <div class="my-5 flex justify-end">
         @can("create care level")
             <a href="{{ route("create.care-level") }}"
                 class="inline-flex items-center justify-center rounded-md bg-blue-500 px-3.5 py-2.5 text-sm text-white shadow-lg transition-colors duration-500 hover:bg-blue-600">
@@ -64,7 +64,10 @@
                             #
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                            Name
+                            Package
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                            Care Level
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                             Hours Pricing
@@ -80,10 +83,11 @@
                     @forelse ($careLevels as $index => $careLevel)
                         <tr>
                             <td class="whitespace-nowrap px-6 py-4">{{ $careLevels->firstItem() + $index }}</td>
+                            <td class="whitespace-nowrap px-6 py-4">{{ optional($careLevel->package)->name }}</td>
                             <td class="whitespace-nowrap px-6 py-4">{{ $careLevel->name }}</td>
                             <td class="whitespace-nowrap px-6 py-4">
                                 {{ @$careLevel->careOptions?->map(function ($opt) {
-                                    return $opt->hours . 'h (৳' . $opt->price . ')';
+                                    return $opt->hours . 'h (৳' . number_format($opt->price) . ')';
                                 })->join(', ') }}
                             </td>
                             {{-- <td class="whitespace-nowrap px-6 py-4">

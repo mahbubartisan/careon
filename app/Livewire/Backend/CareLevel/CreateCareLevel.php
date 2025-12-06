@@ -22,12 +22,12 @@ class CreateCareLevel extends Component
         $this->form->levels = [['hour' => '', 'price' => '']];
     }
 
-    public function addLevel()
+    public function addOption()
     {
         $this->form->levels[] = ['hour' => '', 'price' => ''];
     }
 
-    public function removeLevel($index)
+    public function removeOption($index)
     {
         unset($this->form->levels[$index]);
         $this->form->levels = array_values($this->form->levels); // reindex
@@ -45,7 +45,7 @@ class CreateCareLevel extends Component
             $careLevel = CareLevel::create([
                 'package_id'  => $this->form->packageId,
                 'name'        => $this->form->name,
-                'description' => $this->form->description,
+                // 'description' => $this->form->description,
             ]);
 
             // Insert Hours & Price Rows
@@ -58,24 +58,13 @@ class CreateCareLevel extends Component
             }
 
             DB::commit();
-
-            // Reset Form
-            $this->resetForm();
-
+            
             session()->flash('success', 'Care Level created successfully!');
             return redirect()->route('care-level');
         } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error', 'Something went wrong: ' . $e->getMessage());
         }
-    }
-
-    private function resetForm()
-    {
-        $this->form->packageId = null;
-        $this->form->name = '';
-        $this->form->description = '';
-        $this->form->levels = [['hours' => '', 'price' => '']];
     }
 
     public function render()

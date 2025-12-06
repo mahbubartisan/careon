@@ -1,8 +1,8 @@
 <div>
     <!-- Breadcrumb Start -->
     <div class="my-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-300">
-            Create Service
+        <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-300">
+            Create Special Service
         </h2>
         <nav>
             <ol class="flex items-center gap-2">
@@ -10,13 +10,13 @@
                     <a class="text-[13.5px] text-gray-500 dark:text-blue-200" href="{{ route("dashboard") }}">Dashboard
                         /</a>
                 </li>
-                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Create Service</li>
+                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Create Special Service</li>
             </ol>
         </nav>
     </div>
     <div class="rounded-md bg-white px-6 pb-3 pt-6 shadow dark:bg-[#132337]">
-        <h2 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200">
-            Service Information
+        <h2 class="mb-4 text-lg font-semibold tracking-tight text-gray-800 dark:text-gray-200">
+            Special Service Information
         </h2>
         {{-- <form method="post" class="space-y-6">
             <!-- Image -->
@@ -432,22 +432,22 @@
                 </div>
 
                 <div class="space-y-4">
-                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                    <h2 class="text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-300">
                         Care Level Information
                     </h2>
 
                     <!-- Add Care Level -->
-                    @foreach ($care_levels as $index => $level)
+                    @foreach ($form->care_levels as $index => $level)
                         <div wire:key="care-level-{{ $index }}"
                             class="space-y-4 border p-4 rounded-xl dark:border-[#1b2f46] dark:bg-[#102030]">
                             <!-- Care Level Dropdown -->
                             <div>
                                 <label for="care_level_id_{{ $index }}"
-                                    class="block text-sm text-gray-700 dark:text-gray-400">Care Level*</label>
+                                    class="block text-sm text-gray-700 dark:text-gray-400">Care*</label>
                                 <select wire:model="form.care_levels.{{ $index }}.care_level_id"
                                     id="care_level_id_{{ $index }}"
                                     class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300">
-                                    <option value="">-- Select a Care Level --</option>
+                                    <option value="">-- Select a Care --</option>
                                     @foreach ($form->careLevels as $careLevel)
                                         <option value="{{ $careLevel->id }}">{{ $careLevel->name }}</option>
                                     @endforeach
@@ -460,7 +460,9 @@
 
                             <!-- Description -->
                             <div>
-                                <label class="mb-2 block text-sm text-gray-700 dark:text-gray-400">Description*</label>
+                                <label class="mb-2 block text-sm text-gray-700 dark:text-gray-400">
+                                    Care Feature*
+                                </label>
 
                                 <div wire:ignore>
                                     <div id="editor-{{ $index }}" class="quill-editor" style="height: 200px;"
@@ -477,7 +479,7 @@
                             </div>
 
                             <!-- Hours & Pricing -->
-                            <div>
+                            {{-- <div>
                                 <div class="mt-3 space-y-3">
                                     @foreach ($level["options"] as $oIndex => $option)
                                         <div class="flex items-center gap-3"
@@ -533,7 +535,7 @@
                                     class="mt-3 rounded-full border border-gray-400 px-4 py-2 text-sm font-medium hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-[#1b2f46]">
                                     + Add Hour/Price
                                 </button>
-                            </div>
+                            </div> --}}
 
                         </div>
                     @endforeach

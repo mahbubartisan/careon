@@ -28,10 +28,16 @@ class CareLevel extends Component
 
     public function render()
     {
-        $careLevels = ModelsCareLevel::with('careOptions')
-            ->where('name', 'like', '%' . $this->form->search . '%')
+        $careLevels = ModelsCareLevel::with(['package', 'careOptions'])
+            ->where(function ($query) {
+                $query->where('name', 'like', '%' . $this->form->search . '%')
+                    ->orWhereHas('package', function ($q) {
+                        $q->where('name', 'like', '%' . $this->form->search . '%');
+                    });
+            })
             ->latest()
             ->paginate($this->form->rowsPerPage);
+
         return view('livewire.backend.care-level.care-level', [
             'careLevels' => $careLevels
         ])->extends('livewire.backend.layouts.app');

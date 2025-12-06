@@ -15,7 +15,7 @@
         </nav>
     </div>
     <!-- Breadcrumb End -->
-    <div class="my-9 flex justify-end">
+    <div class="my-5 flex justify-end">
         @can("create location")
             <a href="{{ route('create.location') }}"
                 class="inline-flex items-center justify-center rounded-md bg-blue-500 px-3.5 py-2.5 text-sm text-white shadow-lg transition-colors duration-500 hover:bg-blue-600">

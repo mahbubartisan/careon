@@ -296,12 +296,7 @@
 
             <!-- Service Manage -->
 
-            @canany([
-                "view service type",
-                "create service type",
-                "edit service type",
-                "delete service type",
-                ])
+            @canany(["view service type", "create service type", "edit service type", "delete service type"])
                 <div x-data="{ open: {{ request()->routeIs("service-type", "service", "create.service", "edit.service") ? "true" : "false" }} }">
                     <a href="#" @click.prevent="open = !open"
                         class="flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-600"
@@ -316,8 +311,7 @@
                                     {{ request()->routeIs("service-type", "service", "create.service", "edit.service") ? true : false }} ?
                                     'text-blue-600' : 'text-gray-400 dark:text-gray-100'"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-heartbeat">
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path
                                     d="M19.5 13.572l-7.5 7.428l-2.896 -2.868m-6.117 -8.104a5 5 0 0 1 9.013 -3.022a5 5 0 1 1 7.5 6.572" />
@@ -347,22 +341,7 @@
                     <div x-show="open" class="mt-2 space-y-2" role="menu" aria-label="Components"
                         style="display: none">
                         <ul class="ml-2">
-                            <!-- Service Type -->
-                            @canany(["view service type", "create service type", "edit service type", "delete service
-                                type"])
-                                <li
-                                    class="{{ request()->routeIs("service-type") ? "text-blue-600 dark:text-blue-600" : "text-gray-400 dark:text-gray-100" }} group flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-500">
-                                    <span
-                                        class="{{ request()->routeIs("service-type") ? "text-blue-500" : "text-gray-400 group-hover:text-blue-500" }} mr-2 list-item list-inside list-disc text-sm">
-                                    </span>
-                                    <a href="{{ route("service-type") }}" @click="open = true"
-                                        class="{{ request()->routeIs("service-type") ? "text-blue-600" : "group-hover:text-blue-500" }} flex-grow">
-                                        Service Type
-                                    </a>
-                                </li>
-                            @endcanany
-
-                            <!-- Services -->
+                            <!-- Special Care Service -->
                             @canany(["view service", "create service", "edit service", "delete service"])
                                 <li
                                     class="{{ request()->routeIs("service", "create.service", "edit.service") ? "text-blue-600 dark:text-blue-600" : "text-gray-400 dark:text-gray-100" }} group flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-500">
@@ -371,7 +350,26 @@
                                     </span>
                                     <a href="{{ route("service") }}" @click="open = true"
                                         class="{{ request()->routeIs("service", "create.service", "edit.service") ? "text-blue-600" : "group-hover:text-blue-500" }} flex-grow">
-                                        Services
+                                        Special Service
+                                    </a>
+                                </li>
+                            @endcanany
+                            <!-- Medical Care Service -->
+                            @canany([
+                                "view service type",
+                                "create service type",
+                                "edit service type",
+                                "delete service
+                                type"
+                                ])
+                                <li
+                                    class="{{ request()->routeIs("service-type") ? "text-blue-600 dark:text-blue-600" : "text-gray-400 dark:text-gray-100" }} group flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-500">
+                                    <span
+                                        class="{{ request()->routeIs("service-type") ? "text-blue-500" : "text-gray-400 group-hover:text-blue-500" }} mr-2 list-item list-inside list-disc text-sm">
+                                    </span>
+                                    <a href="{{ route("service-type") }}" @click="open = true"
+                                        class="{{ request()->routeIs("service-type") ? "text-blue-600" : "group-hover:text-blue-500" }} flex-grow">
+                                        Medical Service
                                     </a>
                                 </li>
                             @endcanany

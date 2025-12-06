@@ -44,8 +44,8 @@ class ServiceForm extends Form
             'image.mimes' => 'Image must be JPG, JPEG, PNG, or WEBP.',
             'image.max' => 'Image size cannot exceed 2MB.',
 
-            'short_desc.required' => 'Short description is required.',
-            'short_desc.max' => 'Short description must not exceed 500 characters.',
+            'short_desc.required' => 'Service description is required.',
+            'short_desc.max' => 'Service description must not exceed 500 characters.',
         ];
     }
 }

@@ -7,7 +7,7 @@ use Livewire\Form;
 
 class CareLevelForm extends Form
 {
-    public $packageId, $name, $description;
+    public $packageId, $name;
     public $search = '';
     public $rowsPerPage = 20;
     public $careLevelId = null;
@@ -19,7 +19,7 @@ class CareLevelForm extends Form
         return [
             'packageId' => 'required|exists:packages,id',
             'name' => 'required|string|max:100|unique:care_levels,name,' . $this->careLevelId,
-            'description' => 'required',
+            // 'description' => 'required',
             // 'hours' => 'required|integer|min:1',
             // 'price' => 'required|numeric|min:0',
             'levels.*.hours' => 'required|numeric|min:1',

@@ -20,7 +20,7 @@
             Care Level Information
         </h2>
         <form method="post">
-            <div class="border rounded-xl p-4 space-y-4">
+            <div class="space-y-4 rounded-xl border p-4">
                 <!-- Package -->
                 <div>
                     <label for="packageId" class="block text-sm text-gray-700 dark:text-gray-400">Package*</label>
@@ -37,7 +37,7 @@
                     @enderror
                 </div>
                 <!-- Care Level -->
-                <div> 
+                <div>
                     <label for="name" class="block text-sm text-gray-700 dark:text-gray-400">
                         Care Level*
                     </label>
@@ -46,6 +46,58 @@
                     @error("form.name")
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
+                </div>
+
+                <!-- Dynamic Hours & Price Inputs -->
+                <div class="space-y-4">
+                    @foreach ($form->levels as $index => $level)
+                        <div class="flex items-center gap-3">
+
+                            <!-- Hour -->
+                            <div class="flex-1">
+                                <label class="mb-1 block text-sm text-gray-700 dark:text-gray-400">
+                                    Hours*
+                                </label>
+                                <input type="number" wire:model="form.levels.{{ $index }}.hours"
+                                    placeholder="Hour (e.g. 8)"
+                                    class="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+                                @error("form.levels.$index.hours")
+                                    <span class="text-xs text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Price -->
+                            <div class="flex-1">
+                                <label class="mb-1 block text-sm text-gray-700 dark:text-gray-400">
+                                    Price*
+                                </label>
+                                <input type="number" wire:model="form.levels.{{ $index }}.price"
+                                    placeholder="Price"
+                                    class="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+                                @error("form.levels.$index.price")
+                                    <span class="text-xs text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Remove Button -->
+                            @if (count($form->levels) > 1)
+                                <button type="button" wire:click="removeOption({{ $index }})"
+                                    class="mt-5 flex h-[42px] w-10 items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" class="h-5 w-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1
+                                       0 00-1-1h-4a1 1 0 00-1 1v3m-4 0h14" />
+                                    </svg>
+                                </button>
+                            @endif
+                        </div>
+                    @endforeach
+
+                    <!-- Add Button -->
+                    <button type="button" wire:click="addOption"
+                        class="mt-3 bg-green-600 rounded-full px-4 py-2.5 text-sm text-white">
+                        + Add More
+                    </button>
                 </div>
             </div>
             <!-- Description -->
@@ -63,56 +115,7 @@
                     @enderror
                 </div>
             </div> --}}
-            <!-- Dynamic Hours & Price Inputs -->
-            {{-- <div class="space-y-4">
-                @foreach ($form->levels as $index => $level)
-                    <div class="flex items-start gap-3">
 
-                        <!-- Hour -->
-                        <div class="flex-1">
-                            <label class="mb-1 block text-sm text-gray-700 dark:text-gray-400">
-                                Hours*
-                            </label>
-                            <input type="number" wire:model="form.levels.{{ $index }}.hours"
-                                placeholder="Hour (e.g. 8)"
-                                class="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
-                            @error("form.levels.$index.hours")
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <!-- Price -->
-                        <div class="flex-1">
-                            <label class="mb-1 block text-sm text-gray-700 dark:text-gray-400">
-                                Price*
-                            </label>
-                            <input type="number" wire:model="form.levels.{{ $index }}.price" placeholder="Price"
-                                class="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
-                            @error("form.levels.$index.price")
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <!-- Remove Button -->
-                        @if (count($form->levels) > 1)
-                            <button type="button" wire:click="removeLevel({{ $index }})"
-                                class="mt-5 flex h-[42px] w-10 items-center justify-center rounded-md bg-red-500 text-white hover:bg-red-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" class="h-5 w-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1
-                                       0 00-1-1h-4a1 1 0 00-1 1v3m-4 0h14" />
-                                </svg>
-                            </button>
-                        @endif
-                    </div>
-                @endforeach
-
-                <!-- Add Button -->
-                <button type="button" wire:click="addLevel"
-                    class="mt-3 rounded-md bg-blue-600 px-4 py-2.5 text-sm text-white">
-                    + Add More
-                </button>
-            </div> --}}
 
             <!-- Create Button -->
             <div class="mt-5 flex justify-end space-x-3">

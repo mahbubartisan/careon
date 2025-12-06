@@ -21,46 +21,46 @@ class CreateService extends Component
     #[Title('Create Service')]
 
     public ServiceForm $form;
-    public $care_levels = [];
+    // public $care_levels = [];
 
     public function mount()
     {
         $this->form->serviceTypes = ServiceType::select('id', 'name')->get();
         $this->form->careLevels = CareLevel::select('id', 'name')->get();
-        $this->care_levels = [
+        $this->form->care_levels = [
             [
                 'care_level_id' => '',
                 'desc' => '',
-                'options' => [
-                    ['hours' => '', 'price' => '']
-                ]
+                // 'options' => [
+                //     ['hours' => '', 'price' => '']
+                // ]
             ],
             [
                 'care_level_id' => '',
                 'desc' => '',
-                'options' => [
-                    ['hours' => '', 'price' => '']
-                ]
+                // 'options' => [
+                //     ['hours' => '', 'price' => '']
+                // ]
             ],
             [
                 'care_level_id' => '',
                 'desc' => '',
-                'options' => [
-                    ['hours' => '', 'price' => '']
-                ]
+                // 'options' => [
+                //     ['hours' => '', 'price' => '']
+                // ]
             ],
         ];
     }
 
-    public function addOption($levelIndex)
-    {
-        $this->form->care_levels[$levelIndex]['options'][] = ['hours' => null, 'price' => null];
-    }
+    // public function addOption($levelIndex)
+    // {
+    //     $this->form->care_levels[$levelIndex]['options'][] = ['hours' => null, 'price' => null];
+    // }
 
-    public function removeOption($levelIndex, $oIndex)
-    {
-        array_splice($this->form->care_levels[$levelIndex]['options'], $oIndex, 1);
-    }
+    // public function removeOption($levelIndex, $oIndex)
+    // {
+    //     array_splice($this->form->care_levels[$levelIndex]['options'], $oIndex, 1);
+    // }
 
     public function store()
     {
@@ -94,8 +94,7 @@ class CreateService extends Component
             2. STORE CARE LEVELS
         -------------------------- */
             foreach ($this->form->care_levels as $level) {
-
-                $careLevel = ServiceCareLevel::create([
+                ServiceCareLevel::create([
                     'service_id'     => $service->id,
                     'care_level_id'  => $level['care_level_id'],
                     'description'    => $level['desc'],
@@ -105,13 +104,13 @@ class CreateService extends Component
                 /* -------------------------
                 3. STORE CARE OPTIONS
             -------------------------- */
-                foreach ($level['options'] as $option) {
-                    CareOption::create([
-                        'care_level_id' => $level['care_level_id'],
-                        'hours' => $option['hours'],
-                        'price' => $option['price'],
-                    ]);
-                }
+                // foreach ($level['options'] as $option) {
+                //     CareOption::create([
+                //         'care_level_id' => $level['care_level_id'],
+                //         'hours' => $option['hours'],
+                //         'price' => $option['price'],
+                //     ]);
+                // }
             }
 
             DB::commit();

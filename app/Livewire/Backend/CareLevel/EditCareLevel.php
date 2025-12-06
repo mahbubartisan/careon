@@ -45,6 +45,17 @@ class EditCareLevel extends Component
         }
     }
 
+    public function addOption()
+    {
+        $this->form->levels[] = ['hour' => '', 'price' => ''];
+    }
+
+    public function removeOption($index)
+    {
+        unset($this->form->levels[$index]);
+        $this->form->levels = array_values($this->form->levels); // reindex
+    }
+
     public function update()
     {
         $this->validate();

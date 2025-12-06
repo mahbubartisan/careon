@@ -13,7 +13,7 @@ class Service extends Component
 {
     use WithPagination, MediaTrait;
 
-    #[Title('Services')]
+    #[Title('Special Services')]
 
     public ServiceForm $form;
 
@@ -30,17 +30,21 @@ class Service extends Component
     {
         $service = ModelsService::findOrFail($id);
 
-        // Delete advisor image if exists
+        // Delete service care levels
+        $service->serviceCareLevels()->delete();
+
+        // Delete service image if exists
         if ($service->image) {
             $this->deleteMedia($service->image);
         }
 
-        // Delete advisor record
+        // Delete service record
         $service->delete();
 
         $this->dispatch('toastr:success', 'Service deleted!');
         return redirect()->back();
     }
+
 
     public function render()
     {
