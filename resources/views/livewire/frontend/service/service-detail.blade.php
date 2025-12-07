@@ -4,6 +4,7 @@
         step: 1,
         formData: { location: '', packageType: '', care: '', payment: '' },
         packages: @js($packages),
+        service: @js($service),
         locationGroups: @js($locationGroups),
         init() {
             if (this.packages.length > 0) {
@@ -240,7 +241,6 @@
                     </div>
                 </div>
 
-
                 <!-- Step 2: Package -->
                 <div x-show="step === 2" y-transition>
                     <div class="rounded-xl border border-gray-200 bg-white p-8">
@@ -341,7 +341,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Step 3: Schedule -->
                 <div x-show="step === 3" y-transition>
@@ -646,9 +645,10 @@
                     </div>
                 </div>
 
-                <!-- Step 5 (Review) -->
-                {{-- <div x-show="step === 5" y-transition>
-                    <div x-data="{ agree: false }" class="rounded-xl border border-gray-200 bg-white p-8">
+                <!-- Step 5: Review & Confirm -->
+                <div x-show="step === 5" x-transition>
+                    <div class="rounded-xl border border-gray-200 bg-white p-8">
+
                         <!-- Header -->
                         <div class="mb-6">
                             <h2 class="text-xl font-bold text-gray-900 lg:text-2xl">
@@ -659,107 +659,62 @@
                             </p>
                         </div>
 
-                        <!-- Booking Summary -->
-                        <div class="mb-6 rounded-xl border border-gray-200 p-5">
+                        <div class="space-y-4 rounded-xl border border-gray-200 p-5 text-sm">
                             <h3 class="mb-4 text-lg font-bold text-gray-900">
                                 Booking Summary
                             </h3>
-                            <div class="grid grid-cols-2 text-sm">
-                                <div class="space-y-2 text-gray-600">
-                                    <p>Service:</p>
-                                    <p>Package:</p>
-                                    <p>Location:</p>
-                                    <p>Date & Time:</p>
+
+                            <!-- CARE LEVEL & HOURS + PRICE -->
+                            <template x-if="formData.care">
+                                <div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Service:</span>
+                                        {{-- <span class="font-medium text-gray-900"
+                                            x-text="
+                                                (() => {
+                                                    const [lvl, opt] = formData.care.split('-');
+                                                    const pkg = packages.find(p => p.id === formData.packageType);
+                                                    const level = pkg?.care_levels.find(l => l.id == lvl);
+                                                    const option = level?.care_options.find(o => o.id == opt);
+                                                    return level?.name + ' - ' + option?.hours + ' Hours';
+                                                })()
+                                        ">
+                                        </span> --}}
+
+                                        <span class="font-medium text-gray-900"
+                                            x-text="
+                                            (() => {
+                                                const [lvl, opt] = formData.care.split('-');
+
+                                                const pkg = packages.find(p => p.id == formData.packageType);
+                                                const level = pkg?.care_levels.find(l => l.id == lvl);
+                                                const option = level?.care_options.find(o => o.id == opt);
+
+                                                // service.name is available from x-data
+                                                return `${service.name} - ${level?.name} (${option?.hours}h)`;
+                                            })()
+                                        ">
+                                        </span>
+                                    </div>
+
+                                    {{-- <div class="flex justify-between">
+                                        <span class="text-gray-600">Care Charge:</span>
+                                        <span class="font-medium text-gray-900"
+                                            x-text="
+                                (() => {
+                                    const [lvl, opt] = formData.care.split('-');
+                                    const pkg = packages.find(p => p.id === formData.packageType);
+                                    const level = pkg?.care_levels.find(l => l.id == lvl);
+                                    const option = level?.care_options.find(o => o.id == opt);
+                                    return '৳ ' + option?.price;
+                                })()
+                        ">
+                                        </span>
+                                    </div> --}}
                                 </div>
-                                <div class="space-y-2 text-right font-medium text-gray-900">
-                                    <p>Nursing Care - basic (8h)</p>
-                                    <p>Daily</p>
-                                    <p>Old Dhaka</p>
-                                    <p>Not selected -</p>
-                                </div>
-                            </div>
-                        </div>
+                            </template>
 
-                        <!-- Terms & Conditions -->
-                        <div class="mb-8 rounded-xl border border-emerald-300 bg-emerald-50/30 p-5">
-                            <h3 class="mb-3 text-lg font-bold text-gray-900">
-                                Terms & Conditions
-                            </h3>
-                            <ul class="list-inside list-disc space-y-1 text-sm text-gray-600">
-                                <li>
-                                    I authorize CareOn-verified professionals to enter the
-                                    specified address for the booked service time.
-                                </li>
-                                <li>
-                                    I agree to provide a safe working environment and comply
-                                    with all safety guidelines.
-                                </li>
-                                <li>
-                                    I understand the cancellation policy and refund terms as per
-                                    CareOn policies.
-                                </li>
-                                <li>
-                                    All personal and medical information will be kept
-                                    confidential.
-                                </li>
-                                <li>
-                                    I confirm that all information provided is accurate and
-                                    complete.
-                                </li>
-                            </ul>
-
-                            <div class="mt-4 flex items-center space-x-2 text-sm">
-                                <input id="agree" type="checkbox" x-model="agree"
-                                    class="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" />
-                                <label for="agree" class="text-gray-700">
-                                    I have read and agree to the terms and conditions
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Buttons -->
-                        <div class="flex justify-between border-t pt-4">
-
-                            <button
-                                @click="
-                                step--;
-                                $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                            "
-                                class="flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                Back
-                            </button>
-
-                            <!-- Next Button -->
-                            <button
-                                @click="
-                                if (agree) {
-                                    step++;
-                                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                                }
-                                "
-                                :disabled="!agree"
-                                :class="agree
-                                    ?
-                                    'flex items-center bg-green-600 hover:bg-green-700 text-white' :
-                                    'flex items-center bg-green-300 text-white cursor-not-allowed'"
-                                class="rounded-lg px-5 py-2 text-sm transition">
-                                Confirm & Next →
-                            </button>
-                        </div>
-                    </div>
-                </div> --}}
-                <!-- Step 5: Review -->
-                <!-- Step 5: Review & Confirm -->
-                <div x-show="step === 5" x-transition>
-                    <div class="rounded-xl border border-gray-200 bg-white p-8">
-
-                        <h2 class="mb-4 text-xl font-bold text-gray-900 lg:text-2xl">
-                            Review & Confirm
-                        </h2>
-
-                        <div class="space-y-4 rounded-xl border border-gray-200 p-5 text-sm">
-
-                            <!-- LOCATION -->
+                            {{-- <!-- LOCATION -->
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Location:</span>
                                 <span class="font-medium text-gray-900" x-text="formData.location"></span>
@@ -782,7 +737,7 @@
                                     })()">
                                 </span>
 
-                            </div>
+                            </div> --}}
 
 
                             <!-- PACKAGE -->
@@ -793,90 +748,9 @@
                                 </span>
                             </div>
 
-                            <!-- CARE LEVEL & HOURS + PRICE -->
-                            <template x-if="formData.care">
-                                <div>
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-600">Care Level & Hours:</span>
-                                        <span class="font-medium text-gray-900"
-                                            x-text="
-                                (() => {
-                                    const [lvl, opt] = formData.care.split('-');
-                                    const pkg = packages.find(p => p.id === formData.packageType);
-                                    const level = pkg?.care_levels.find(l => l.id == lvl);
-                                    const option = level?.care_options.find(o => o.id == opt);
-                                    return level?.name + ' - ' + option?.hours + ' Hours';
-                                })()
-                        ">
-                                        </span>
-                                    </div>
-
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-600">Care Charge:</span>
-                                        <span class="font-medium text-gray-900"
-                                            x-text="
-                                (() => {
-                                    const [lvl, opt] = formData.care.split('-');
-                                    const pkg = packages.find(p => p.id === formData.packageType);
-                                    const level = pkg?.care_levels.find(l => l.id == lvl);
-                                    const option = level?.care_options.find(o => o.id == opt);
-                                    return '৳ ' + option?.price;
-                                })()
-                        ">
-                                        </span>
-                                    </div>
-                                </div>
-                            </template>
-
-                            <!-- TOTAL PRICE -->
-                            <div class="mt-4 flex justify-between border-t pt-4 text-base font-bold text-green-600">
-                                <span>Total Price</span>
-
-                                <span
-                                    x-text="
-        (() => {
-            // -------------------------
-            // 1. CARE PRICE
-            // -------------------------
-            let carePrice = 0;
-
-            if (formData.care && formData.packageType) {
-                const [lvl, opt] = formData.care.split('-');
-                const pkg = packages.find(p => p.id == formData.packageType);
-
-                const level = pkg?.care_levels.find(l => l.id == lvl);
-                const option = level?.care_options.find(o => o.id == opt);
-
-                carePrice = option?.price ?? 0;
-            }
-
-            // -------------------------
-            // 2. LOCATION PRICE
-            // -------------------------
-            let locationPrice = 0;
-
-            if (formData.location) {
-                // Find the group containing the selected location
-                const group = locationGroups.find(g =>
-                    g.locations.some(loc => loc.name === formData.location)
-                );
-
-                locationPrice = group ? group.price : 0;
-            }
-
-            // -------------------------
-            // 3. TOTAL
-            // -------------------------
-            return '৳ ' + (carePrice + locationPrice);
-        })()
-    ">
-                                </span>
-
-                            </div>
-
-                            <!-- DATE -->
+                            {{-- <!-- DATE -->
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Date:</span>
+                                <span class="text-gray-600">Date & Time:</span>
                                 <span class="font-medium text-gray-900" x-text="formData.date"></span>
                             </div>
 
@@ -884,12 +758,87 @@
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Time:</span>
                                 <span class="font-medium text-gray-900" x-text="formData.time"></span>
+                            </div> --}}
+
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Date & Time:</span>
+                            
+                                <span class="font-medium text-gray-900"
+                                    x-text="
+                                        (() => {
+                                            if (!formData.date || !formData.time) return '';
+                            
+                                            const datetime = new Date(`${formData.date} ${formData.time}`);
+                            
+                                            const formattedDate = datetime.toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            });
+                            
+                                            const formattedTime = datetime.toLocaleTimeString('en-US', {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                hour12: true
+                                            });
+                            
+                                            return `${formattedDate} • ${formattedTime}`;
+                                        })()
+                                    ">
+                                </span>
                             </div>
+                            
+                            
 
                             <!-- ADDRESS -->
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Address:</span>
+                                <span class="text-gray-600">Patient Address:</span>
                                 <span class="text-right font-medium text-gray-900" x-text="formData.address"></span>
+                            </div>
+
+                            <!-- TOTAL PRICE -->
+                            <div class="mt-4 flex justify-between border-t pt-4 text-base font-bold text-green-600">
+                                <span>Total Price</span>
+
+                                <span
+                                    x-text="
+                                    (() => {
+                                        // -------------------------
+                                        // 1. CARE PRICE
+                                        // -------------------------
+                                        let carePrice = 0;
+
+                                        if (formData.care && formData.packageType) {
+                                            const [lvl, opt] = formData.care.split('-');
+                                            const pkg = packages.find(p => p.id == formData.packageType);
+
+                                            const level = pkg?.care_levels.find(l => l.id == lvl);
+                                            const option = level?.care_options.find(o => o.id == opt);
+
+                                            carePrice = option?.price ?? 0;
+                                        }
+
+                                        // -------------------------
+                                        // 2. LOCATION PRICE
+                                        // -------------------------
+                                        let locationPrice = 0;
+
+                                        if (formData.location) {
+                                            // Find the group containing the selected location
+                                            const group = locationGroups.find(g =>
+                                                g.locations.some(loc => loc.name === formData.location)
+                                            );
+
+                                            locationPrice = group ? group.price : 0;
+                                        }
+
+                                        // -------------------------
+                                        // 3. TOTAL
+                                        // -------------------------
+                                        return '৳ ' + (carePrice + locationPrice);
+                                    })()
+                                ">
+                                </span>
                             </div>
 
                         </div>
@@ -906,9 +855,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
 
                 <!-- Step 6: Payment Method -->
                 <div x-show="step === 6" y-transition>
