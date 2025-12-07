@@ -4,7 +4,6 @@
         step: 1,
         formData: { location: '', packageType: '', care: '', payment: '' },
         packages: @js($packages),
-        locationGroups: @js($locationGroups),
         init() {
             if (this.packages.length > 0) {
                 this.formData.packageType = this.packages[0].id; // ← default first tab
@@ -647,7 +646,7 @@
                 </div>
 
                 <!-- Step 5 (Review) -->
-                {{-- <div x-show="step === 5" y-transition>
+                <div x-show="step === 5" y-transition>
                     <div x-data="{ agree: false }" class="rounded-xl border border-gray-200 bg-white p-8">
                         <!-- Header -->
                         <div class="mb-6">
@@ -747,168 +746,7 @@
                             </button>
                         </div>
                     </div>
-                </div> --}}
-                <!-- Step 5: Review -->
-                <!-- Step 5: Review & Confirm -->
-                <div x-show="step === 5" x-transition>
-                    <div class="rounded-xl border border-gray-200 bg-white p-8">
-
-                        <h2 class="mb-4 text-xl font-bold text-gray-900 lg:text-2xl">
-                            Review & Confirm
-                        </h2>
-
-                        <div class="space-y-4 rounded-xl border border-gray-200 p-5 text-sm">
-
-                            <!-- LOCATION -->
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Location:</span>
-                                <span class="font-medium text-gray-900" x-text="formData.location"></span>
-                            </div>
-
-                            <!-- LOCATION GROUP PRICE -->
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Location Charge:</span>
-                                <span class="font-medium text-gray-900"
-                                    x-text="(() => {
-
-                                        if (!formData.location) return '৳ 0';
-
-                                        // Find the group where one of its locations matches the selected name
-                                        const group = locationGroups.find(g =>
-                                            g.locations.some(loc => loc.name === formData.location)
-                                        );
-
-                                        return group ? '৳ ' + group.price : '৳ 0';
-                                    })()">
-                                </span>
-
-                            </div>
-
-
-                            <!-- PACKAGE -->
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Package:</span>
-                                <span class="font-medium text-gray-900"
-                                    x-text="packages.find(p => p.id === formData.packageType)?.name">
-                                </span>
-                            </div>
-
-                            <!-- CARE LEVEL & HOURS + PRICE -->
-                            <template x-if="formData.care">
-                                <div>
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-600">Care Level & Hours:</span>
-                                        <span class="font-medium text-gray-900"
-                                            x-text="
-                                (() => {
-                                    const [lvl, opt] = formData.care.split('-');
-                                    const pkg = packages.find(p => p.id === formData.packageType);
-                                    const level = pkg?.care_levels.find(l => l.id == lvl);
-                                    const option = level?.care_options.find(o => o.id == opt);
-                                    return level?.name + ' - ' + option?.hours + ' Hours';
-                                })()
-                        ">
-                                        </span>
-                                    </div>
-
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-600">Care Charge:</span>
-                                        <span class="font-medium text-gray-900"
-                                            x-text="
-                                (() => {
-                                    const [lvl, opt] = formData.care.split('-');
-                                    const pkg = packages.find(p => p.id === formData.packageType);
-                                    const level = pkg?.care_levels.find(l => l.id == lvl);
-                                    const option = level?.care_options.find(o => o.id == opt);
-                                    return '৳ ' + option?.price;
-                                })()
-                        ">
-                                        </span>
-                                    </div>
-                                </div>
-                            </template>
-
-                            <!-- TOTAL PRICE -->
-                            <div class="mt-4 flex justify-between border-t pt-4 text-base font-bold text-green-600">
-                                <span>Total Price</span>
-
-                                <span
-                                    x-text="
-        (() => {
-            // -------------------------
-            // 1. CARE PRICE
-            // -------------------------
-            let carePrice = 0;
-
-            if (formData.care && formData.packageType) {
-                const [lvl, opt] = formData.care.split('-');
-                const pkg = packages.find(p => p.id == formData.packageType);
-
-                const level = pkg?.care_levels.find(l => l.id == lvl);
-                const option = level?.care_options.find(o => o.id == opt);
-
-                carePrice = option?.price ?? 0;
-            }
-
-            // -------------------------
-            // 2. LOCATION PRICE
-            // -------------------------
-            let locationPrice = 0;
-
-            if (formData.location) {
-                // Find the group containing the selected location
-                const group = locationGroups.find(g =>
-                    g.locations.some(loc => loc.name === formData.location)
-                );
-
-                locationPrice = group ? group.price : 0;
-            }
-
-            // -------------------------
-            // 3. TOTAL
-            // -------------------------
-            return '৳ ' + (carePrice + locationPrice);
-        })()
-    ">
-                                </span>
-
-                            </div>
-
-                            <!-- DATE -->
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Date:</span>
-                                <span class="font-medium text-gray-900" x-text="formData.date"></span>
-                            </div>
-
-                            <!-- TIME -->
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Time:</span>
-                                <span class="font-medium text-gray-900" x-text="formData.time"></span>
-                            </div>
-
-                            <!-- ADDRESS -->
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Address:</span>
-                                <span class="text-right font-medium text-gray-900" x-text="formData.address"></span>
-                            </div>
-
-                        </div>
-
-                        <div class="mt-6 flex justify-between">
-                            <button @click="step--"
-                                class="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                ← Back
-                            </button>
-
-                            <button class="rounded-md bg-green-600 px-5 py-2 text-sm text-white hover:bg-green-700">
-                                Confirm Booking →
-                            </button>
-                        </div>
-                    </div>
                 </div>
-
-
-
 
                 <!-- Step 6: Payment Method -->
                 <div x-show="step === 6" y-transition>

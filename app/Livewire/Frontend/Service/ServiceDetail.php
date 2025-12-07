@@ -14,7 +14,34 @@ class ServiceDetail extends Component
     public $service;
     public $packages;
     public $locationGroups;
+    public $careLevels = []; 
+    public $careOptions = [];
     public $payment_method; // 'cod' or 'bkash'
+
+    // Form container (single row storage)
+    public $form = [
+        'service_id' => null,
+        'service_name' => null,
+        'location' => null,
+        'package_id' => null,
+        'care_level_id' => null,
+        'care_option_id' => null,
+        'date' => null,
+        'time' => null,
+        'patient_name' => null,
+        'gender' => null,
+        'height' => null,
+        'weight' => null,
+        'patient_type' => null,
+        'country' => null,
+        'patient_contact' => null,
+        'emergency_contact' => null,
+        'address' => null,
+        'gender_preference' => null,
+        'language' => null,
+        'special_instructions' => null,
+        // 'payment_method' => 'bkash', // default
+    ];
 
 
     public function mount($slug)
@@ -60,7 +87,7 @@ class ServiceDetail extends Component
     public function storeOrder()
     {
         // Save service + package + care options + caregiving hours, etc.
-        $order = Booking::create([
+        $booking = Booking::create([
             'service_id'      => $this->service_id,
             'package_id'      => $this->package_id,
             'care_level_id'   => $this->care_level_id,
@@ -71,7 +98,7 @@ class ServiceDetail extends Component
             'status'          => 'pending',
         ]);
 
-        // return redirect()->route('order.success', $order->id);
+        // return redirect()->route('order.success', $booking->id);
     }
 
     public function initiateBkashPayment()
