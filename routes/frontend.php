@@ -16,7 +16,7 @@ Route::as('frontend.')->group(function () {
     Route::get('/about-us', About::class)->name('about');
     Route::get('/contact-us', Contact::class)->name('contact-us');
     Route::get('/services', Service::class)->name('service');
-    Route::get('/service-detail', ServiceDetail::class)->name('service-detail');
+    Route::get('/service/{slug}', ServiceDetail::class)->name('service-detail');
     Route::get('/health-tips', Blog::class)->name('blogs');
     Route::get('/health-tips/{slug}', BlogDetail::class)->name('blog-detail');
     Route::get('/provider-signup', CareProvider::class)->name('provider-signup');

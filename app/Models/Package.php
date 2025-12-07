@@ -11,7 +11,7 @@ class Package extends Model
 
     protected $guarded = [];
 
-    public function careLevel()
+    public function careLevels()
     {
         return $this->hasMany(CareLevel::class);
     }

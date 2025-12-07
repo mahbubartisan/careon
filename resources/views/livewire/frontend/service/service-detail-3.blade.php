@@ -2,7 +2,7 @@
     <div x-data="{
         showStepper: false,
         step: 1,
-        formData: { location: '', packageType: '', care: '', payment: '' },
+        formData: { location: '', packageType: '', care: '', payment: 'bkash' },
         packages: @js($packages),
         init() {
             if (this.packages.length > 0) {
@@ -181,61 +181,65 @@
                             Choose your area to proceed
                         </p>
 
-                        <div class="grid grid-cols-1 gap-4 text-sm md:grid-cols-3">
+                        <form>
+                            <div class="grid grid-cols-1 gap-4 text-sm md:grid-cols-3">
 
-                            <!-- Generate 3 columns -->
-                            @php
-                                $chunks = $locationGroups->flatMap->locations
-                                    ->pluck("name")
-                                    ->chunk(ceil($locationGroups->flatMap->locations->count() / 3));
-                            @endphp
+                                <!-- Generate 3 columns -->
+                                @php
+                                    $chunks = $locationGroups->flatMap->locations
+                                        ->pluck("name")
+                                        ->chunk(ceil($locationGroups->flatMap->locations->count() / 3));
+                                @endphp
 
-                            @foreach ($chunks as $col)
-                                <div class="space-y-3">
-                                    @foreach ($col as $loc)
-                                        <label class="flex items-center space-x-2 font-medium">
-                                            <input type="radio" name="location" class="form-radio h-4 w-4"
-                                                value="{{ $loc }}" x-model="formData.location">
-                                            <span>{{ $loc }}</span>
-                                        </label>
-                                    @endforeach
-                                </div>
-                            @endforeach
+                                @foreach ($chunks as $col)
+                                    <div class="space-y-3">
+                                        @foreach ($col as $loc)
+                                            <label class="flex items-center space-x-2 font-medium">
+                                                <input type="radio" name="location" class="form-radio h-4 w-4"
+                                                    value="{{ $loc }}" x-model="formData.location">
+                                                <span>{{ $loc }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                @endforeach
 
-                        </div>
+                            </div>
 
-                        <hr class="my-6" />
+                            <hr class="my-6" />
 
-                        <div class="flex items-center justify-between">
-                            <button type="button"
-                                @click="
+                            <div class="flex items-center justify-between">
+                                <button type="button"
+                                    @click="
                                             step > 1 ? step-- : showStepper = false;
                                             $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
                                         "
-                                class="inline-flex items-center rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 19l-7-7 7-7" />
-                                </svg>
-                                Back
-                            </button>
+                                    class="inline-flex items-center rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                    <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                    Back
+                                </button>
 
-                            <button type="button"
-                                @click="
+                                <button type="button"
+                                    @click="
                                             if (formData.location) {
                                                 step++;
                                                 $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
                                             }
                                         "
-                                :disabled="!formData.location"
-                                class="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50">
-                                Next
-                                <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
+                                    :disabled="!formData.location"
+                                    class="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50">
+                                    Next
+                                    <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                        </form>
+
                     </div>
                 </div>
 
@@ -308,7 +312,9 @@
 
                                         </div>
                                     </template>
+
                                 </div>
+
                             </div>
                         </template>
 
@@ -322,22 +328,13 @@
                                 ← Back
                             </button>
 
-                            <button type="button"
-                                @click="
-                                    if (formData.care) {
-                                        step++;
-                                        $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                                    }
-                                "
-                                :disabled="!formData.care"
-                                class="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50">
-                                Next
-                                <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
+                            <button @click="if(formData.care) { step++; }" :disabled="!formData.care"
+                                class="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50">
+                                Next →
                             </button>
+
                         </div>
+
                     </div>
                 </div>
 
@@ -369,9 +366,9 @@
                             <!-- Back Button -->
                             <button
                                 @click="
-                                    step--;
-                                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                                "
+                    step--;
+                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                  "
                                 class="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                                 ← Back
                             </button>
@@ -379,9 +376,9 @@
                             <!-- Next Button -->
                             <button
                                 @click="
-                                    step++;
-                                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                                "
+                    step++;
+                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                  "
                                 class="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700">
                                 Next →
                             </button>
@@ -614,6 +611,31 @@
                                     x-model="formData.specialInstructions"
                                     class="w-full resize-none rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none"></textarea>
                             </div>
+
+                            <!-- Use Current Location Button -->
+                            <!-- <div class="flex items-center justify-between">
+                  <button
+                    type="button"
+                    @click="getCurrentLocation()"
+                    class="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition hover:bg-gray-50 sm:w-auto"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-green-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.364-7.364l-1.414 1.414M6.05 17.95l-1.414 1.414M17.95 17.95l1.414 1.414M6.05 6.05L4.636 4.636M12 8a4 4 0 110 8 4 4 0 010-8z"
+                      />
+                    </svg>
+                    Use Current Location
+                  </button>
+                </div> -->
                         </div>
 
                         <!-- Divider -->
@@ -632,12 +654,24 @@
                             </button>
 
                             <!-- Next Button -->
+                            <!-- <button
+                  @click="
+                    if (formData.address && formData.contactPhone) {
+                      step++;
+                      $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                    }
+                  "
+                  :disabled="!formData.address || !formData.contactPhone"
+                  class="flex items-center rounded-md bg-green-600 px-5 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50"
+                >
+                  Next →
+                </button> -->
                             <button
                                 @click="
-                                    step++;
-                                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                                    
-                                "
+                      step++;
+                      $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                    
+                  "
                                 class="flex items-center rounded-md bg-green-600 px-5 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50">
                                 Next →
                             </button>
@@ -718,24 +752,51 @@
 
                         <!-- Buttons -->
                         <div class="flex justify-between border-t pt-4">
-
+                            <!-- <button
+                  class="flex items-center gap-2 rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 transition hover:bg-gray-100"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                  Back
+                </button> -->
                             <button
                                 @click="
-                                step--;
-                                $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                            "
+                    step--;
+                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                  "
                                 class="flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                                 Back
                             </button>
 
+                            <!-- <a
+                  href="confirmation.html"
+                  :disabled="!agree"
+                  :class="agree ? 'bg-emerald-600 hover:bg-emerald-700 text-white' :
+                      'bg-emerald-300 text-white cursor-not-allowed'"
+                  class="rounded-lg px-5 py-2 text-sm transition"
+                >
+                  Confirm Booking
+                </a> -->
                             <!-- Next Button -->
                             <button
                                 @click="
-                                if (agree) {
-                                    step++;
-                                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                                }
-                                "
+                  if (agree) {
+                    step++;
+                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                  }
+                "
                                 :disabled="!agree"
                                 :class="agree
                                     ?
@@ -772,13 +833,31 @@
                                     class="rounded-full bg-green-100 px-2 py-0.5 text-[11px] font-medium text-green-700">Popular</span>
                             </label>
 
-                            <!-- Cash On Delivery -->
+                            <!-- Nagad -->
                             <label
                                 class="flex cursor-pointer items-center rounded-xl border px-4 py-3 transition hover:border-green-600"
-                                :class="formData.payment === 'COD' ? 'border-green-600 bg-green-50' : 'border-gray-200'">
-                                <input type="radio" name="payment" value="COD" x-model="formData.payment"
+                                :class="formData.payment === 'nagad' ? 'border-green-600 bg-green-50' : 'border-gray-200'">
+                                <input type="radio" name="payment" value="nagad" x-model="formData.payment"
                                     class="mr-3 text-green-600 focus:ring-0" />
-                                <span class="font-medium text-gray-800">Cash On Delivery</span>
+                                <span class="font-medium text-gray-800">Nagad</span>
+                            </label>
+
+                            <!-- Credit/Debit Card -->
+                            <label
+                                class="flex cursor-pointer items-center rounded-xl border px-4 py-3 transition hover:border-green-600"
+                                :class="formData.payment === 'card' ? 'border-green-600 bg-green-50' : 'border-gray-200'">
+                                <input type="radio" name="payment" value="card" x-model="formData.payment"
+                                    class="mr-3 text-green-600 focus:ring-0" />
+                                <span class="font-medium text-gray-800">Credit/Debit Card</span>
+                            </label>
+
+                            <!-- Cash on Service -->
+                            <label
+                                class="flex cursor-pointer items-center rounded-xl border px-4 py-3 transition hover:border-green-600"
+                                :class="formData.payment === 'cash' ? 'border-green-600 bg-green-50' : 'border-gray-200'">
+                                <input type="radio" name="payment" value="cash" x-model="formData.payment"
+                                    class="mr-3 text-green-600 focus:ring-0" />
+                                <span class="font-medium text-gray-800">Cash on Service</span>
                             </label>
                         </div>
 
@@ -790,16 +869,23 @@
                             <!-- Back Button -->
                             <button
                                 @click="
-                                    step--;
-                                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                                "
+                    step--;
+                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                  "
                                 class="flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                                 ← Back
                             </button>
-                            <button type="button" wire:click="processOrder"
-                                class="rounded-xl bg-green-600 px-5 py-2 text-white">
-                                Confirm Payment & Book
-                            </button>
+
+                            <!-- Next Button -->
+                            <!-- <button
+                  @click="
+                    step++;
+                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                  "
+                  class="flex items-center rounded-md bg-green-600 px-5 py-2 text-sm text-white hover:bg-green-700"
+                >
+                  Next →
+                </button> -->
                         </div>
                     </div>
                 </div>

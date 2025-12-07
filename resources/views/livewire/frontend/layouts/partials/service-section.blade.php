@@ -17,7 +17,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <!-- Nursing Care -->
-        <a href="{{ route('frontend.service-detail') }}"
+        <a href="#"
             class="border border-gray-200 rounded-2xl bg-gray-50/20 hover:bg-white hover:shadow-[0_0_25px_rgba(0,0,0,0.1)] hover:cursor-pointer transition duration-300 ease-in-out p-6">
             <div class="flex items-start space-x-3">
                 <div class="w-16 h-16 rounded-2xl bg-[#E6F9F3] flex items-center justify-center flex-shrink-0">

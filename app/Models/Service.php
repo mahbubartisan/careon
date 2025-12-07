@@ -28,6 +28,11 @@ class Service extends Model
             'service_care_levels',
             'service_id',
             'care_level_id'
-        );
+        )->withPivot(['description']); // IMPORTANT
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(ServiceType::class, 'service_type_id');
     }
 }

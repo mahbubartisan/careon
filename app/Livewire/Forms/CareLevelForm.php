@@ -18,7 +18,7 @@ class CareLevelForm extends Form
     {
         return [
             'packageId' => 'required|exists:packages,id',
-            'name' => 'required|string|max:100|unique:care_levels,name,' . $this->careLevelId,
+            'name' => 'required|string|max:100',
             // 'description' => 'required',
             // 'hours' => 'required|integer|min:1',
             // 'price' => 'required|numeric|min:0',
