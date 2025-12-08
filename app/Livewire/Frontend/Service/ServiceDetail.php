@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Frontend\Service;
 
+use App\Mail\BookingMail;
 use App\Models\Booking;
 use App\Models\LocationGroup;
 use App\Models\Package;
 use App\Models\Patient;
 use App\Models\Service;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -94,6 +96,54 @@ class ServiceDetail extends Component
         throw new \Exception("Invalid payment type selected.");
     }
 
+    // public function storeOrder()
+    // {
+    //     $data = $this->bookingForm;
+
+    //     $carePrice      = $this->getCarePrice($data['packageType'], $data['care']);
+    //     $locationPrice  = $this->getLocationPrice($data['location']);
+    //     $totalPrice     = $this->getTotalPrice($data['packageType'], $data['care'], $data['location']);
+
+    //     // Generate Booking ID
+    //     $bookingId = $this->generateBookingId($this->service->name);
+
+    //     $booking = Booking::create([
+    //         'booking_id'        => $bookingId,
+    //         'user_id'           => auth()->id(),
+    //         'service_name'      => $this->service->name,
+    //         'package_name'      => $this->getPackageName($data['packageType']),
+    //         'care_level_name'   => $this->getCareLevelName($data['care']),
+    //         'hours'             => $this->getHours($data['care']),
+    //         'price'             => $carePrice,
+    //         'location_price'    => $locationPrice,
+    //         'total_price'       => $totalPrice,
+    //         'location_group'    => $this->getLocationGroup($data['location']),
+    //         'location_name'     => $data['location'],
+    //         'date'              => $data['date'],
+    //         'time' => $this->formatTimeToAmPm($data['time']),
+    //         'payment_method'    => $data['payment_type'],
+    //     ]);
+
+    //     // Patient details
+    //     Patient::create([
+    //         'booking_id'         => $booking->id,
+    //         'name'               => $data['patientName'],
+    //         'gender'             => $data['gender'],
+    //         'height'             => $data['height'],
+    //         'weight'             => $data['weight'],
+    //         'patient_type'       => $data['patientType'],
+    //         'country'            => $data['country'],
+    //         'patient_contact'    => $data['patientContact'],
+    //         'emergency_contact'  => $data['emergencyContact'],
+    //         'address'            => $data['address'],
+    //         'gender_preference'  => $data['genderPreference'],
+    //         'language'           => $data['language'],
+    //         'special_notes'      => $data['specialInstructions'],
+    //     ]);
+
+    //     session()->flash('success', 'Booking successful!');
+    // }
+
     public function storeOrder()
     {
         $data = $this->bookingForm;
@@ -102,11 +152,11 @@ class ServiceDetail extends Component
         $locationPrice  = $this->getLocationPrice($data['location']);
         $totalPrice     = $this->getTotalPrice($data['packageType'], $data['care'], $data['location']);
 
-        // Generate Booking ID
         $bookingId = $this->generateBookingId($this->service->name);
 
         $booking = Booking::create([
             'booking_id'        => $bookingId,
+            'user_id'           => auth()->id(),
             'service_name'      => $this->service->name,
             'package_name'      => $this->getPackageName($data['packageType']),
             'care_level_name'   => $this->getCareLevelName($data['care']),
@@ -117,11 +167,10 @@ class ServiceDetail extends Component
             'location_group'    => $this->getLocationGroup($data['location']),
             'location_name'     => $data['location'],
             'date'              => $data['date'],
-            'time' => $this->formatTimeToAmPm($data['time']),
+            'time'              => $this->formatTimeToAmPm($data['time']),
             'payment_method'    => $data['payment_type'],
         ]);
 
-        // Patient details
         Patient::create([
             'booking_id'         => $booking->id,
             'name'               => $data['patientName'],
@@ -138,8 +187,17 @@ class ServiceDetail extends Component
             'special_notes'      => $data['specialInstructions'],
         ]);
 
+       
+        // SEND EMAIL TO USER + COPY TO ADMIN
+        
+        $adminEmail = 'admin@example.com';
+
+        Mail::to([$adminEmail, auth()->user()->email])
+            ->send(new BookingMail($booking));
+
         session()->flash('success', 'Booking successful!');
     }
+
 
     public function initiateBkashPayment()
     {

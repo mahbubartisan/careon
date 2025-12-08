@@ -11,8 +11,8 @@ class Patient extends Model
 
     protected $guarded = [];
 
-    public function patient()
+    public function booking()
     {
-        return $this->hasOne(Patient::class);
+        return $this->belongsTo(Booking::class);
     }
 }
