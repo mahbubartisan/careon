@@ -87,11 +87,11 @@ class CreateService extends Component
                 'name' => $this->form->name,
                 'slug' => str()->slug($this->form->name),
                 'image' => $imagePath,
+                'service_type_id' => $this->form->service_type_id,
                 'short_desc' => $this->form->short_desc,
                 'badge' => $this->form->badge ?? 0,
                 'status' => $this->form->status ?? 1,
             ]);
-
 
 
             /* -------------------------

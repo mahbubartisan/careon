@@ -9,30 +9,24 @@ use App\Livewire\Backend\Advisor\EditAdvisor;
 use App\Livewire\Backend\Blog\Blog;
 use App\Livewire\Backend\Blog\CreateBlog;
 use App\Livewire\Backend\Blog\EditBlog;
+use App\Livewire\Backend\Booking\Booking;
+use App\Livewire\Backend\Booking\BookingDetail;
 use App\Livewire\Backend\CareLevel\CareLevel;
 use App\Livewire\Backend\CareLevel\CreateCareLevel;
 use App\Livewire\Backend\CareLevel\EditCareLevel;
 use App\Livewire\Backend\Contact\Contact;
 use App\Livewire\Backend\Contact\ContactDetail;
 use App\Livewire\Backend\Dashboard;
-use App\Livewire\Backend\Faq\CreateFaq;
-use App\Livewire\Backend\Faq\EditFaq;
-use App\Livewire\Backend\Faq\Faq;
 use App\Livewire\Backend\Location\CreateLocation;
-use App\Livewire\Backend\Location\District;
 use App\Livewire\Backend\Location\EditLocation;
 use App\Livewire\Backend\Location\Location;
-use App\Livewire\Backend\Location\Thana;
 use App\Livewire\Backend\LocationGroup\CreateLocationGroup;
 use App\Livewire\Backend\LocationGroup\EditLocationGroup;
 use App\Livewire\Backend\LocationGroup\LocationGroup;
-use App\Livewire\Backend\News\EditNews;
-use App\Livewire\Backend\News\News;
 use App\Livewire\Backend\Package\CreatePackage;
 use App\Livewire\Backend\Package\EditPackage;
 use App\Livewire\Backend\Package\Package;
 use App\Livewire\Backend\Permission\Permissions;
-use App\Livewire\Backend\Player\Player;
 use App\Livewire\Backend\Profile\Profile;
 use App\Livewire\Backend\Role\CreateRole;
 use App\Livewire\Backend\Role\EditRole;
@@ -44,10 +38,6 @@ use App\Livewire\Backend\Service\ServiceType;
 use App\Livewire\Backend\Settings\CreateSettings;
 use App\Livewire\Backend\Settings\EditSettings;
 use App\Livewire\Backend\Settings\Settings;
-use App\Livewire\Backend\Slider\Slider;
-use App\Livewire\Backend\Squad\Squad;
-use App\Livewire\Backend\Team\EditTeam;
-use App\Livewire\Backend\Team\Team;
 use App\Livewire\Backend\User\Users;
 use Illuminate\Support\Facades\Route;
 
@@ -105,6 +95,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/create-service', CreateService::class)->name('create.service');
     Route::get('/service/{serviceId}/edit', EditService::class)->name('edit.service');
 
+    // Booking Routes
+    Route::get('/bookings', Booking::class)->name('booking');
+    Route::get('/booking/{bookingId}', BookingDetail::class)->name('booking.detail');
+    
     // Blog Routes
     Route::get('/blog', Blog::class)->name('blog');
     Route::get('/create-blog', CreateBlog::class)->name('create.blog');

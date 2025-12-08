@@ -390,6 +390,24 @@
             <div class="space-y-4">
                 <div class="space-y-4 rounded-xl border p-4 dark:border-[#1b2f46] dark:bg-[#102030]">
 
+                    <!-- Service Type -->
+                    <div>
+                        <label for="service_type_id"
+                            class="block text-sm text-gray-700 dark:text-gray-400">Service Type*</label>
+                        <select wire:model="form.service_type_id"
+                            id="service_type_id"
+                            class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300">
+                            <option value="">-- Select a Service Type --</option>
+                            @foreach ($form->serviceTypes as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+
+                        @error("form.service_type_id")
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
                     <!-- Service Name -->
                     <div>
                         <label for="name" class="block text-sm text-gray-700 dark:text-gray-400">

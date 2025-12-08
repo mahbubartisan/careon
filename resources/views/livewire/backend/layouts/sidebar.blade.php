@@ -295,7 +295,6 @@
             @endcanany
 
             <!-- Service Manage -->
-
             @canany(["view service type", "create service type", "edit service type", "delete service type"])
                 <div x-data="{ open: {{ request()->routeIs("service-type", "service", "create.service", "edit.service") ? "true" : "false" }} }">
                     <a href="#" @click.prevent="open = !open"
@@ -375,6 +374,32 @@
                             @endcanany
                         </ul>
                     </div>
+                </div>
+            @endcanany
+
+            <!-- About -->
+            @canany(["view booking", "booking detail"])
+                <div>
+                    <a href="{{ route("booking") }}"
+                        class="{{ request()->routeIs("booking", "booking.detail") ? "bg-blue-50 dark:bg-[#233A57] text-blue-600 dark:text-blue-600" : "text-gray-400 hover:text-blue-600 dark:text-gray-100" }} flex items-center space-x-3 rounded-md p-2 text-sm dark:hover:text-blue-600">
+                        <span aria-hidden="true">
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M8 2v4" />
+                                <path d="M16 2v4" />
+                                <rect width="18" height="18" x="3" y="4" rx="2" />
+                                <path d="M3 10h18" />
+                                <path d="M8 14h.01" />
+                                <path d="M12 14h.01" />
+                                <path d="M16 14h.01" />
+                                <path d="M8 18h.01" />
+                                <path d="M12 18h.01" />
+                                <path d="M16 18h.01" />
+                            </svg>
+                        </span>
+                        <span>Bookings</span>
+                    </a>
                 </div>
             @endcanany
 
