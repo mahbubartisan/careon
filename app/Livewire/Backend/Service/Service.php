@@ -45,7 +45,6 @@ class Service extends Component
         return redirect()->back();
     }
 
-
     public function render()
     {
         $services = ModelsService::with('media')

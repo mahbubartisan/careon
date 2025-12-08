@@ -26,7 +26,11 @@ class CreateService extends Component
     public function mount()
     {
         $this->form->serviceTypes = ServiceType::select('id', 'name')->get();
-        $this->form->careLevels = CareLevel::select('id', 'name')->get();
+        $this->form->careLevels = CareLevel::select('id', 'name')
+            ->get()
+            ->unique('name')
+            ->values();
+
         $this->form->care_levels = [
             [
                 'care_level_id' => '',
@@ -124,38 +128,53 @@ class CreateService extends Component
         }
     }
 
+    // private function generateServiceId($name)
+    // {
+    //     // 1. Create prefix from first letters of each word
+    //     $words = preg_split('/[\s\/&]+/', $name);
+    //     $prefix = '';
+
+    //     foreach ($words as $w) {
+    //         if (strlen($w) > 0) {
+    //             $prefix .= strtoupper($w[0]);
+    //         }
+    //     }
+
+    //     // Fallback if prefix empty
+    //     if (!$prefix) {
+    //         $prefix = 'SRV';
+    //     }
+
+    //     // 2. Find the last service ID with this prefix
+    //     $last = Service::where('service_id', 'LIKE', $prefix . '%')
+    //         ->orderBy('service_id', 'DESC')
+    //         ->first();
+
+    //     // 3. Increase number
+    //     if ($last) {
+    //         $number = (int) substr($last->service_uid, strlen($prefix));
+    //         $number++;
+    //     } else {
+    //         $number = 1;
+    //     }
+
+    //     // 4. Format like 3-digit
+    //     return $prefix . str_pad($number, 3, '0', STR_PAD_LEFT);
+    // }
+
     private function generateServiceId($name)
     {
-        // 1. Create prefix from first letters of each word
-        $words = preg_split('/[\s\/&]+/', $name);
-        $prefix = '';
+        // Short prefix from service name: "Nursing Care" → "NC"
+        $prefix = strtoupper(
+            collect(explode(' ', $name))
+                ->map(fn($w) => substr($w, 0, 1))
+                ->join('')
+        );
 
-        foreach ($words as $w) {
-            if (strlen($w) > 0) {
-                $prefix .= strtoupper($w[0]);
-            }
-        }
+        // Six–digit numeric code
+        $random = random_int(100000, 999999);
 
-        // Fallback if prefix empty
-        if (!$prefix) {
-            $prefix = 'SRV';
-        }
-
-        // 2. Find the last service ID with this prefix
-        $last = Service::where('service_id', 'LIKE', $prefix . '%')
-            ->orderBy('service_id', 'DESC')
-            ->first();
-
-        // 3. Increase number
-        if ($last) {
-            $number = (int) substr($last->service_uid, strlen($prefix));
-            $number++;
-        } else {
-            $number = 1;
-        }
-
-        // 4. Format like 3-digit
-        return $prefix . str_pad($number, 3, '0', STR_PAD_LEFT);
+        return $prefix . $random;
     }
 
     public function render()

@@ -187,17 +187,29 @@ class ServiceDetail extends Component
             'special_notes'      => $data['specialInstructions'],
         ]);
 
-       
+
         // SEND EMAIL TO USER + COPY TO ADMIN
-        
+
+        // $adminEmail = 'admin@example.com';
+
+        // Mail::to([$adminEmail, auth()->user()->email])
+        //     ->send(new BookingMail($booking));
+
         $adminEmail = 'admin@example.com';
 
-        Mail::to([$adminEmail, auth()->user()->email])
+        // Send to user
+        Mail::to(auth()->user()->email)
+            ->send(new BookingMail($booking));
+
+        // Send to admin
+        Mail::to($adminEmail)
             ->send(new BookingMail($booking));
 
         session()->flash('success', 'Booking successful!');
-    }
+        session()->put('booking_id', $booking->id);
+        return redirect()->route('frontend.confirmation');
 
+    }
 
     public function initiateBkashPayment()
     {

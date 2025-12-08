@@ -142,7 +142,7 @@
                         <strong>Package</strong>
                     </td>
                     <td style="padding: 10px; border: 1px solid #e5e7eb;">
-                        {{ $booking->package->title ?? $booking->package_name }}
+                        {{ $booking->package->name ?? $booking->package_name }}
                     </td>
                 </tr>
 

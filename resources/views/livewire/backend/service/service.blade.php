@@ -82,7 +82,7 @@
                 <tbody class="divide-y divide-gray-200 bg-white dark:divide-[#233A57] dark:bg-[#132337]">
                     @forelse ($services as $index => $service)
                         <tr>
-                            <td class="whitespace-nowrap px-6 py-4">{{ $service->service_id }}</td>
+                            <td class="whitespace-nowrap px-6 py-4">#{{ $service->service_id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <img src="{{ asset(@$service->media?->path) }}" alt="{{ $service->name }}"
                                     class="w-12 h-12 object-contain rounded-full border border-gray-300" />

@@ -1,5 +1,8 @@
 <div>
     <div class="flex min-h-screen flex-col items-center justify-center px-4 pb-20 pt-28">
+        @php
+            $booking = \App\Models\Booking::find(session("booking_id"));
+        @endphp
         <!-- Floating Header (Outside Top) -->
         <div class="z-10 -mb-6 flex flex-col items-center">
             <div class="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 shadow-sm">
@@ -33,18 +36,24 @@
                 <div class="mb-6 rounded-xl border border-gray-200 p-6">
                     <div class="mb-2 flex justify-between">
                         <span class="text-gray-500">Service:</span>
-                        <span class="font-medium">Nursing Care</span>
+                        <span class="font-medium">{{ $booking->service_name }}</span>
                     </div>
                     <div class="mb-2 flex justify-between">
                         <span class="text-gray-500">Booking ID:</span>
-                        <span class="font-medium">#NC574163</span>
+                        <span class="font-medium">#{{ $booking->booking_id }}</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-gray-500">Status:</span>
-                        <span
+                        {{-- <span
                             class="rounded-full border border-blue-200 bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
                             Confirmed – Provider Assignment in Progress
-                        </span>
+                        </span> --}}
+                        @if ($booking->status == 0)
+                            <span
+                                class="rounded-full border border-yellow-200 bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-700">
+                                Pending
+                            </span>
+                        @endif
                     </div>
                 </div>
 
@@ -116,7 +125,7 @@
             </div>
 
             <!-- Back to Home -->
-            <div
+            <a href="{{ route("frontend.home-page") }}"
                 class="flex flex-col items-center rounded-2xl border border-gray-200 bg-gray-50/20 p-4 text-center transition duration-300 ease-in-out hover:cursor-pointer hover:bg-white hover:shadow-[0_0_25px_rgba(0,0,0,0.1)]">
                 <div class="mb-2 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -129,15 +138,19 @@
                     </svg>
                 </div>
                 <p class="text-sm font-semibold text-gray-900">Back to Home</p>
-                <span class="text-xs text-gray-500">Browse services</span>
-            </div>
+                <span class="text-xs text-gray-500">Browse homepage</span>
+            </a>
         </div>
 
         <div class="text-center">
-            <a href="{{ route('frontend.service') }}"><button
+            <a href="{{ route("frontend.service") }}"><button
                     class="mt-10 h-11 rounded-xl border border-gray-200 px-6 text-sm font-medium transition-colors hover:border-amber-500 hover:bg-amber-500 hover:text-gray-900">
                     Book Another Service
                 </button></a>
         </div>
     </div>
+
+    @push("title")
+        Booking Confirmation
+    @endpush -
 </div>
