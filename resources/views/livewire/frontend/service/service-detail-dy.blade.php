@@ -2,8 +2,11 @@
     <div x-data="{
         showStepper: false,
         step: 1,
-        formData: { location: '', packageType: '', care: '', payment: '' },
+        {{-- formData: { location: '', packageType: '', care: '', payment: '' }, --}}
+        formData: @entangle("bookingForm").live,
         packages: @js($packages),
+        service: @js($service),
+        locationGroups: @js($locationGroups),
         init() {
             if (this.packages.length > 0) {
                 this.formData.packageType = this.packages[0].id; // ← default first tab
@@ -195,13 +198,12 @@
                                     @foreach ($col as $loc)
                                         <label class="flex items-center space-x-2 font-medium">
                                             <input type="radio" name="location" class="form-radio h-4 w-4"
-                                                value="{{ $loc }}" x-model="formData.location">
+                                                value="{{ $loc }}" wire:model.defer="bookingForm.location">
                                             <span>{{ $loc }}</span>
                                         </label>
                                     @endforeach
                                 </div>
                             @endforeach
-
                         </div>
 
                         <hr class="my-6" />
@@ -239,9 +241,8 @@
                     </div>
                 </div>
 
-
                 <!-- Step 2: Package -->
-                <div x-show="step === 2" y-transition>
+                {{-- <div x-show="step === 2" y-transition>
                     <div class="rounded-xl border border-gray-200 bg-white p-8">
 
                         <h3 class="mb-1 text-xl font-semibold lg:text-xl">
@@ -339,8 +340,99 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+                <div x-show="step === 2" y-transition>
+                    <div class="rounded-xl border border-gray-200 bg-white p-8">
 
+                        <h3 class="mb-1 text-xl font-semibold lg:text-xl">
+                            Select Package & Care Type
+                        </h3>
+                        <p class="mb-6 text-sm text-gray-500">Choose daily or monthly, hours, and care level</p>
+
+                        <!-- PACKAGE TABS -->
+                        <div class="mb-6 flex gap-2">
+                            <template x-for="pkg in packages" :key="pkg.id">
+                                <button type="button" @click="$wire.set('bookingForm.packageType', pkg.id)"
+                                    :class="formData.packageType === pkg.id ?
+                                        'bg-green-600 text-white' :
+                                        'bg-gray-100 text-gray-900 hover:bg-gray-100'"
+                                    class="flex-1 rounded-xl py-2 font-medium transition" x-text="pkg.name">
+                                </button>
+                            </template>
+                        </div>
+
+                        <!-- CARE LEVELS -->
+                        <template x-for="pkg in packages" :key="'pkg-' + pkg.id">
+                            <div x-show="formData.packageType === pkg.id">
+
+                                <h4 class="mb-3 text-base font-semibold">Select Care Type & Hours</h4>
+
+                                <div class="space-y-5">
+
+                                    <template x-for="level in pkg.care_levels" :key="'lvl-' + level.id">
+                                        <div>
+
+                                            <p class="mb-2 font-semibold text-gray-800" x-text="level.name"></p>
+
+                                            <div class="grid grid-cols-1 gap-3 lg:grid-cols-3">
+
+                                                <template x-for="opt in level.care_options" :key="'opt-' + opt.id">
+                                                    <label
+                                                        class="flex cursor-pointer flex-col items-center rounded-lg border px-4 py-3 text-center transition hover:border-green-600"
+                                                        :class="formData.care === (level.id + '-' + opt.id) ?
+                                                            'border-green-600 bg-green-50' :
+                                                            'border-gray-200'">
+
+                                                        <input type="radio" name="care" class="hidden"
+                                                            :value="level.id + '-' + opt.id"
+                                                            wire:model="bookingForm.care">
+
+                                                        <span class="font-medium text-gray-800"
+                                                            x-text="opt.hours + ' Hours'"></span>
+
+                                                        <span class="text-xs text-gray-500"
+                                                            x-text="pkg.name.includes('Monthly') ? 'Per Month' : 'Per Day'">
+                                                        </span>
+
+                                                        <span class="mt-1 text-sm font-semibold text-green-600"
+                                                            x-text="'৳ ' + opt.price"></span>
+                                                    </label>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+
+                        <hr class="my-6" />
+
+                        <!-- BUTTONS -->
+                        <div class="mt-8 flex justify-between">
+
+                            <button @click="step--"
+                                class="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                ← Back
+                            </button>
+
+                            <button type="button"
+                                @click="
+                                    if (formData.care) {
+                                        step++;
+                                        $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                                    }
+                                "
+                                :disabled="!formData.care"
+                                class="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50">
+                                Next
+                                <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Step 3: Schedule -->
                 <div x-show="step === 3" y-transition>
@@ -353,17 +445,21 @@
                         <div class="grid gap-4 md:grid-cols-2">
                             <div>
                                 <label class="mb-1 block text-sm">Select Date</label>
-                                <input type="date" x-model="formData.date"
+                                <input type="date" wire:model="bookingForm.date"
                                     class="w-full rounded-xl border px-3 py-2 text-sm" />
                             </div>
                             <div>
                                 <label class="mb-1 block text-sm">Preferred Time</label>
-                                <input type="time" x-model="formData.time"
+                                <input type="time" wire:model="bookingForm.time"
                                     class="w-full rounded-xl border px-3 py-2 text-sm" />
                             </div>
                         </div>
 
                         <hr class="my-6" />
+
+                        <div x-text="bookingForm.date" class="text-red-600"></div>
+                        <div x-text="bookingForm.time" class="text-red-600"></div>
+
 
                         <div class="mt-6 flex justify-between">
                             <!-- Back Button -->
@@ -409,7 +505,7 @@
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Patient Name <span
                                             class="text-red-500">*</span></label>
                                     <input type="text" placeholder="Enter patient name"
-                                        x-model="formData.patientName"
+                                        wire:model="bookingForm.patientName"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>
 
@@ -421,7 +517,7 @@
                                     <div class="grid grid-cols-3 gap-2">
                                         <!-- Male -->
                                         <label class="relative">
-                                            <input type="radio" name="gender" x-model="formData.gender"
+                                            <input type="radio" name="gender" wire:model="bookingForm.gender"
                                                 value="male" class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -431,7 +527,7 @@
 
                                         <!-- Female -->
                                         <label class="relative">
-                                            <input type="radio" name="gender" x-model="formData.gender"
+                                            <input type="radio" name="gender" wire:model="bookingForm.gender"
                                                 value="female" class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -441,7 +537,7 @@
 
                                         <!-- Others -->
                                         <label class="relative">
-                                            <input type="radio" name="gender" x-model="formData.gender"
+                                            <input type="radio" name="gender" wire:model="bookingForm.gender"
                                                 value="others" class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -457,13 +553,13 @@
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Height <span
                                             class="text-red-500">*</span></label>
-                                    <input type="text" placeholder="Height" x-model="formData.height"
+                                    <input type="text" placeholder="Height" wire:model="bookingForm.height"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Weight <span
                                             class="text-red-500">*</span></label>
-                                    <input type="text" placeholder="Weight" x-model="formData.wight"
+                                    <input type="text" placeholder="Weight" wire:model="bookingForm.wight"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>
                             </div>
@@ -478,7 +574,7 @@
                                     <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
                                         <!-- Bangladeshi -->
                                         <label class="relative">
-                                            <input type="radio" name="patientType" x-model="formData.patientType"
+                                            <input type="radio" name="patientType" wire:model="bookingForm.patientType"
                                                 value="Bangladeshi" class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -488,7 +584,7 @@
 
                                         <!-- Foreigner -->
                                         <label class="relative">
-                                            <input type="radio" name="patientType" x-model="formData.patientType"
+                                            <input type="radio" name="patientType" wire:model="bookingForm.patientType"
                                                 value="Foreigner" class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -503,7 +599,7 @@
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Country
                                         <span class="text-xs font-normal text-gray-500">(If foreigner, please enter
                                             your country name)</span></label>
-                                    <input type="text" placeholder="Enter country name" x-model="formData.country"
+                                    <input type="text" placeholder="Enter country name" wire:model="bookingForm.country"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>
                             </div>
@@ -514,14 +610,14 @@
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Patient Contact
                                         <span class="text-red-500">*</span></label>
                                     <input type="text" placeholder="+880 1XXX-XXXXXX"
-                                        x-model="formData.patientContact"
+                                        wire:model="bookingForm.patientContact"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Emergency Contact
                                         <span class="text-red-500">*</span></label>
                                     <input type="text" placeholder="+880 1XXX-XXXXXX"
-                                        x-model="formData.emergencyContact"
+                                        wire:model="bookingForm.emergencyContact"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>
                             </div>
@@ -530,7 +626,7 @@
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-700">Full Address <span
                                         class="text-red-500">*</span></label>
-                                <textarea x-model="formData.address" rows="3" placeholder="House/Flat number, Road, Block"
+                                <textarea wire:model="bookingForm.address" rows="3" placeholder="House/Flat number, Road, Block"
                                     class="w-full resize-none rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none"></textarea>
                             </div>
 
@@ -545,7 +641,7 @@
                                         <!-- Male Nurse -->
                                         <label class="relative">
                                             <input type="radio" name="genderPreference"
-                                                x-model="formData.genderPreference" value="Male Nurse"
+                                                wire:model="bookingForm.genderPreference" value="Male Nurse"
                                                 class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -556,7 +652,7 @@
                                         <!-- Female Nurse -->
                                         <label class="relative">
                                             <input type="radio" name="genderPreference"
-                                                x-model="formData.genderPreference" value="Female Nurse"
+                                                wire:model="bookingForm.genderPreference" value="Female Nurse"
                                                 class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -574,7 +670,7 @@
                                     <div class="grid grid-cols-3 gap-2">
                                         <!-- Bengali -->
                                         <label class="relative">
-                                            <input type="radio" name="language" x-model="formData.language"
+                                            <input type="radio" name="language" wire:model="bookingForm.language"
                                                 value="Bengali" class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -584,7 +680,7 @@
 
                                         <!-- English -->
                                         <label class="relative">
-                                            <input type="radio" name="language" x-model="formData.language"
+                                            <input type="radio" name="language" wire:model="bookingForm.language"
                                                 value="English" class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -594,7 +690,7 @@
 
                                         <!-- Both -->
                                         <label class="relative">
-                                            <input type="radio" name="language" x-model="formData.language"
+                                            <input type="radio" name="language" wire:model="bookingForm.language"
                                                 value="Both" class="peer hidden" />
                                             <div
                                                 class="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 transition-all peer-checked:border-green-600 peer-checked:bg-green-600 peer-checked:text-white">
@@ -611,7 +707,7 @@
                                     <span class="text-xs font-normal text-gray-500">(if any)</span>
                                 </label>
                                 <textarea rows="3" placeholder="Any medical conditions, allergies, or specific requirements..."
-                                    x-model="formData.specialInstructions"
+                                    wire:model="bookingForm.specialInstructions"
                                     class="w-full resize-none rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none"></textarea>
                             </div>
                         </div>
@@ -645,9 +741,10 @@
                     </div>
                 </div>
 
-                <!-- Step 5 (Review) -->
+                <!-- Step 5: Review & Confirm -->
                 <div x-show="step === 5" y-transition>
-                    <div x-data="{ agree: false }" class="rounded-xl border border-gray-200 bg-white p-8">
+                    <div class="rounded-xl border border-gray-200 bg-white p-8">
+
                         <!-- Header -->
                         <div class="mb-6">
                             <h2 class="text-xl font-bold text-gray-900 lg:text-2xl">
@@ -658,29 +755,189 @@
                             </p>
                         </div>
 
-                        <!-- Booking Summary -->
-                        <div class="mb-6 rounded-xl border border-gray-200 p-5">
+                        <div class="space-y-4 rounded-xl border border-gray-200 p-5 text-sm">
                             <h3 class="mb-4 text-lg font-bold text-gray-900">
                                 Booking Summary
                             </h3>
-                            <div class="grid grid-cols-2 text-sm">
-                                <div class="space-y-2 text-gray-600">
-                                    <p>Service:</p>
-                                    <p>Package:</p>
-                                    <p>Location:</p>
-                                    <p>Date & Time:</p>
+
+                            <!-- CARE LEVEL & HOURS + PRICE -->
+                            <template x-if="formData.care">
+                                <div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Service:</span>
+                                        {{-- <span class="font-medium text-gray-900"
+                                            x-text="
+                                                (() => {
+                                                    const [lvl, opt] = formData.care.split('-');
+                                                    const pkg = packages.find(p => p.id === formData.packageType);
+                                                    const level = pkg?.care_levels.find(l => l.id == lvl);
+                                                    const option = level?.care_options.find(o => o.id == opt);
+                                                    return level?.name + ' - ' + option?.hours + ' Hours';
+                                                })()
+                                        ">
+                                        </span> --}}
+
+                                        <span class="font-medium text-gray-900"
+                                            x-text="
+                                            (() => {
+                                                const [lvl, opt] = formData.care.split('-');
+
+                                                const pkg = packages.find(p => p.id == formData.packageType);
+                                                const level = pkg?.care_levels.find(l => l.id == lvl);
+                                                const option = level?.care_options.find(o => o.id == opt);
+
+                                                // service.name is available from x-data
+                                                return `${service.name} - ${level?.name} (${option?.hours}h)`;
+                                            })()
+                                        ">
+                                        </span>
+                                    </div>
+
+                                    {{-- <div class="flex justify-between">
+                                        <span class="text-gray-600">Care Charge:</span>
+                                        <span class="font-medium text-gray-900"
+                                            x-text="
+                                (() => {
+                                    const [lvl, opt] = formData.care.split('-');
+                                    const pkg = packages.find(p => p.id === formData.packageType);
+                                    const level = pkg?.care_levels.find(l => l.id == lvl);
+                                    const option = level?.care_options.find(o => o.id == opt);
+                                    return '৳ ' + option?.price;
+                                })()
+                        ">
+                                        </span>
+                                    </div> --}}
                                 </div>
-                                <div class="space-y-2 text-right font-medium text-gray-900">
-                                    <p>Nursing Care - basic (8h)</p>
-                                    <p>Daily</p>
-                                    <p>Old Dhaka</p>
-                                    <p>Not selected -</p>
-                                </div>
+                            </template>
+
+                            {{-- <!-- LOCATION -->
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Location:</span>
+                                <span class="font-medium text-gray-900" x-text="formData.location"></span>
+                            </div>
+
+                            <!-- LOCATION GROUP PRICE -->
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Location Charge:</span>
+                                <span class="font-medium text-gray-900"
+                                    x-text="(() => {
+
+                                        if (!formData.location) return '৳ 0';
+
+                                        // Find the group where one of its locations matches the selected name
+                                        const group = locationGroups.find(g =>
+                                            g.locations.some(loc => loc.name === formData.location)
+                                        );
+
+                                        return group ? '৳ ' + group.price : '৳ 0';
+                                    })()">
+                                </span>
+
+                            </div> --}}
+
+
+                            <!-- PACKAGE -->
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Package:</span>
+                                <span class="font-medium text-gray-900"
+                                    x-text="packages.find(p => p.id === formData.packageType)?.name">
+                                </span>
+                            </div>
+
+                            {{-- <!-- DATE -->
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Date & Time:</span>
+                                <span class="font-medium text-gray-900" x-text="formData.date"></span>
+                            </div>
+
+                            <!-- TIME -->
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Time:</span>
+                                <span class="font-medium text-gray-900" x-text="formData.time"></span>
+                            </div> --}}
+
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Date & Time:</span>
+
+                                <span class="font-medium text-gray-900"
+                                    x-text="
+                                        (() => {
+                                            if (!formData.date || !formData.time) return '';
+                            
+                                            const datetime = new Date(`${formData.date} ${formData.time}`);
+                            
+                                            const formattedDate = datetime.toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            });
+                            
+                                            const formattedTime = datetime.toLocaleTimeString('en-US', {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                hour12: true
+                                            });
+                            
+                                            return `${formattedDate} • ${formattedTime}`;
+                                        })()
+                                    ">
+                                </span>
+                            </div>
+
+                            <!-- ADDRESS -->
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Patient Address:</span>
+                                <span class="text-right font-medium text-gray-900" x-text="formData.address"></span>
+                            </div>
+
+                            <!-- TOTAL PRICE -->
+                            <div class="mt-4 flex justify-between border-t pt-4 text-base font-bold text-green-600">
+                                <span>Total Price</span>
+
+                                <span
+                                    x-text="
+                                    (() => {
+                                        // -------------------------
+                                        // 1. CARE PRICE
+                                        // -------------------------
+                                        let carePrice = 0;
+
+                                        if (formData.care && formData.packageType) {
+                                            const [lvl, opt] = formData.care.split('-');
+                                            const pkg = packages.find(p => p.id == formData.packageType);
+
+                                            const level = pkg?.care_levels.find(l => l.id == lvl);
+                                            const option = level?.care_options.find(o => o.id == opt);
+
+                                            carePrice = option?.price ?? 0;
+                                        }
+
+                                        // -------------------------
+                                        // 2. LOCATION PRICE
+                                        // -------------------------
+                                        let locationPrice = 0;
+
+                                        if (formData.location) {
+                                            // Find the group containing the selected location
+                                            const group = locationGroups.find(g =>
+                                                g.locations.some(loc => loc.name === formData.location)
+                                            );
+
+                                            locationPrice = group ? group.price : 0;
+                                        }
+
+                                        // -------------------------
+                                        // 3. TOTAL
+                                        // -------------------------
+                                        return '৳ ' + (carePrice + locationPrice);
+                                    })()
+                                ">
+                                </span>
                             </div>
                         </div>
 
                         <!-- Terms & Conditions -->
-                        <div class="mb-8 rounded-xl border border-emerald-300 bg-emerald-50/30 p-5">
+                        <div class="mb-8 mt-5 rounded-xl border border-emerald-300 bg-emerald-50/30 p-5">
                             <h3 class="mb-3 text-lg font-bold text-gray-900">
                                 Terms & Conditions
                             </h3>
@@ -716,14 +973,13 @@
                             </div>
                         </div>
 
-                        <!-- Buttons -->
-                        <div class="flex justify-between border-t pt-4">
-
+                        <div class="mt-6 flex justify-between">
+                            <!-- Back Button -->
                             <button
                                 @click="
-                                step--;
-                                $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                            "
+                                    step--;
+                                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                                "
                                 class="flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                                 Back
                             </button>
@@ -762,9 +1018,9 @@
                             <!-- bKash -->
                             <label
                                 class="flex cursor-pointer items-center justify-between rounded-xl border px-4 py-3 transition hover:border-green-600"
-                                :class="formData.payment === 'bkash' ? 'border-green-600 bg-green-50' : 'border-gray-200'">
+                                :class="formData.payment_type === 'bkash' ? 'border-green-600 bg-green-50' : 'border-gray-200'">
                                 <div class="flex items-center space-x-3">
-                                    <input type="radio" name="payment" value="bkash" x-model="formData.payment"
+                                    <input type="radio" name="payment_type" value="bkash" wire:model="bookingForm.payment_type"
                                         class="text-green-600 focus:ring-0" />
                                     <span class="font-medium text-gray-800">bKash</span>
                                 </div>
@@ -775,8 +1031,8 @@
                             <!-- Cash On Delivery -->
                             <label
                                 class="flex cursor-pointer items-center rounded-xl border px-4 py-3 transition hover:border-green-600"
-                                :class="formData.payment === 'COD' ? 'border-green-600 bg-green-50' : 'border-gray-200'">
-                                <input type="radio" name="payment" value="COD" x-model="formData.payment"
+                                :class="formData.payment_type === 'COD' ? 'border-green-600 bg-green-50' : 'border-gray-200'">
+                                <input type="radio" name="payment_type" value="COD" wire:model="bookingForm.payment_type"
                                     class="mr-3 text-green-600 focus:ring-0" />
                                 <span class="font-medium text-gray-800">Cash On Delivery</span>
                             </label>

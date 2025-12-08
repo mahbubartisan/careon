@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Booking extends Model
+class Patient extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function booking()
+    public function patient()
     {
-        return $this->belongsTo(Booking::class);
+        return $this->hasOne(Patient::class);
     }
 }

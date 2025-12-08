@@ -13,6 +13,29 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->string('booking_id')->unique();
+            // $table->string('cutomer_name')->nullable();
+
+            // Snapshot Data
+            $table->string('service_name');
+            $table->string('package_name')->nullable();
+            $table->string('care_level_name')->nullable();
+            $table->string('hours')->nullable();
+
+            // Prices
+            $table->string('price')->nullable();
+            $table->string('location_group')->nullable();
+            $table->string('location_name')->nullable();
+            $table->string('location_price')->nullable();
+            $table->string('total_price')->nullable();
+
+            // Schedule
+            $table->date('schedule_date')->nullable();
+            $table->string('schedule_time')->nullable();
+
+            // Payment
+            $table->string('payment_method')->nullable();
+
             $table->timestamps();
         });
     }

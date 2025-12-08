@@ -1098,9 +1098,9 @@
                 </button> -->
                             <button
                                 @click="
-                    step--;
-                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                  "
+                                    step--;
+                                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                                "
                                 class="flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                                 Back
                             </button>
@@ -1117,11 +1117,11 @@
                             <!-- Next Button -->
                             <button
                                 @click="
-                  if (agree) {
-                    step++;
-                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-                  }
-                "
+                                if (agree) {
+                                    step++;
+                                    $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                                }
+                                "
                                 :disabled="!agree"
                                 :class="agree
                                     ?
