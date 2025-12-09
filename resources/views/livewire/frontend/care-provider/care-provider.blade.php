@@ -113,62 +113,69 @@
                 ব্যক্তিগত তথ্য |
                 <span class="text-gray-900">Personal Information</span>
             </h3>
-
-            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <div>
-                    <label class="mb-1 block text-sm font-medium text-gray-700">পূর্ণ নাম | Full Name*</label>
-                    <input type="text" placeholder="As per NID"
-                        class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">পূর্ণ নাম | Full Name*</label>
+                        <input type="text" placeholder="As per NID"
+                            class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
+                    </div>
+    
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">ফোন নম্বর | Personal Number*</label>
+                        <input type="text" placeholder="+880 1XXX-XXXXXX"
+                            class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
+                    </div>
                 </div>
-
-                <div>
-                    <label class="mb-1 block text-sm font-medium text-gray-700">ফোন নম্বর | Phone Number*</label>
-                    <input type="text" placeholder="+880 1XXX-XXXXXX"
-                        class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">ইমেইল | Email*</label>
+                        <input type="email" placeholder="example@email.com"
+                            class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
+                    </div>
+    
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">জন্ম তারিখ | Date of Birth *</label>
+                        <input type="date"
+                            class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
+                    </div>
                 </div>
-
-                <div>
-                    <label class="mb-1 block text-sm font-medium text-gray-700">ইমেইল | Email*</label>
-                    <input type="email" placeholder="example@email.com"
-                        class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">লিঙ্গ | Gender*</label>
+                        <select
+                            class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none">
+                            <option selected disabled hidden>Select gender</option>
+                            <option value="male">Male | পুরুষ</option>
+                            <option value="female">Female | মহিলা</option>
+                            <option value="other">Other | অন্যান্য</option>
+                        </select>
+                    </div>
+    
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">NID/Birth Certificate Number*</label>
+                        <input type="text" placeholder="NID/Birth Certificate Number"
+                            class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
+                    </div>
                 </div>
-
-                <div>
-                    <label class="mb-1 block text-sm font-medium text-gray-700">জন্ম তারিখ | Date of Birth *</label>
-                    <input type="date"
-                        class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
-                </div>
-
-                <div>
-                    <label class="mb-1 block text-sm font-medium text-gray-700">লিঙ্গ | Gender*</label>
-                    <select
-                        class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none">
-                        <option selected disabled hidden>Select gender</option>
-                        <option value="male">Male | পুরুষ</option>
-                        <option value="female">Female | মহিলা</option>
-                        <option value="other">Other | অন্যান্য</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="mb-1 block text-sm font-medium text-gray-700">NID/Birth Certificate Number*</label>
-                    <input type="text" placeholder="NID/Birth Certificate Number"
-                        class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none" />
-                </div>
-
-                <div class="md:col-span-2">
-                    <label class="mb-1 block text-sm font-medium text-gray-700">বর্তমান ঠিকানা | Present
-                        Address*</label>
-                    <textarea rows="3"
-                        class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none"></textarea>
-                </div>
-                <div class="md:col-span-2">
-                    <label class="mb-1 block text-sm font-medium text-gray-700">স্থায়ী ঠিকানা | Permanent
-                        Address*</label>
-                    <textarea rows="3"
-                        class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none"></textarea>
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+    
+    
+                    <div class="md:col-span-2">
+                        <label class="mb-1 block text-sm font-medium text-gray-700">বর্তমান ঠিকানা | Present
+                            Address*</label>
+                        <textarea rows="3"
+                            class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none"></textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="mb-1 block text-sm font-medium text-gray-700">স্থায়ী ঠিকানা | Permanent
+                            Address*</label>
+                        <textarea rows="3"
+                            class="duration w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm transition ease-in-out focus:border-[#00B686] focus:outline-none"></textarea>
+                    </div>
                 </div>
             </div>
+            
         </div>
 
         <!-- Professional Information -->
@@ -230,7 +237,7 @@
                     <!-- LEFT SIDE — INPUT -->
                     <div>
                         <label class="mb-1 block text-sm font-medium text-gray-900">
-                            শিক্ষাগত যোগ্যতা | Highest Qualification*
+                            সর্বোচ্চ শিক্ষাগত যোগ্যতা | Highest Qualification*
                         </label>
 
                         <input type="text" x-model="qualification" placeholder="e.g., B.Sc in Nursing"
@@ -320,7 +327,7 @@
                 <!-- NID Upload -->
                 <div>
                     <label class="mb-2 block text-sm font-medium leading-none text-gray-900">
-                        NID/Birth Certificate (Front & Back) *
+                        NID/Birth Certificate (Front & Back)*
                     </label>
                     <div x-data="{ fileName: '' }" @dragover.prevent
                         @drop.prevent="fileName = $event.dataTransfer.files[0].name"
@@ -346,7 +353,7 @@
                 <!-- Professional License -->
                 <div>
                     <label class="mb-2 block text-sm font-medium leading-none text-gray-900">
-                        Professional License/Certificate (Optional)
+                        Registration NO./License NO. (Optional)
                     </label>
                     <div x-data="{ fileName: '' }"
                         class="cursor-pointer rounded-xl border-2 border-dashed border-gray-300 p-6 text-center transition duration-300 ease-in-out hover:border-[#00B686]">
@@ -394,7 +401,7 @@
                 <!-- Police Clearance -->
                 <div>
                     <label class="mb-2 block text-sm font-medium leading-none text-gray-900">
-                        Police Clearance Certificate (Optional)
+                        Police Clearance (Optional)
                     </label>
                     <div x-data="{ fileName: '' }"
                         class="cursor-pointer rounded-xl border-2 border-dashed border-gray-300 p-6 text-center transition duration-300 ease-in-out hover:border-[#00B686]">

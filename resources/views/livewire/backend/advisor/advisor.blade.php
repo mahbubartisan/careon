@@ -91,6 +91,16 @@
                             <td class="whitespace-nowrap px-6 py-4">{{ $advisor->name }}</td>
                             <td class="whitespace-nowrap px-6 py-4">{{ $advisor->designation ?: "N/A" }}</td>
                             <td class="whitespace-nowrap px-6 py-4">
+                                <label class="inline-flex cursor-pointer items-center">
+                                    <input type="checkbox" wire:click="toggleStatus({{ $advisor->id }})"
+                                        @checked($advisor->status == 1) class="peer sr-only">
+
+                                    <div
+                                        class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-500 peer-checked:after:translate-x-full peer-focus:outline-none">
+                                    </div>
+                                </label>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
                                 <div class="flex items-center space-x-2">
                                     @can("edit advisor")
                                         <a href="{{ route("edit.advisor", $advisor->id) }}" title="Edit">

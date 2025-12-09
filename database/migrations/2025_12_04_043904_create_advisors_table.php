@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('name');
             $table->string('designation')->nullable();
             $table->text('detail');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

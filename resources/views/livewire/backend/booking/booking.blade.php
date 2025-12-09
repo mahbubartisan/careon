@@ -21,7 +21,7 @@
         <div class="mb-4 flex flex-col items-center justify-between gap-y-3 sm:flex-row">
             <div class="flex items-center text-sm text-gray-700 dark:text-gray-400">
                 <label for="rowsPerPage" class="mr-2">Show</label>
-                <select id="rowsPerPage" wire:model.live="rowsPerPage"
+                <select id="rowsPerPage" wire:model.live="form.rowsPerPage"
                     class="rounded-md border border-gray-200 p-2 text-sm transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:focus:border-blue-600">
                     <option value="20">20</option>
                     <option value="35">35</option>
@@ -37,7 +37,7 @@
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
-                <input type="search" wire:model.live='search' id="search"
+                <input type="search" wire:model.live='form.search' id="search"
                     class="w-full rounded-md border border-gray-200 py-2 pl-10 pr-3.5 text-[13px] text-gray-700 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-400 dark:focus:border-blue-600"
                     placeholder="Search...">
             </div>

@@ -398,7 +398,7 @@
             @endcanany
 
             <!-- Booking -->
-            @canany(["view booking", "booking detail"])
+            {{-- @canany(["view booking", "booking detail"])
                 <div>
                     <a href="{{ route("booking") }}"
                         class="{{ request()->routeIs("booking", "booking.detail") ? "bg-blue-50 dark:bg-[#233A57] text-blue-600 dark:text-blue-600" : "text-gray-400 hover:text-blue-600 dark:text-gray-100" }} flex items-center space-x-3 rounded-md p-2 text-sm dark:hover:text-blue-600">
@@ -420,7 +420,7 @@
                         <span>Bookings</span>
                     </a>
                 </div>
-            @endcanany
+            @endcanany --}}
 
 
             <!-- Contact Us -->

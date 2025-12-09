@@ -19,6 +19,15 @@ class Advisor extends Component
 
     public AdvisorForm $form;
 
+    public function toggleStatus($id)
+    {
+        $advisor = ModelsAdvisor::findOrFail($id);
+        $advisor->status = !$advisor->status;
+        $advisor->save();
+
+        $this->dispatch('toastr:success', 'Status updated!');
+    }
+
     public function delete($id)
     {
         $advisor = ModelsAdvisor::findOrFail($id);

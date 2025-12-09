@@ -7,7 +7,7 @@ use Livewire\Form;
 
 class AdvisorForm extends Form
 {
-    public $advisorId, $image, $name, $designation, $detail;
+    public $advisorId, $image, $name, $designation, $detail, $status = true;
     public $search = '';
     public $rowsPerPage = 20;
 
