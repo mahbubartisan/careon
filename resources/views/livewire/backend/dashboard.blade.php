@@ -1,7 +1,7 @@
 <div>
     <!-- Content header -->
     <div class="my-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 class="text-xl">
+        <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-300">
             Dashboard
         </h2>
     </div>
@@ -41,6 +41,21 @@
                 <p class="text-sm text-gray-500">Medical Services</p>
             </div>
 
+            <!-- Patients -->
+            <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 dark:bg-[#132337]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-teal-600 text-white">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M18 21a8 8 0 0 0-16 0" />
+                        <circle cx="10" cy="8" r="5" />
+                        <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
+                    </svg>
+                </div>
+                <p class="mt-3 text-xl font-medium">{{ $totalPatients }}</p>
+                <p class="text-sm text-gray-500">Patients</p>
+            </div>
+
             <!-- Health Tips -->
             <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 dark:bg-[#132337]">
                 <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-600 text-white">
@@ -55,16 +70,15 @@
                         <path d="M8 18h5"></path>
                     </svg>
                 </div>
-                <p class="mt-3 text-xl font-medium">0</p>
+                <p class="mt-3 text-xl font-medium">{{ $totalBlogs }}</p>
                 <p class="text-sm text-gray-500">Health Tips</p>
             </div>
 
             <!-- Packages -->
             <div class="flex flex-col items-center justify-center rounded-lg bg-white p-6 dark:bg-[#132337]">
                 <div class="flex h-12 w-12 items-center justify-center rounded-full bg-lime-600 text-white">
-                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path
                             d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
                         <path d="M12 22V12" />
@@ -72,7 +86,7 @@
                         <path d="m7.5 4.27 9 5.15" />
                     </svg>
                 </div>
-                <p class="mt-3 text-xl font-medium">0</p>
+                <p class="mt-3 text-xl font-medium">{{ $totalPackages }}</p>
                 <p class="text-sm text-gray-500">Packages</p>
             </div>
 

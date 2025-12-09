@@ -17,7 +17,7 @@ class AdvisorForm extends Form
 
             'image' => $this->advisorId ? 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048' : 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
             'name'         => 'required|string|max:255',
-            'designation'  => 'required|string|max:255',
+            'designation'  => 'nullable|string|max:255',
             'detail'       => 'required',
         ];
     }
@@ -29,7 +29,7 @@ class AdvisorForm extends Form
             'name.string'           => 'Advisor name must be a valid text.',
             'name.max'              => 'Advisor name may not be greater than 255 characters.',
 
-            'designation.required'  => 'Designation field is required.',
+            // 'designation.required'  => 'Designation field is required.',
             'designation.string'    => 'Designation must be valid text.',
             'designation.max'       => 'Designation may not exceed 255 characters.',
 

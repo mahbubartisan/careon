@@ -17,7 +17,7 @@
     <!-- Breadcrumb End -->
     <div class="my-5 flex justify-end">
         @can("create advisor")
-            <a href="{{ route('create.advisor') }}"
+            <a href="{{ route("create.advisor") }}"
                 class="inline-flex items-center justify-center rounded-md bg-blue-500 px-3.5 py-2.5 text-sm text-white shadow-lg transition-colors duration-500 hover:bg-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="mr-2 h-5 w-5">
@@ -83,17 +83,17 @@
                     @forelse ($advisors as $index => $advisor)
                         <tr>
                             <td class="whitespace-nowrap px-6 py-4">{{ $advisors->firstItem() + $index }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="whitespace-nowrap px-6 py-4">
                                 <img src="{{ asset(@$advisor->media?->path) }}" alt="{{ $advisor->name }}"
-                                    class="w-12 h-12 object-contain rounded-full border border-gray-300" />
+                                    loading="lazy"
+                                    class="h-12 w-12 rounded-full border border-gray-300 object-contain" />
                             </td>
                             <td class="whitespace-nowrap px-6 py-4">{{ $advisor->name }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">{{ $advisor->designation }}</td>
+                            <td class="whitespace-nowrap px-6 py-4">{{ $advisor->designation ?: "N/A" }}</td>
                             <td class="whitespace-nowrap px-6 py-4">
                                 <div class="flex items-center space-x-2">
                                     @can("edit advisor")
-                                        <a href="{{ route("edit.advisor", $advisor->id) }}"
-                                            title="Edit">
+                                        <a href="{{ route("edit.advisor", $advisor->id) }}" title="Edit">
                                             <!-- Edit Icon -->
                                             <svg class="h-5 w-5 text-gray-600 transition-colors duration-300 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-600"
                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
