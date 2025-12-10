@@ -21,6 +21,9 @@ class CreateServicePrice extends Component
     public $careLevels = [];
     public $levels = [];
 
+    public $allCareLevels; // store all care levels once
+    public $filteredCareLevels = []; // care-levels loaded per-package
+
     public $form = [
         "serviceId" => null,
         "groups" => [
@@ -71,12 +74,38 @@ class CreateServicePrice extends Component
     {
         $this->services = Service::select('id', 'name')->get();
         $this->packages = Package::select('id', 'name')->get();
-        $this->careLevels = CareLevel::select('id', 'name')
-            ->get()
-            ->unique('name')
-            ->values();
+        $this->allCareLevels = CareLevel::pluck('name', 'id')->toArray();
         $this->levels = [['hour' => '', 'price' => '']];
     }
+
+    public function updatedForm($value, $key)
+{
+    // When package selection changes
+    if (str_ends_with($key, 'packageId')) {
+
+        // Extract group index (groups.0.packageId → 0)
+        $gIndex = explode('.', $key)[1];
+
+        $packageId = $value;
+
+        // Load care levels directly by package_id
+        $this->filteredCareLevels[$gIndex] = CareLevel::where('package_id', $packageId)
+            ->pluck('name', 'id')
+            ->toArray();
+
+        // Reset careLevels for this group
+        $this->form['groups'][$gIndex]['careLevels'] = [
+            [
+                'careLevelId' => '',
+                'levels' => [
+                    ['hours' => '', 'price' => '']
+                ]
+            ]
+        ];
+    }
+}
+
+
 
     public function addGroup()
     {

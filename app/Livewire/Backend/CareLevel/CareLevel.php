@@ -28,7 +28,7 @@ class CareLevel extends Component
 
     public function render()
     {
-        $careLevels = ModelsCareLevel::with(['package', 'careOptions'])
+        $careLevels = ModelsCareLevel::with(['package'])
             ->where(function ($query) {
                 $query->where('name', 'like', '%' . $this->form->search . '%')
                     ->orWhereHas('package', function ($q) {

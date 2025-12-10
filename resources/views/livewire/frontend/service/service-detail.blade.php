@@ -114,7 +114,6 @@
                                     </ul>
                                 </div>
                             @endforeach
-
                         </div>
                     </div>
 
@@ -893,7 +892,7 @@
 
 
                             <!-- LOCATION PRICE -->
-                            <div class="flex justify-between">
+                            {{-- <div class="flex justify-between">
                                 <span class="text-gray-600">Location Charge:</span>
                                 <span class="font-medium text-gray-900"
                                     x-text="(() => {
@@ -909,8 +908,7 @@
                                     })()">
                                 </span>
 
-                            </div>
-
+                            </div> --}}
 
                             <!-- PACKAGE -->
                             <div class="flex justify-between">

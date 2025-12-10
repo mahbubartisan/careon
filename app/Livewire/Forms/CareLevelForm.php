@@ -22,8 +22,8 @@ class CareLevelForm extends Form
             // 'description' => 'required',
             // 'hours' => 'required|integer|min:1',
             // 'price' => 'required|numeric|min:0',
-            'levels.*.hours' => 'required|numeric|min:1',
-            'levels.*.price' => 'required|numeric|min:1',
+            // 'levels.*.hours' => 'required|numeric|min:1',
+            // 'levels.*.price' => 'required|numeric|min:1',
         ];
     }
 
@@ -39,15 +39,15 @@ class CareLevelForm extends Form
             'name.max'      => 'Name must not be greater than 100 characters.',
             'name.unique'   => 'Name already exists. Please choose another.',
 
-            'description.required' => 'Description field is required.',
+            // 'description.required' => 'Description field is required.',
 
-            'levels.*.hours.required' => 'Hours field is required.',
-            'levels.*.hours.numeric'  => 'Hours must be a valid number.',
-            'levels.*.hours.min'      => 'Hour must be at least 1.',
+            // 'levels.*.hours.required' => 'Hours field is required.',
+            // 'levels.*.hours.numeric'  => 'Hours must be a valid number.',
+            // 'levels.*.hours.min'      => 'Hour must be at least 1.',
 
-            'levels.*.price.required' => 'Price field is required.',
-            'levels.*.price.numeric'  => 'Price must be a valid number.',
-            'levels.*.price.min'      => 'Price must be at least 1.',
+            // 'levels.*.price.required' => 'Price field is required.',
+            // 'levels.*.price.numeric'  => 'Price must be a valid number.',
+            // 'levels.*.price.min'      => 'Price must be at least 1.',
         ];
     }
 }

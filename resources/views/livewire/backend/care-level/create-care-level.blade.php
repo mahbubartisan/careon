@@ -49,7 +49,7 @@
                 </div>
 
                 <!-- Dynamic Hours & Price Inputs -->
-                <div class="space-y-4">
+                {{-- <div class="space-y-4">
                     @foreach ($form->levels as $index => $level)
                         <div class="flex items-center gap-3">
 
@@ -98,25 +98,9 @@
                         class="mt-3 bg-green-600 rounded-full px-4 py-2.5 text-sm text-white">
                         + Add More
                     </button>
-                </div>
+                </div> --}}
             </div>
-            <!-- Description -->
-            {{-- <div>
-                <div wire:ignore>
-                    <label for="editorDesc" class="mb-2 block text-sm text-gray-700 dark:text-gray-400">
-                        Description*
-                    </label>
-                    <div id="editorDesc" style="height: 200px;"></div>
-                    <input type="hidden" wire:model="form.description" id="description">
-                </div>
-                <div class="mt-1">
-                    @error("form.description")
-                        <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div> --}}
-
-
+           
             <!-- Create Button -->
             <div class="mt-5 flex justify-end space-x-3">
                 <button type="reset"
@@ -136,31 +120,4 @@
             </div>
         </form>
     </div>
-
-    {{-- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-
-    <script>
-        var quill = new Quill('#editorDesc', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    [{
-                        'header': [1, 2, 3, false]
-                    }],
-                    ['bold', 'italic', 'underline'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                ]
-            }
-        });
-
-        // Update Livewire model when content changes
-        quill.on('text-change', function() {
-            @this.set('form.description', quill.root.innerHTML);
-        });
-    </script> --}}
 </div>

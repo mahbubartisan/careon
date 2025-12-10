@@ -69,9 +69,6 @@
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                             Care Level
                         </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                            Hours Pricing
-                        </th>
                         @if (auth()->user()->can("edit care level") || auth()->user()->can("delete care level"))
                             <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                 Action
@@ -85,14 +82,6 @@
                             <td class="whitespace-nowrap px-6 py-4">{{ $careLevels->firstItem() + $index }}</td>
                             <td class="whitespace-nowrap px-6 py-4">{{ optional($careLevel->package)->name }}</td>
                             <td class="whitespace-nowrap px-6 py-4">{{ $careLevel->name }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                {{ @$careLevel->careOptions?->map(function ($opt) {
-                                    return $opt->hours . 'h (৳' . number_format($opt->price) . ')';
-                                })->join(', ') }}
-                            </td>
-                            {{-- <td class="whitespace-nowrap px-6 py-4">
-                                {{ $careLevel->careOptions->pluck("price")->join(", ") }}
-                            </td> --}}
                             <td class="whitespace-nowrap px-6 py-4">
                                 <div class="flex items-center space-x-2">
                                     @can("edit care level")

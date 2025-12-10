@@ -146,8 +146,8 @@
             <div class="mb-4">
                 <label class="block text-sm text-gray-700">Service*</label>
                 <select wire:model="form.serviceId"
-                    class="mt-2 w-full rounded-lg border border-gray-200 px-4 py-2.5 focus:border-blue-500 focus:outline-none">
-                    <option value="">-- Select Service --</option>
+                    class="mt-2 w-full rounded-lg border border-gray-200 text-sm px-4 py-2.5 focus:border-blue-500 focus:outline-none">
+                    <option value="" hidden>-- Select a Service --</option>
                     @foreach ($services as $service)
                         <option value="{{ $service->id }}">{{ $service->name }}</option>
                     @endforeach
@@ -161,7 +161,7 @@
 
                         <!-- Group Header -->
                         <div class="flex items-center justify-between">
-                            <h3 class="font-semibold">Package #{{ $gIndex + 1 }}</h3>
+                            <h3 class="font-semibold tracking-tight">Package & Care Information</h3>
 
                             @if (count($form["groups"]) > 1)
                                 <button type="button" wire:click="removeGroup({{ $gIndex }})"
@@ -174,9 +174,9 @@
                         <!-- PACKAGE SELECT -->
                         <div>
                             <label class="block text-sm">Package*</label>
-                            <select wire:model="form.groups.{{ $gIndex }}.packageId"
-                                class="mt-2 w-full rounded-lg border border-gray-200 px-4 py-2.5 focus:border-blue-500 focus:outline-none">
-                                <option value="">-- Select Package --</option>
+                            <select wire:model.live="form.groups.{{ $gIndex }}.packageId"
+                                class="mt-2 w-full rounded-lg border border-gray-200 text-sm px-4 py-2.5 focus:border-blue-500 focus:outline-none">
+                                <option value="" hidden>-- Select a Package --</option>
                                 @foreach ($packages as $package)
                                     <option value="{{ $package->id }}">{{ $package->name }}</option>
                                 @endforeach
@@ -191,8 +191,6 @@
 
                                     <!-- Care Level Header -->
                                     <div class="flex items-center justify-between">
-                                        <h4 class="font-medium">Care Level #{{ $cIndex + 1 }}</h4>
-
                                         @if (count($group["careLevels"]) > 1)
                                             <button type="button"
                                                 wire:click="removeCareLevel({{ $gIndex }}, {{ $cIndex }})"
@@ -207,10 +205,10 @@
                                         <label class="block text-sm">Care Level*</label>
                                         <select
                                             wire:model="form.groups.{{ $gIndex }}.careLevels.{{ $cIndex }}.careLevelId"
-                                            class="mt-2 w-full rounded-lg border border-gray-200 px-4 py-2.5 focus:border-blue-500 focus:outline-none">
-                                            <option value="">-- Select Level --</option>
-                                            @foreach ($careLevels as $cl)
-                                                <option value="{{ $cl->id }}">{{ $cl->name }}</option>
+                                            class="mt-2 w-full rounded-lg border border-gray-200 text-sm px-4 py-2.5 focus:border-blue-500 focus:outline-none">
+                                            <option value="" hidden>-- Select a Level --</option>
+                                            @foreach ($filteredCareLevels[$gIndex] ?? [] as $id => $name)
+                                                <option value="{{ $id }}">{{ $name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -222,13 +220,13 @@
 
                                                 <input type="number"
                                                     wire:model="form.groups.{{ $gIndex }}.careLevels.{{ $cIndex }}.levels.{{ $lIndex }}.hours"
-                                                    placeholder="Hours"
-                                                    class="w-full rounded-lg border border-gray-200 px-4 py-2.5 focus:border-blue-500 focus:outline-none">
+                                                    placeholder="Hour (e.g. 8)"
+                                                    class="w-full rounded-lg border border-gray-200 text-sm px-4 py-2.5 focus:border-blue-500 focus:outline-none">
 
                                                 <input type="number"
                                                     wire:model="form.groups.{{ $gIndex }}.careLevels.{{ $cIndex }}.levels.{{ $lIndex }}.price"
                                                     placeholder="Price"
-                                                    class="w-full rounded-lg border border-gray-200 px-4 py-2.5 focus:border-blue-500 focus:outline-none">
+                                                    class="w-full rounded-lg border border-gray-200 text-sm px-4 py-2.5 focus:border-blue-500 focus:outline-none">
 
                                                 @if (count($care["levels"]) > 1)
                                                     <button type="button"
@@ -243,7 +241,7 @@
 
                                         <button type="button"
                                             wire:click="addLevel({{ $gIndex }}, {{ $cIndex }})"
-                                            class="rounded-full bg-green-600 px-3 py-1 text-sm text-white">
+                                            class="rounded-full bg-sky-700 px-3 py-1.5 text-sm text-white">
                                             + Add Hours/Price
                                         </button>
                                     </div>
@@ -253,7 +251,7 @@
 
                             <!-- Add Care Level -->
                             <button type="button" wire:click="addCareLevel({{ $gIndex }})"
-                                class="rounded-full bg-purple-600 px-3 py-1 text-sm text-white">
+                                class="rounded-full bg-green-600 px-3 py-1.5 text-sm text-white">
                                 + Add Care Level
                             </button>
 
@@ -264,7 +262,7 @@
             </div>
 
             <!-- Add Package -->
-            <button type="button" wire:click="addGroup" class="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white">
+            <button type="button" wire:click="addGroup" class="mt-4 rounded-full bg-blue-600 px-4 py-2 text-white">
                 + Add Another Package
             </button>
 

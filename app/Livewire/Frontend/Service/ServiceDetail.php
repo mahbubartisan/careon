@@ -74,6 +74,10 @@ class ServiceDetail extends Component
         //     });
         // $this->packages = Package::with(['careLevels.careOptions'])->get();
 
+
+       
+
+
         $serviceId = $this->service->id;
 
         $this->packages = Package::with([
