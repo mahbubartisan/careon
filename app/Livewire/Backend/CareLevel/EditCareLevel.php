@@ -69,7 +69,7 @@ class EditCareLevel extends Component
             $careLevel->update([
                 'package_id'  => $this->form->packageId,
                 'name'        => $this->form->name,
-                'description' => $this->form->description,
+                // 'description' => $this->form->description,
             ]);
 
             // Track existing option IDs to detect deletion
@@ -92,6 +92,7 @@ class EditCareLevel extends Component
 
                     // Create new row
                     $new = CareOption::create([
+                        'package_id'    => $this->form->packageId,
                         'care_level_id' => $careLevel->id,
                         'hours'         => $level['hours'],
                         'price'         => $level['price'],

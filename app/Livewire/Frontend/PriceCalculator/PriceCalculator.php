@@ -28,8 +28,11 @@ class PriceCalculator extends Component
     public function mount()
     {
         $this->locations = Location::select('id', 'name')->get();
-        $this->packages = \App\Models\Package::select('id', 'name')->get();
-        $this->careLevels = \App\Models\CareLevel::select('id', 'name')->get();
+        $this->packages = Package::select('id', 'name')->get();
+        $this->careLevels = CareLevel::select('id', 'name')
+            ->get()
+            ->unique('name')
+            ->values();
 
         $this->hours = [8, 12, 24];
     }
@@ -57,12 +60,11 @@ class PriceCalculator extends Component
         if ($this->selectedPackage && $this->selectedCareLevel && $this->selectedHours) {
 
             $option = CareOption::where('package_id', $this->selectedPackage)
-                ->where('care_level_id', $this->selectedCareLevel)
+                // ->where('care_level_id', $this->selectedCareLevel)
                 ->where('hours', $this->selectedHours)
                 ->first();
 
             $this->basePrice = $option->price ?? 0;
-
         } else {
             $this->basePrice = 0;
         }

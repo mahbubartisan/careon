@@ -51,6 +51,7 @@ class CreateCareLevel extends Component
             // Insert Hours & Price Rows
             foreach ($this->form->levels as $level) {
                 CareOption::create([
+                    'package_id'    => $this->form->packageId,
                     'care_level_id' => $careLevel->id,
                     'hours'         => $level['hours'],
                     'price'         => $level['price'],
