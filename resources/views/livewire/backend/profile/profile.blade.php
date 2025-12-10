@@ -1,8 +1,8 @@
 <div>
     <!-- Breadcrumb Start -->
     <div class="my-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-300">
-            Profile View
+        <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-300">
+            Profile
         </h2>
         <nav>
             <ol class="flex items-center gap-2">

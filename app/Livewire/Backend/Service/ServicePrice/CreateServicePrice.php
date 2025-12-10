@@ -21,8 +21,8 @@ class CreateServicePrice extends Component
     public $careLevels = [];
     public $levels = [];
 
-    public $allCareLevels; // store all care levels once
-    public $filteredCareLevels = []; // care-levels loaded per-package
+    public $allCareLevels;
+    public $filteredCareLevels = [];
 
     public $form = [
         "serviceId" => null,
@@ -79,33 +79,31 @@ class CreateServicePrice extends Component
     }
 
     public function updatedForm($value, $key)
-{
-    // When package selection changes
-    if (str_ends_with($key, 'packageId')) {
+    {
+        // When package selection changes
+        if (str_ends_with($key, 'packageId')) {
 
-        // Extract group index (groups.0.packageId → 0)
-        $gIndex = explode('.', $key)[1];
+            // Extract group index (groups.0.packageId → 0)
+            $gIndex = explode('.', $key)[1];
 
-        $packageId = $value;
+            $packageId = $value;
 
-        // Load care levels directly by package_id
-        $this->filteredCareLevels[$gIndex] = CareLevel::where('package_id', $packageId)
-            ->pluck('name', 'id')
-            ->toArray();
+            // Load care levels directly by package_id
+            $this->filteredCareLevels[$gIndex] = CareLevel::where('package_id', $packageId)
+                ->pluck('name', 'id')
+                ->toArray();
 
-        // Reset careLevels for this group
-        $this->form['groups'][$gIndex]['careLevels'] = [
-            [
-                'careLevelId' => '',
-                'levels' => [
-                    ['hours' => '', 'price' => '']
+            // Reset careLevels for this group
+            $this->form['groups'][$gIndex]['careLevels'] = [
+                [
+                    'careLevelId' => '',
+                    'levels' => [
+                        ['hours' => '', 'price' => '']
+                    ]
                 ]
-            ]
-        ];
+            ];
+        }
     }
-}
-
-
 
     public function addGroup()
     {
@@ -186,12 +184,9 @@ class CreateServicePrice extends Component
             }
         }
 
-        // OPTIONAL: reset form
-        // $this->reset('form');
-
         session()->flash('success', 'Care options saved successfully!');
+        return redirect()->route('service.price');
     }
-
 
     public function render()
     {

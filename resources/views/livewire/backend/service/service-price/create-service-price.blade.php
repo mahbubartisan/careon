@@ -190,7 +190,7 @@
                                 <div class="space-y-3 rounded-md border p-4">
 
                                     <!-- Care Level Header -->
-                                    <div class="flex items-center justify-between">
+                                    <div class="flex justify-end">
                                         @if (count($group["careLevels"]) > 1)
                                             <button type="button"
                                                 wire:click="removeCareLevel({{ $gIndex }}, {{ $cIndex }})"

@@ -101,7 +101,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Service Price Routes
     Route::get('/service-price', ServicePrice::class)->name('service.price');
     Route::get('/create-service-price', CreateServicePrice::class)->name('create.service.price');
-    Route::get('/service-price/{priceId}/edit', EditServicePrice::class)->name('edit.service.price');
+    Route::get('/service-price/{serviceId}/edit', EditServicePrice::class)->name('edit.service.price');
 
     // Booking Routes
     Route::get('/bookings', Booking::class)->name('booking');

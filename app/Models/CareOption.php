@@ -11,6 +11,16 @@ class CareOption extends Model
 
     protected $guarded = [];
 
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
+    }
+
     public function careLevel()
     {
         return $this->belongsTo(CareLevel::class);

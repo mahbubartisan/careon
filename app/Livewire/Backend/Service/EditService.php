@@ -56,40 +56,40 @@ class EditService extends Component
                 [
                     'care_level_id' => '',
                     'desc' => '',
-                    'options' => [
-                        ['hours' => '', 'price' => '']
-                    ]
+                    // 'options' => [
+                    //     ['hours' => '', 'price' => '']
+                    // ]
                 ],
                 [
                     'care_level_id' => '',
                     'desc' => '',
-                    'options' => [
-                        ['hours' => '', 'price' => '']
-                    ]
+                    // 'options' => [
+                    //     ['hours' => '', 'price' => '']
+                    // ]
                 ],
                 [
                     'care_level_id' => '',
                     'desc' => '',
-                    'options' => [
-                        ['hours' => '', 'price' => '']
-                    ]
+                    // 'options' => [
+                    //     ['hours' => '', 'price' => '']
+                    // ]
                 ],
             ];
         }
     }
 
-    public function addOption($levelIndex)
-    {
-        $this->form->care_levels[$levelIndex]['options'][] = [
-            'hours' => null,
-            'price' => null
-        ];
-    }
+    // public function addOption($levelIndex)
+    // {
+    //     $this->form->care_levels[$levelIndex]['options'][] = [
+    //         'hours' => null,
+    //         'price' => null
+    //     ];
+    // }
 
-    public function removeOption($levelIndex, $oIndex)
-    {
-        array_splice($this->form->care_levels[$levelIndex]['options'], $oIndex, 1);
-    }
+    // public function removeOption($levelIndex, $oIndex)
+    // {
+    //     array_splice($this->form->care_levels[$levelIndex]['options'], $oIndex, 1);
+    // }
 
     public function update()
     {
@@ -154,14 +154,14 @@ class EditService extends Component
                 /* -------------------------
                 4. RE-INSERT OPTIONS
                 -------------------------- */
-                foreach ($level['options'] as $opt) {
-                    CareOption::create([
-                        'service_id'     => $service->id,
-                        'care_level_id' => $level['care_level_id'],
-                        'hours' => $opt['hours'],
-                        'price' => $opt['price'],
-                    ]);
-                }
+                // foreach ($level['options'] as $opt) {
+                //     CareOption::create([
+                //         'service_id'     => $service->id,
+                //         'care_level_id' => $level['care_level_id'],
+                //         'hours' => $opt['hours'],
+                //         'price' => $opt['price'],
+                //     ]);
+                // }
             }
 
 

@@ -460,55 +460,51 @@
                         </div>
         
                         <!-- CARE LEVELS -->
-                        <template x-for="pkg in packages" :key="'pkg-' + pkg.id">
-                            <div x-show="formData.packageType === pkg.id">
-        
-                                <h4 class="mb-3 text-base font-semibold">Select Care Type & Hours</h4>
-        
-                                <div class="space-y-5">
-        
-                                    <!-- FIX: Use pkg.care_levels -->
-                                    <template x-for="level in pkg.care_levels" :key="'lvl-' + level.id">
-                                        <div>
-        
-                                            <p class="mb-2 font-semibold text-gray-800" x-text="level.name"></p>
-        
-                                            <div class="grid grid-cols-1 gap-3 lg:grid-cols-3">
-        
-                                                <!-- FIX: use level.care_options -->
-                                                <template x-for="opt in level.care_options" :key="'opt-' + opt.id">
-                                                    <label
-                                                        class="flex cursor-pointer flex-col items-center rounded-lg border px-4 py-3 text-center transition hover:border-green-600"
-                                                        :class="formData.care === (level.id + '-' + opt.id)
-                                                            ? 'border-green-600 bg-green-50'
-                                                            : 'border-gray-200'">
-        
-                                                        <input type="radio"
-                                                            name="care"
-                                                            class="hidden"
-                                                            :value="level.id + '-' + opt.id"
-                                                            wire:model="bookingForm.care">
-        
-                                                        <span
-                                                            class="font-medium text-gray-800"
-                                                            x-text="opt.hours + ' Hours'"></span>
-        
-                                                        <span class="text-xs text-gray-500"
-                                                            x-text="pkg.name.includes('Monthly') ? 'Per Month' : 'Per Day'">
-                                                        </span>
-        
-                                                        <span class="mt-1 text-sm font-semibold text-green-600"
-                                                            x-text="'৳ ' + opt.price"></span>
-                                                    </label>
-                                                </template>
-        
-                                            </div>
-                                        </div>
-                                    </template>
-        
-                                </div>
-                            </div>
+                        <!-- CARE LEVELS -->
+<template x-for="pkg in packages" :key="'pkg-' + pkg.id">
+    <div x-show="formData.packageType === pkg.id">
+
+        <h4 class="mb-3 text-base font-semibold">Select Care Type & Hours</h4>
+
+        <div class="space-y-5">
+
+            <!-- HIDE care level if it has no care options -->
+            <template x-for="level in pkg.care_levels" :key="'lvl-' + level.id">
+                <div x-show="level.care_options && level.care_options.length > 0">
+
+                    <p class="mb-2 font-semibold text-gray-800" x-text="level.name"></p>
+
+                    <div class="grid grid-cols-1 gap-3 lg:grid-cols-3">
+
+                        <template x-for="opt in level.care_options" :key="'opt-' + opt.id">
+                            <label
+                                class="flex cursor-pointer flex-col items-center rounded-lg border px-4 py-3 text-center transition hover:border-green-600"
+                                :class="formData.care === (level.id + '-' + opt.id)
+                                    ? 'border-green-600 bg-green-50'
+                                    : 'border-gray-200'">
+
+                                <input type="radio" name="care" class="hidden"
+                                    :value="level.id + '-' + opt.id"
+                                    wire:model="bookingForm.care">
+
+                                <span class="font-medium text-gray-800" x-text="opt.hours + ' Hours'"></span>
+
+                                <span class="text-xs text-gray-500"
+                                    x-text="pkg.name.includes('Monthly') ? 'Per Month' : 'Per Day'">
+                                </span>
+
+                                <span class="mt-1 text-sm font-semibold text-green-600"
+                                    x-text="'৳ ' + opt.price"></span>
+                            </label>
                         </template>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </div>
+</template>
+
         
                         <hr class="my-6" />
         
