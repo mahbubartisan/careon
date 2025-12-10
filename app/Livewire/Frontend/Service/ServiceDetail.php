@@ -72,8 +72,24 @@ class ServiceDetail extends Component
         //             ->values();
         //         return $package;
         //     });
+        // $this->packages = Package::with(['careLevels.careOptions'])->get();
 
-        $this->packages = Package::with(['careLevels.careOptions'])->get();
+        $serviceId = $this->service->id;
+
+        $this->packages = Package::with([
+            'careLevels:id,package_id,name',
+
+            'careLevels.careOptions' => function ($q) use ($serviceId) {
+                $q->where('service_id', $serviceId)
+                    ->select('id', 'service_id', 'package_id', 'care_level_id', 'hours', 'price');
+            }
+
+        ])->select('id', 'name')->get();
+
+
+
+        // dd($this->packages);
+
         $this->locationGroups = LocationGroup::with('locations')->get();
     }
 
@@ -208,7 +224,6 @@ class ServiceDetail extends Component
         session()->flash('success', 'Booking successful!');
         session()->put('booking_id', $booking->id);
         return redirect()->route('frontend.confirmation');
-
     }
 
     public function initiateBkashPayment()

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Backend\Service;
+namespace App\Livewire\Backend\Service\ServiceType;
 
 use App\Livewire\Forms\ServiceTypeForm;
 use App\Models\ServiceType as ModelsServiceType;
@@ -83,7 +83,7 @@ class ServiceType extends Component
         $serviceTypes = ModelsServiceType::where('name', 'like', '%' . $this->form->search . '%')
         ->latest()
         ->paginate($this->form->rowsPerPage);
-        return view('livewire.backend.service.service-type', [
+        return view('livewire.backend.service.service-type.service-type', [
             'serviceTypes' => $serviceTypes
         ])->extends('livewire.backend.layouts.app');
     }

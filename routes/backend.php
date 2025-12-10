@@ -34,7 +34,10 @@ use App\Livewire\Backend\Role\Roles;
 use App\Livewire\Backend\Service\CreateService;
 use App\Livewire\Backend\Service\EditService;
 use App\Livewire\Backend\Service\Service;
-use App\Livewire\Backend\Service\ServiceType;
+use App\Livewire\Backend\Service\ServicePrice\CreateServicePrice;
+use App\Livewire\Backend\Service\ServicePrice\EditServicePrice;
+use App\Livewire\Backend\Service\ServicePrice\ServicePrice;
+use App\Livewire\Backend\Service\ServiceType\ServiceType;
 use App\Livewire\Backend\Settings\CreateSettings;
 use App\Livewire\Backend\Settings\EditSettings;
 use App\Livewire\Backend\Settings\Settings;
@@ -94,6 +97,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/service', Service::class)->name('service');
     Route::get('/create-service', CreateService::class)->name('create.service');
     Route::get('/service/{serviceId}/edit', EditService::class)->name('edit.service');
+    
+    // Service Price Routes
+    Route::get('/service-price', ServicePrice::class)->name('service.price');
+    Route::get('/create-service-price', CreateServicePrice::class)->name('create.service.price');
+    Route::get('/service-price/{priceId}/edit', EditServicePrice::class)->name('edit.service.price');
 
     // Booking Routes
     Route::get('/bookings', Booking::class)->name('booking');

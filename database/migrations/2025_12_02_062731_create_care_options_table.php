@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('care_options', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('package_id')->constrained('packages')->cascadeOnDelete();
+            $table->foreignId('service_id')->constrained('services')->cascadeOnDelete();
             $table->foreignId('care_level_id')->constrained('care_levels')->cascadeOnDelete();
             $table->unsignedSmallInteger('hours');
             $table->integer('price');

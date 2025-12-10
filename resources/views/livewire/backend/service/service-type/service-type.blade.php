@@ -228,7 +228,7 @@
         </div>
 
         @if ($form->isOpen)
-        @include("livewire.backend.service.fragments.modal")
+        @include("livewire.backend.service.service-type.fragments.modal")
         @endif
     </div>
 

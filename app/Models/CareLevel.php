@@ -18,6 +18,6 @@ class CareLevel extends Model
 
     public function careOptions()
     {
-        return $this->hasMany(CareOption::class);
+        return $this->hasMany(CareOption::class, 'care_level_id');
     }
 }

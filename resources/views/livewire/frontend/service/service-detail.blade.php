@@ -2,7 +2,6 @@
     <div x-data="{
         showStepper: false,
         step: 1,
-        {{-- formData: { location: '', packageType: '', care: '', payment: '' }, --}}
         formData: @entangle("bookingForm").live,
         packages: @js($packages),
         service: @js($service),
@@ -42,36 +41,6 @@
                     <p class="max-w-3xl text-gray-600">
                         {!! $service->short_desc !!}
                     </p>
-                    <style>
-                        .description-list ul {
-                            @apply mt-4 space-y-2 text-sm text-gray-700;
-                        }
-
-                        .description-list li {
-                            position: relative;
-                            padding-left: 1.5rem;
-                            list-style: none;
-                            margin-bottom: 0.50rem;
-                            /* 👈 vertical space between li */
-                            @apply text-gray-700 leading-relaxed;
-                        }
-
-                        .description-list li::before {
-                            content: '';
-                            position: absolute;
-                            left: 0;
-                            top: 0.25rem;
-                            /* same as mt-1 */
-                            width: 1rem;
-                            height: 1rem;
-
-                            background-image: url("data:image/svg+xml,%3Csvg fill='none' stroke='%2310B981' viewBox='0 0 24 24' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
-                            background-repeat: no-repeat;
-                            background-size: contain;
-                        }
-                    </style>
-
-
 
                     <!-- CARE LEVELS -->
                     <div class="mt-8 grid gap-6 md:grid-cols-3">
@@ -172,7 +141,7 @@
                             <a href="#"
                                 @click.prevent="showStepper = true; $nextTick(() => window.scrollTo({top: 0, behavior: 'smooth'}))"
                                 class="rounded-xl bg-green-600 px-5 py-4 text-sm font-medium text-white shadow-md transition hover:bg-green-700">
-                                Book {{ $service->name }} Now
+                                Book Now
                             </a>
                         </div>
                     @endauth
@@ -372,7 +341,8 @@
                         </div>
                     </div>
                 </div> --}}
-                <div x-show="step === 2" y-transition>
+
+                {{-- <div x-show="step === 2" y-transition>
                     <div class="rounded-xl border border-gray-200 bg-white p-8">
 
                         <h3 class="mb-1 text-xl font-semibold lg:text-xl">
@@ -461,6 +431,113 @@
                                         d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
+                        </div>
+                    </div>
+                </div> --}}
+
+                <div x-show="step === 2" y-transition>
+                    <div class="rounded-xl border border-gray-200 bg-white p-8">
+        
+                        <h3 class="mb-1 text-xl font-semibold lg:text-xl">
+                            Select Package & Care Type
+                        </h3>
+                        <p class="mb-6 text-sm text-gray-500">
+                            Choose daily or monthly, hours, and care level
+                        </p>
+        
+                        <!-- PACKAGE TABS -->
+                        <div class="mb-6 flex gap-2">
+                            <template x-for="pkg in packages" :key="pkg.id">
+                                <button
+                                    type="button"
+                                    @click="$wire.set('bookingForm.packageType', pkg.id)"
+                                    :class="formData.packageType === pkg.id
+                                        ? 'bg-green-600 text-white'
+                                        : 'bg-gray-100 text-gray-900 hover:bg-gray-100'"
+                                    class="flex-1 rounded-xl py-2 font-medium transition"
+                                    x-text="pkg.name">
+                                </button>
+                            </template>
+                        </div>
+        
+                        <!-- CARE LEVELS -->
+                        <template x-for="pkg in packages" :key="'pkg-' + pkg.id">
+                            <div x-show="formData.packageType === pkg.id">
+        
+                                <h4 class="mb-3 text-base font-semibold">Select Care Type & Hours</h4>
+        
+                                <div class="space-y-5">
+        
+                                    <!-- FIX: Use pkg.care_levels -->
+                                    <template x-for="level in pkg.care_levels" :key="'lvl-' + level.id">
+                                        <div>
+        
+                                            <p class="mb-2 font-semibold text-gray-800" x-text="level.name"></p>
+        
+                                            <div class="grid grid-cols-1 gap-3 lg:grid-cols-3">
+        
+                                                <!-- FIX: use level.care_options -->
+                                                <template x-for="opt in level.care_options" :key="'opt-' + opt.id">
+                                                    <label
+                                                        class="flex cursor-pointer flex-col items-center rounded-lg border px-4 py-3 text-center transition hover:border-green-600"
+                                                        :class="formData.care === (level.id + '-' + opt.id)
+                                                            ? 'border-green-600 bg-green-50'
+                                                            : 'border-gray-200'">
+        
+                                                        <input type="radio"
+                                                            name="care"
+                                                            class="hidden"
+                                                            :value="level.id + '-' + opt.id"
+                                                            wire:model="bookingForm.care">
+        
+                                                        <span
+                                                            class="font-medium text-gray-800"
+                                                            x-text="opt.hours + ' Hours'"></span>
+        
+                                                        <span class="text-xs text-gray-500"
+                                                            x-text="pkg.name.includes('Monthly') ? 'Per Month' : 'Per Day'">
+                                                        </span>
+        
+                                                        <span class="mt-1 text-sm font-semibold text-green-600"
+                                                            x-text="'৳ ' + opt.price"></span>
+                                                    </label>
+                                                </template>
+        
+                                            </div>
+                                        </div>
+                                    </template>
+        
+                                </div>
+                            </div>
+                        </template>
+        
+                        <hr class="my-6" />
+        
+                        <!-- BUTTONS -->
+                        <div class="mt-8 flex justify-between">
+        
+                            <button
+                                @click="step--"
+                                class="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                ← Back
+                            </button>
+        
+                            <button type="button"
+                                @click="
+                                    if (formData.care) {
+                                        step++;
+                                        $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                                    }
+                                "
+                                :disabled="!formData.care"
+                                class="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50">
+                                Next
+                                <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+        
                         </div>
                     </div>
                 </div>
@@ -1051,6 +1128,36 @@
             </div>
         </div>
     </div>
+
+
+    <style>
+        .description-list ul {
+            @apply mt-4 space-y-2 text-sm text-gray-700;
+        }
+
+        .description-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            list-style: none;
+            margin-bottom: 0.50rem;
+            /* 👈 vertical space between li */
+            @apply text-gray-700 leading-relaxed;
+        }
+
+        .description-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.25rem;
+            /* same as mt-1 */
+            width: 1rem;
+            height: 1rem;
+
+            background-image: url("data:image/svg+xml,%3Csvg fill='none' stroke='%2310B981' viewBox='0 0 24 24' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    </style>
 
     @push("title")
         {{ $service->name }}
