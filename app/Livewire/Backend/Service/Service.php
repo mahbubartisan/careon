@@ -30,6 +30,9 @@ class Service extends Component
     {
         $service = ModelsService::findOrFail($id);
 
+        // Delete all care options of this service
+        $service->careOptions()->delete();
+
         // Delete service care levels
         $service->serviceCareLevels()->delete();
 
@@ -41,9 +44,10 @@ class Service extends Component
         // Delete service record
         $service->delete();
 
-        $this->dispatch('toastr:success', 'Service deleted!');
+        $this->dispatch('toastr:success', 'Service deleted Successfully!');
         return redirect()->back();
     }
+
 
     public function render()
     {

@@ -135,20 +135,37 @@
                                 {{ $row["service"] }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4">
-                                @foreach ($row["packages"] as $pkg)
-                                    <div class="mb-3">
-                                        <p class="font-semibold">{{ $pkg["package"] }}</p>
-                                        @foreach ($pkg["care_levels"] as $cl)
-                                            <ul class="ml-4">
-                                                •<span class="font-medium">{{ $cl["care_level"] }}:</span>
-
-                                                <!-- Format multiple hours/prices -->
-                                                {{ implode(" • ", array_map(fn($t) => "($t)", $cl["time_prices"])) }}
-                                            </ul>
-                                        @endforeach
-                                    </div>
-                                @endforeach
+                                @if (empty($row["packages"]))
+                                    <span class="text-gray-500">N/A</span>
+                                @else
+                                    @foreach ($row["packages"] as $pkg)
+                                        <div class="mb-3">
+                            
+                                            <p class="font-semibold">{{ $pkg["package"] }}</p>
+                            
+                                            {{-- If no care levels --}}
+                                            @if (empty($pkg["care_levels"]))
+                                                <p class="ml-4 text-gray-500">N/A</p>
+                                            @else
+                                                @foreach ($pkg["care_levels"] as $cl)
+                                                    <ul class="ml-4">
+                                                        • <span class="font-medium">{{ $cl["care_level"] }}:</span>
+                            
+                                                        {{-- If no time/price --}}
+                                                        @if (!empty($cl["time_prices"]))
+                                                            {{ implode(" • ", array_map(fn($t) => "($t)", $cl["time_prices"])) }}
+                                                        @else
+                                                            <span class="text-gray-500">N/A</span>
+                                                        @endif
+                                                    </ul>
+                                                @endforeach
+                                            @endif
+                            
+                                        </div>
+                                    @endforeach
+                                @endif
                             </td>
+                            
 
                             <td class="whitespace-nowrap px-6 py-4">
                                 <div class="flex items-center space-x-2">

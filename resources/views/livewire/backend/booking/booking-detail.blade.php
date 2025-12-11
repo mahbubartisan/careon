@@ -197,47 +197,47 @@
                 <!-- Row -->
                 <div class="flex justify-between">
                     <span class="text-gray-500">Booking ID</span>
-                    <span class="font-semibold text-gray-900">#{{ $booking->booking_id }}</span>
+                    <span class="font-semibold text-gray-900">#{{ $form->booking->booking_id }}</span>
                 </div>
 
                 <!-- Row -->
                 <div class="flex justify-between">
                     <span class="text-gray-500">Service</span>
-                    <span class="font-semibold text-gray-900">{{ $booking->service_name }}</span>
+                    <span class="font-semibold text-gray-900">{{ $form->booking->service_name }}</span>
                 </div>
 
                 <!-- Row -->
                 <div class="flex justify-between">
                     <span class="text-gray-500">Package</span>
-                    <span class="font-semibold text-gray-900">{{ $booking->package_name }}</span>
+                    <span class="font-semibold text-gray-900">{{ $form->booking->package_name }}</span>
                 </div>
 
                 <!-- Row -->
                 <div class="flex justify-between">
                     <span class="text-gray-500">Care Level</span>
                     <span class="font-semibold text-gray-900">
-                        {{ $booking->care_level_name }} ({{ $booking->hours }} hrs)
+                        {{ $form->booking->care_level_name }} ({{ $form->booking->hours }} hrs)
                     </span>
                 </div>
 
                 <!-- Row -->
                 <div class="flex justify-between">
                     <span class="text-gray-500">Location Group</span>
-                    <span class="font-semibold text-gray-900">{{ $booking->location_group }}</span>
+                    <span class="font-semibold text-gray-900">{{ $form->booking->location_group }}</span>
                 </div>
 
                 <!-- Row -->
                 <div class="flex justify-between">
                     <span class="text-gray-500">Location</span>
-                    <span class="font-semibold text-gray-900">{{ $booking->location_name }}</span>
+                    <span class="font-semibold text-gray-900">{{ $form->booking->location_name }}</span>
                 </div>
 
                 <!-- Row -->
                 <div class="flex justify-between">
                     <span class="text-gray-500">Date & Time</span>
                     <span class="font-semibold text-gray-900">
-                        {{ \Carbon\Carbon::parse($booking->date)->format("F j, Y") }} •
-                        {{ \Carbon\Carbon::parse($booking->time)->format("g:i A") }}
+                        {{ \Carbon\Carbon::parse($form->booking->date)->format("F j, Y") }} •
+                        {{ \Carbon\Carbon::parse($form->booking->time)->format("g:i A") }}
                     </span>
                 </div>
 
@@ -247,20 +247,20 @@
                     <div class="flex justify-between">
                         <span class="text-gray-500">Care Price</span>
                         <span class="font-semibold text-gray-900">
-                            ৳{{ number_format($booking->price) }}
+                            ৳{{ number_format($form->booking->price) }}
                         </span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Location Fee</span>
                         <span class="font-semibold text-gray-900">
-                            ৳{{ number_format($booking->location_price) }}
+                            ৳{{ number_format($form->booking->location_price) }}
                         </span>
                     </div>
 
-                    <div class="flex justify-between pt-3 text-lg font-bold text-green-600">
+                    <div class="flex justify-between pt-3 text-lg font-bold text-green-700">
                         <span class="text-gray-900">Total</span>
-                        <span>৳{{ number_format($booking->total_price) }}</span>
+                        <span>৳{{ number_format($form->booking->total_price) }}</span>
                     </div>
 
                 </div>
@@ -275,52 +275,67 @@
                 Patient Details
             </h2>
 
-            @if ($booking->patient)
+            @if ($form->booking->patient)
                 <div class="space-y-4 text-sm">
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Patient Name</span>
-                        <span class="font-semibold text-gray-900">{{ optional($booking->patient)->name }}</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->name }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Gender</span>
-                        <span class="font-semibold text-gray-900">{{ ucfirst(optional($booking->patient)->gender) }}</span>
+                        <span class="font-semibold text-gray-900">{{ ucfirst(optional($form->booking->patient)->gender) }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Height</span>
-                        <span class="font-semibold text-gray-900">{{ optional($booking->patient)->height }}</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->height }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Weight</span>
-                        <span class="font-semibold text-gray-900">{{ optional($booking->patient)->weight }}kg</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->weight }}kg</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Patient Contact</span>
-                        <span class="font-semibold text-gray-900">{{ optional($booking->patient)->patient_contact }}</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->patient_contact }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Emergency Contact</span>
-                        <span class="font-semibold text-gray-900">{{ optional($booking->patient)->emergency_contact }}</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->emergency_contact }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Patient Address</span>
-                        <span class="font-semibold text-gray-900">{{ optional($booking->patient)->address }}</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->address }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Patient Type</span>
-                        <span class="font-semibold text-gray-900">{{ optional($booking->patient)->patient_type }}</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->patient_type }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Country</span>
-                        <span class="font-semibold text-gray-900">{{ optional($booking->patient)->country ?: "N/A" }}</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->country ?: "N/A" }}</span>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Gender Preference</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->gender_preference ?: "N/A" }}</span>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Language</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->language ?: "N/A" }}</span>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Special Notes</span>
+                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->special_notes ?: "N/A" }}</span>
                     </div>
 
                 </div>

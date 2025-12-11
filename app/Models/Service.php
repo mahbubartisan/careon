@@ -20,6 +20,11 @@ class Service extends Model
     {
         return $this->hasMany(ServiceCareLevel::class);
     }
+    
+    public function careOptions()
+    {
+        return $this->hasMany(CareOption::class);
+    }
 
     public function careLevels()
     {

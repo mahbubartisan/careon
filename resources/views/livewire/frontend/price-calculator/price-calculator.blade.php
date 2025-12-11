@@ -188,7 +188,7 @@
             <!-- Total Price -->
             <div class="mt-6 space-y-2 border-t pt-4">
                 <div class="flex justify-between">
-                    <span class="text-base font-medium text-gray-900">Total Cost:</span>
+                    <span class="text-base font-medium text-gray-900">Total Price:</span>
 
                     <!-- Show total only when all selected, otherwise show 0 -->
                     <span class="text-lg font-semibold text-green-700"
@@ -201,6 +201,6 @@
 
 
     @push("title")
-        CareOn - Serive Cost Calculator
+        CareOn - Price Calculator
     @endpush
 </div>

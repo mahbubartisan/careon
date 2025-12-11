@@ -373,7 +373,13 @@
                                 </li>
                             @endcanany
                             <!-- Special Care Service -->
-                            @canany(["view service price", "create service price", "edit service price", "delete service price"])
+                            @canany([
+                                "view service price",
+                                "create service price",
+                                "edit service price",
+                                "delete service
+                                price"
+                                ])
                                 <li
                                     class="{{ request()->routeIs("service.price", "create.service.price", "edit.service.price") ? "text-blue-600 dark:text-blue-600" : "text-gray-400 dark:text-gray-100" }} group flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-500">
                                     <span
@@ -387,12 +393,12 @@
                             @endcanany
                             <!-- Medical Care Service -->
                             {{-- @canany([
-    "view service type",
-    "create service type",
-    "edit service type",
-    "delete service
-                                                                type"
-])
+                                "view service type",
+                                "create service type",
+                                "edit service type",
+                                "delete service
+                                type"
+                                ])
                                 <li
                                     class="{{ request()->routeIs("service-type") ? "text-blue-600 dark:text-blue-600" : "text-gray-400 dark:text-gray-100" }} group flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-500">
                                     <span
@@ -411,7 +417,7 @@
             @endcanany
 
             <!-- Booking -->
-            {{-- @canany(["view booking", "booking detail"])
+            @canany(["view booking", "booking detail"])
                 <div>
                     <a href="{{ route("booking") }}"
                         class="{{ request()->routeIs("booking", "booking.detail") ? "bg-blue-50 dark:bg-[#233A57] text-blue-600 dark:text-blue-600" : "text-gray-400 hover:text-blue-600 dark:text-gray-100" }} flex items-center space-x-3 rounded-md p-2 text-sm dark:hover:text-blue-600">
@@ -430,10 +436,10 @@
                                 <path d="M16 18h.01" />
                             </svg>
                         </span>
-                        <span>Bookings</span>
+                        <span>Special Care Bookings</span>
                     </a>
                 </div>
-            @endcanany --}}
+            @endcanany
 
 
             <!-- Contact Us -->

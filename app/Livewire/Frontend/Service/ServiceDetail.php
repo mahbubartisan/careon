@@ -206,13 +206,6 @@ class ServiceDetail extends Component
         ]);
 
 
-        // SEND EMAIL TO USER + COPY TO ADMIN
-
-        // $adminEmail = 'admin@example.com';
-
-        // Mail::to([$adminEmail, auth()->user()->email])
-        //     ->send(new BookingMail($booking));
-
         $adminEmail = 'admin@example.com';
 
         // Send to user

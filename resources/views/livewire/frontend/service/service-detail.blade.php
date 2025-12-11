@@ -436,87 +436,84 @@
 
                 <div x-show="step === 2" y-transition>
                     <div class="rounded-xl border border-gray-200 bg-white p-8">
-        
+
                         <h3 class="mb-1 text-xl font-semibold lg:text-xl">
                             Select Package & Care Type
                         </h3>
                         <p class="mb-6 text-sm text-gray-500">
                             Choose daily or monthly, hours, and care level
                         </p>
-        
+
                         <!-- PACKAGE TABS -->
                         <div class="mb-6 flex gap-2">
                             <template x-for="pkg in packages" :key="pkg.id">
-                                <button
-                                    type="button"
-                                    @click="$wire.set('bookingForm.packageType', pkg.id)"
-                                    :class="formData.packageType === pkg.id
-                                        ? 'bg-green-600 text-white'
-                                        : 'bg-gray-100 text-gray-900 hover:bg-gray-100'"
-                                    class="flex-1 rounded-xl py-2 font-medium transition"
-                                    x-text="pkg.name">
+                                <button type="button" @click="$wire.set('bookingForm.packageType', pkg.id)"
+                                    :class="formData.packageType === pkg.id ?
+                                        'bg-green-600 text-white' :
+                                        'bg-gray-100 text-gray-900 hover:bg-gray-100'"
+                                    class="flex-1 rounded-xl py-2 font-medium transition" x-text="pkg.name">
                                 </button>
                             </template>
                         </div>
-        
+
                         <!-- CARE LEVELS -->
                         <!-- CARE LEVELS -->
-<template x-for="pkg in packages" :key="'pkg-' + pkg.id">
-    <div x-show="formData.packageType === pkg.id">
+                        <template x-for="pkg in packages" :key="'pkg-' + pkg.id">
+                            <div x-show="formData.packageType === pkg.id">
 
-        <h4 class="mb-3 text-base font-semibold">Select Care Type & Hours</h4>
+                                <h4 class="mb-3 text-base font-semibold">Select Care Type & Hours</h4>
 
-        <div class="space-y-5">
+                                <div class="space-y-5">
 
-            <!-- HIDE care level if it has no care options -->
-            <template x-for="level in pkg.care_levels" :key="'lvl-' + level.id">
-                <div x-show="level.care_options && level.care_options.length > 0">
+                                    <!-- HIDE care level if it has no care options -->
+                                    <template x-for="level in pkg.care_levels" :key="'lvl-' + level.id">
+                                        <div x-show="level.care_options && level.care_options.length > 0">
 
-                    <p class="mb-2 font-semibold text-gray-800" x-text="level.name"></p>
+                                            <p class="mb-2 font-semibold text-gray-800" x-text="level.name"></p>
 
-                    <div class="grid grid-cols-1 gap-3 lg:grid-cols-3">
+                                            <div class="grid grid-cols-1 gap-3 lg:grid-cols-3">
 
-                        <template x-for="opt in level.care_options" :key="'opt-' + opt.id">
-                            <label
-                                class="flex cursor-pointer flex-col items-center rounded-lg border px-4 py-3 text-center transition hover:border-green-600"
-                                :class="formData.care === (level.id + '-' + opt.id)
-                                    ? 'border-green-600 bg-green-50'
-                                    : 'border-gray-200'">
+                                                <template x-for="opt in level.care_options" :key="'opt-' + opt.id">
+                                                    <label
+                                                        class="flex cursor-pointer flex-col items-center rounded-lg border px-4 py-3 text-center transition hover:border-green-600"
+                                                        :class="formData.care === (level.id + '-' + opt.id) ?
+                                                            'border-green-600 bg-green-50' :
+                                                            'border-gray-200'">
 
-                                <input type="radio" name="care" class="hidden"
-                                    :value="level.id + '-' + opt.id"
-                                    wire:model="bookingForm.care">
+                                                        <input type="radio" name="care" class="hidden"
+                                                            :value="level.id + '-' + opt.id"
+                                                            wire:model="bookingForm.care">
 
-                                <span class="font-medium text-gray-800" x-text="opt.hours + ' Hours'"></span>
+                                                        <span class="font-medium text-gray-800"
+                                                            x-text="opt.hours + ' Hours'"></span>
 
-                                <span class="text-xs text-gray-500"
-                                    x-text="pkg.name.includes('Monthly') ? 'Per Month' : 'Per Day'">
-                                </span>
+                                                        <span class="text-xs text-gray-500"
+                                                            x-text="pkg.name.includes('Monthly') ? 'Per Month' : 'Per Day'">
+                                                        </span>
 
-                                <span class="mt-1 text-sm font-semibold text-green-600"
-                                    x-text="'৳ ' + opt.price"></span>
-                            </label>
+                                                        <span class="mt-1 text-sm font-semibold text-green-600"
+                                                            x-text="'৳ ' + opt.price"></span>
+                                                    </label>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                </div>
+                            </div>
                         </template>
-                    </div>
-                </div>
-            </template>
 
-        </div>
-    </div>
-</template>
 
-        
                         <hr class="my-6" />
-        
+
                         <!-- BUTTONS -->
                         <div class="mt-8 flex justify-between">
-        
-                            <button
-                                @click="step--"
+
+                            <button @click="step--"
                                 class="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                                 ← Back
                             </button>
-        
+
                             <button type="button"
                                 @click="
                                     if (formData.care) {
@@ -532,7 +529,7 @@
                                         d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
-        
+
                         </div>
                     </div>
                 </div>
@@ -656,13 +653,13 @@
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Height <span
                                             class="text-red-500">*</span></label>
-                                    <input type="text" placeholder="Height" wire:model="bookingForm.height"
+                                    <input type="number" placeholder="Height" wire:model="bookingForm.height"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Weight <span
                                             class="text-red-500">*</span></label>
-                                    <input type="text" placeholder="Weight" wire:model="bookingForm.wight"
+                                    <input type="number" placeholder="Weight" wire:model="bookingForm.weight"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>
                             </div>
@@ -715,14 +712,14 @@
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Patient Contact
                                         <span class="text-red-500">*</span></label>
-                                    <input type="text" placeholder="+880 1XXX-XXXXXX"
+                                    <input type="number" placeholder="+880 1XXX-XXXXXX"
                                         wire:model="bookingForm.patientContact"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>
                                 <div>
                                     <label class="mb-1 block text-sm font-medium text-gray-700">Emergency Contact
                                         <span class="text-red-500">*</span></label>
-                                    <input type="text" placeholder="+880 1XXX-XXXXXX"
+                                    <input type="number" placeholder="+880 1XXX-XXXXXX"
                                         wire:model="bookingForm.emergencyContact"
                                         class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-green-600 focus:outline-none" />
                                 </div>

@@ -2,7 +2,7 @@
     <!-- Breadcrumb Start -->
     <div class="my-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-300">
-            Bookings
+            Special Care Bookings
         </h2>
         <nav>
             <ol class="flex items-center gap-2">
@@ -10,7 +10,7 @@
                     <a class="text-[13.5px] text-gray-500 dark:text-blue-200" href="{{ route("dashboard") }}">Dashboard
                         /</a>
                 </li>
-                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Bookings</li>
+                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Special Care Bookings</li>
             </ol>
         </nav>
     </div>
