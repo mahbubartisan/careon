@@ -186,7 +186,7 @@
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
 
         <!-- LEFT CARD -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-6">
+        <div class="rounded-xl border border-gray-200 bg-white p-6">
 
             <h2 class="mb-6 text-xl font-semibold tracking-tight text-gray-900">
                 Booking Summary
@@ -245,6 +245,20 @@
                 <div class="space-y-3 border-t pt-5">
 
                     <div class="flex justify-between">
+                        <span class="text-gray-500">Payment Type</span>
+                        <span class="font-semibold text-gray-900">
+                            {{ ucfirst($form->booking->payment_method) }}
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Transcation ID</span>
+                        <span class="font-semibold text-gray-900">
+                            #{{ $form->booking->trx_id ?? "N/A" }}
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between">
                         <span class="text-gray-500">Care Price</span>
                         <span class="font-semibold text-gray-900">
                             ৳{{ number_format($form->booking->price) }}
@@ -269,7 +283,7 @@
         </div>
 
         <!-- RIGHT CARD -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-6">
+        <div class="rounded-xl border border-gray-200 bg-white p-6">
 
             <h2 class="mb-6 text-xl font-semibold tracking-tight text-gray-900">
                 Patient Details
@@ -285,57 +299,68 @@
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Gender</span>
-                        <span class="font-semibold text-gray-900">{{ ucfirst(optional($form->booking->patient)->gender) }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ ucfirst(optional($form->booking->patient)->gender) }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Height</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->height }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->height }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Weight</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->weight }}kg</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->weight }}kg</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Patient Contact</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->patient_contact }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->patient_contact }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Emergency Contact</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->emergency_contact }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->emergency_contact }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Patient Address</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->address }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->address }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Patient Type</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->patient_type }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->patient_type }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Country</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->country ?: "N/A" }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->country ?: "N/A" }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Gender Preference</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->gender_preference ?: "N/A" }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->gender_preference ?: "N/A" }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Language</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->language ?: "N/A" }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->language ?: "N/A" }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span class="text-gray-500">Special Notes</span>
-                        <span class="font-semibold text-gray-900">{{ optional($form->booking->patient)->special_notes ?: "N/A" }}</span>
+                        <span
+                            class="font-semibold text-gray-900">{{ optional($form->booking->patient)->special_notes ?: "N/A" }}</span>
                     </div>
 
                 </div>
@@ -348,11 +373,21 @@
     </div>
 
     <!-- BACK BUTTON -->
-    <div class="mt-10">
+    <div class="mt-8">
         <a href="{{ route("booking") }}"
-            class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-sm">
+            class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm">
+
+            <!-- SVG Icon -->
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-move-left-icon lucide-move-left">
+                <path d="M6 8L2 12L6 16" />
+                <path d="M2 12H22" />
+            </svg>
+
             Back to List
         </a>
     </div>
+
 
 </div>

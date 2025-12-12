@@ -174,33 +174,6 @@ class ServiceDetail extends Component
         return redirect()->route('frontend.confirmation');
     }
 
-    // public function initiateBkashPayment($bookingId)
-    // {
-    //     // Calculate everything here in Livewire
-    //     $carePrice     = $this->getCarePrice($this->bookingForm['packageType'], $this->bookingForm['care']);
-    //     $locationPrice = $this->getLocationPrice($this->bookingForm['location']);
-    //     $hours         = $this->getHours($this->bookingForm['care']);
-    //     $totalPrice    = $this->getTotalPrice(
-    //         $this->bookingForm['packageType'],
-    //         $this->bookingForm['care'],
-    //         $this->bookingForm['location']
-    //     );
-
-    //     // Call controller
-    //     $controller = app(\App\Http\Controllers\BkashTokenizePaymentController::class);
-
-    //     $response = $controller->createPayment(new \Illuminate\Http\Request([
-    //         'booking_id'       => $bookingId,
-    //         'total_price'      => $totalPrice,
-    //         'care_price'       => $carePrice,
-    //         'location_price'   => $locationPrice,
-    //         'hours'            => $hours,
-    //         'booking_form'     => $this->bookingForm,
-    //     ]));
-
-    //     return redirect()->away($response['bkashURL']);
-    // }
-
     public function initiateBkashPayment($bookingId)
     {
         $data = $this->bookingForm;
@@ -213,6 +186,7 @@ class ServiceDetail extends Component
 
         // Extra values you requested
         $serviceName     = $this->service->name;
+        $locationGroup   = $this->getLocationGroup($data['location']);
         $packageName     = $this->getPackageName($data['packageType']);
         $careLevelName   = $this->getCareLevelName($data['care']);
 
@@ -228,6 +202,7 @@ class ServiceDetail extends Component
 
             // NEWLY ADDED FIELDS
             'service_name'      => $serviceName,
+            'location_group'    => $locationGroup,
             'package_name'      => $packageName,
             'care_level_name'   => $careLevelName,
 
@@ -235,11 +210,7 @@ class ServiceDetail extends Component
             'booking_form'      => $this->bookingForm,
         ]));
 
-        // if (isset($response['bkashURL'])) {
-        //     return redirect()->away($response['bkashURL']); // LIVEWIRE WILL FOLLOW THIS
-        // }
-        return redirect()->route('bkash-create-payment');
-        
+        return $response;
     }
 
 
