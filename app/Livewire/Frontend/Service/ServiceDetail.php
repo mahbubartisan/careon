@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Frontend\Service;
 
+use App\Http\Controllers\BkashTokenizePaymentController;
 use App\Mail\BookingMail;
 use App\Models\Booking;
 use App\Models\LocationGroup;
@@ -173,37 +174,75 @@ class ServiceDetail extends Component
         return redirect()->route('frontend.confirmation');
     }
 
-    // public function initiateBkashPayment()
+    // public function initiateBkashPayment($bookingId)
     // {
-    //     $amount = $this->totalPrice;
+    //     // Calculate everything here in Livewire
+    //     $carePrice     = $this->getCarePrice($this->bookingForm['packageType'], $this->bookingForm['care']);
+    //     $locationPrice = $this->getLocationPrice($this->bookingForm['location']);
+    //     $hours         = $this->getHours($this->bookingForm['care']);
+    //     $totalPrice    = $this->getTotalPrice(
+    //         $this->bookingForm['packageType'],
+    //         $this->bookingForm['care'],
+    //         $this->bookingForm['location']
+    //     );
 
-    //     $response = Http::post(route('bkash.create.payment'), [
-    //         'amount' => $amount,
-    //         'order_id' => $this->orderId ?? null,
-    //         'callback_url' => route('bkash.callback'),
-    //     ]);
+    //     // Call controller
+    //     $controller = app(\App\Http\Controllers\BkashTokenizePaymentController::class);
 
-    //     return redirect()->away($response['paymentURL']);
+    //     $response = $controller->createPayment(new \Illuminate\Http\Request([
+    //         'booking_id'       => $bookingId,
+    //         'total_price'      => $totalPrice,
+    //         'care_price'       => $carePrice,
+    //         'location_price'   => $locationPrice,
+    //         'hours'            => $hours,
+    //         'booking_form'     => $this->bookingForm,
+    //     ]));
+
+    //     return redirect()->away($response['bkashURL']);
     // }
 
-    public function initiateBkashPayment($tempBookingId)
+    public function initiateBkashPayment($bookingId)
     {
-        $amount = $this->getTotalPrice(
-            $this->bookingForm['packageType'],
-            $this->bookingForm['care'],
-            $this->bookingForm['location']
-        );
+        $data = $this->bookingForm;
 
-        dd($amount);
+        // Calculate all needed values
+        $carePrice     = $this->getCarePrice($data['packageType'], $data['care']);
+        $locationPrice = $this->getLocationPrice($data['location']);
+        $hours         = $this->getHours($data['care']);
+        $totalPrice    = $this->getTotalPrice($data['packageType'], $data['care'], $data['location']);
 
-        $response = Http::post(route('bkash.create.payment'), [
-            'temp_booking_id' => $tempBookingId,
-            'amount' => $amount,
-            'booking_form' => $this->bookingForm, // send entire form
-        ]);
+        // Extra values you requested
+        $serviceName     = $this->service->name;
+        $packageName     = $this->getPackageName($data['packageType']);
+        $careLevelName   = $this->getCareLevelName($data['care']);
 
-        return redirect()->away($response['bkashURL']);
+        // Call controller
+        $controller = app(BkashTokenizePaymentController::class);
+
+        $response = $controller->createPayment(new \Illuminate\Http\Request([
+            'booking_id'        => $bookingId,
+            'total_price'       => $totalPrice,
+            'care_price'        => $carePrice,
+            'location_price'    => $locationPrice,
+            'hours'             => $hours,
+
+            // NEWLY ADDED FIELDS
+            'service_name'      => $serviceName,
+            'package_name'      => $packageName,
+            'care_level_name'   => $careLevelName,
+
+            // Full form
+            'booking_form'      => $this->bookingForm,
+        ]));
+
+        // if (isset($response['bkashURL'])) {
+        //     return redirect()->away($response['bkashURL']); // LIVEWIRE WILL FOLLOW THIS
+        // }
+        return redirect()->route('bkash-create-payment');
+        
     }
+
+
 
 
 

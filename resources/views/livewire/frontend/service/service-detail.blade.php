@@ -1111,7 +1111,7 @@
                             </button>
                             <button type="button" wire:click="processOrder"
                                 class="rounded-xl bg-green-600 px-5 py-2 text-white">
-                                Confirm Payment & Book
+                                Pay & Book
                             </button>
                         </div>
                     </div>

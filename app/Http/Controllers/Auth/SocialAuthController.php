@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 // {
@@ -49,10 +49,10 @@ class SocialAuthController extends Controller
 // }
 {
     // Step 1: Redirect to Google/Facebook
-    public function redirect($provider)
-    {
-        return Socialite::driver($provider)->stateless()->redirect();
-    }
+    // public function redirect($provider)
+    // {
+    //     return Socialite::driver($provider)->stateless()->redirect();
+    // }
 
     // Step 2: Handle callback
     public function callback($provider)
@@ -82,11 +82,12 @@ class SocialAuthController extends Controller
             $user = User::where('email', $socialUser->getEmail())->first();
         }
 
+        dd($user);
         // Create new user if not found
         if (!$user) {
             $user = User::create([
                 'name'        => $socialUser->getName() ?? $socialUser->getNickname(),
-                'email'       => $socialUser->getEmail(),
+                'email'       => $socialUser->getEmail() ?? null,
                 'provider'    => $provider,
                 'provider_id' => $socialUser->getId(),
                 'password'    => bcrypt(str()->random(16)), // random placeholder
