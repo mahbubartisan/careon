@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('package_id')->constrained('packages')->cascadeOnDelete();
             $table->foreignId('service_id')->constrained('services')->cascadeOnDelete();
             $table->string('name');
-            // $table->text('description');
             $table->timestamps();
         });
     }

@@ -75,7 +75,7 @@ class ServiceDetail extends Component
         // $this->packages = Package::with(['careLevels.careOptions'])->get();
 
 
-    
+
         $serviceId = $this->service->id;
 
         $this->packages = Package::with([
@@ -107,60 +107,12 @@ class ServiceDetail extends Component
 
         // bKash → redirect to payment flow
         if ($paymentType === 'bkash') {
-            return $this->initiateBkashPayment();
+            return $this->initiateBkashPayment($this->generateBookingId($this->service->name));
         }
 
         // Optional: handle unknown payment types
         throw new \Exception("Invalid payment type selected.");
     }
-
-    // public function storeOrder()
-    // {
-    //     $data = $this->bookingForm;
-
-    //     $carePrice      = $this->getCarePrice($data['packageType'], $data['care']);
-    //     $locationPrice  = $this->getLocationPrice($data['location']);
-    //     $totalPrice     = $this->getTotalPrice($data['packageType'], $data['care'], $data['location']);
-
-    //     // Generate Booking ID
-    //     $bookingId = $this->generateBookingId($this->service->name);
-
-    //     $booking = Booking::create([
-    //         'booking_id'        => $bookingId,
-    //         'user_id'           => auth()->id(),
-    //         'service_name'      => $this->service->name,
-    //         'package_name'      => $this->getPackageName($data['packageType']),
-    //         'care_level_name'   => $this->getCareLevelName($data['care']),
-    //         'hours'             => $this->getHours($data['care']),
-    //         'price'             => $carePrice,
-    //         'location_price'    => $locationPrice,
-    //         'total_price'       => $totalPrice,
-    //         'location_group'    => $this->getLocationGroup($data['location']),
-    //         'location_name'     => $data['location'],
-    //         'date'              => $data['date'],
-    //         'time' => $this->formatTimeToAmPm($data['time']),
-    //         'payment_method'    => $data['payment_type'],
-    //     ]);
-
-    //     // Patient details
-    //     Patient::create([
-    //         'booking_id'         => $booking->id,
-    //         'name'               => $data['patientName'],
-    //         'gender'             => $data['gender'],
-    //         'height'             => $data['height'],
-    //         'weight'             => $data['weight'],
-    //         'patient_type'       => $data['patientType'],
-    //         'country'            => $data['country'],
-    //         'patient_contact'    => $data['patientContact'],
-    //         'emergency_contact'  => $data['emergencyContact'],
-    //         'address'            => $data['address'],
-    //         'gender_preference'  => $data['genderPreference'],
-    //         'language'           => $data['language'],
-    //         'special_notes'      => $data['specialInstructions'],
-    //     ]);
-
-    //     session()->flash('success', 'Booking successful!');
-    // }
 
     public function storeOrder()
     {
@@ -216,22 +168,44 @@ class ServiceDetail extends Component
         Mail::to($adminEmail)
             ->send(new BookingMail($booking));
 
-        session()->flash('success', 'Booking successful!');
+        // session()->flash('success', 'Booking successful!');
         session()->put('booking_id', $booking->id);
         return redirect()->route('frontend.confirmation');
     }
 
-    public function initiateBkashPayment()
-    {
-        $amount = $this->totalPrice;
+    // public function initiateBkashPayment()
+    // {
+    //     $amount = $this->totalPrice;
 
-        // Hit bKash API / your own controller
-        $response = Http::post('https://your-domain.com/bkash/create-payment', [
+    //     $response = Http::post(route('bkash.create.payment'), [
+    //         'amount' => $amount,
+    //         'order_id' => $this->orderId ?? null,
+    //         'callback_url' => route('bkash.callback'),
+    //     ]);
+
+    //     return redirect()->away($response['paymentURL']);
+    // }
+
+    public function initiateBkashPayment($tempBookingId)
+    {
+        $amount = $this->getTotalPrice(
+            $this->bookingForm['packageType'],
+            $this->bookingForm['care'],
+            $this->bookingForm['location']
+        );
+
+        dd($amount);
+
+        $response = Http::post(route('bkash.create.payment'), [
+            'temp_booking_id' => $tempBookingId,
             'amount' => $amount,
+            'booking_form' => $this->bookingForm, // send entire form
         ]);
 
         return redirect()->away($response['bkashURL']);
     }
+
+
 
     private function generateBookingId($serviceName)
     {
