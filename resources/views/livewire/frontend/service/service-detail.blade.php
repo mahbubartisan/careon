@@ -457,7 +457,6 @@
                         </div>
 
                         <!-- CARE LEVELS -->
-                        <!-- CARE LEVELS -->
                         <template x-for="pkg in packages" :key="'pkg-' + pkg.id">
                             <div x-show="formData.packageType === pkg.id">
 
@@ -491,8 +490,8 @@
                                                             x-text="pkg.name.includes('Monthly') ? 'Per Month' : 'Per Day'">
                                                         </span>
 
-                                                        <span class="mt-1 text-sm font-semibold text-green-600"
-                                                            x-text="'৳ ' + opt.price"></span>
+                                                        {{-- <span class="mt-1 text-sm font-semibold text-green-600"
+                                                            x-text="'৳ ' + opt.price"></span> --}}
                                                     </label>
                                                 </template>
                                             </div>
@@ -864,7 +863,7 @@
                             </h3>
 
                             <!-- CARE LEVEL & HOURS + PRICE -->
-                            <template x-if="formData.care">
+                            {{-- <template x-if="formData.care">
                                 <div>
                                     <div class="flex justify-between">
                                         <span class="text-gray-600">Care Price:</span>
@@ -881,7 +880,7 @@
                                         </span>
                                     </div>
                                 </div>
-                            </template>
+                            </template> --}}
 
 
                             <!-- LOCATION PRICE -->
@@ -1148,40 +1147,12 @@
         }
     </style> --}}
 
-    {{-- <style>
-        .description-list ul {
-            @apply mt-4 space-y-2 text-sm text-gray-700;
-        }
-
-        .description-list li {
-            position: relative;
-            padding-left: 1.5rem;
-            list-style: none;
-            margin-bottom: 0.50rem;
-            /*vertical space between li */
-            @apply text-gray-700 leading-relaxed;
-        }
-
-        .description-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.25rem;
-            /* same as mt-1 */
-            width: 1rem;
-            height: 1rem;
-            background-image: url("data:image/svg+xml,%3Csvg fill='none' stroke='%2310B981' viewBox='0 0 24 24' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-    </style> --}}
-
 
     <style>
         .description-list ul {
             @apply mt-4 space-y-2 text-sm text-gray-700;
         }
-    
+
         .description-list li {
             position: relative;
             padding-left: 2rem;
@@ -1189,21 +1160,22 @@
             margin-bottom: 0.9rem;
             @apply text-gray-700 leading-relaxed;
         }
-    
+
         .description-list li::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 0.15em;           /* ✅ text-aligned */
+            top: 0.15em;
+            /* ✅ text-aligned */
             width: 1.25rem;
             height: 1.25rem;
-    
+
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310B981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.801 10A10 10 0 1 1 17 3.335'/%3E%3Cpath d='m9 11 3 3L22 4'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-size: contain;
         }
     </style>
-    
+
 
 
 

@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Frontend\Contact;
 
-use App\Models\Contact as ModelsContact;
-use Livewire\Component;
-use Livewire\Attributes\Title;
 use App\Livewire\Forms\ContactForm;
+use App\Models\Contact as ModelsContact;
+use Livewire\Attributes\Title;
+use Livewire\Component;
 
 class Contact extends Component
 {
@@ -13,7 +13,47 @@ class Contact extends Component
 
     public ContactForm $form;
 
+    public $activeTab = 'general';
+
+    public $general = [];
+    public $feedback = [];
+
+
+
     public $showModal = false;
+
+
+    public function submitGeneral()
+    {
+        $this->activeTab = 'general';
+
+        $this->validate([
+            'general.name'    => 'required',
+            'general.phone'   => 'required',
+            'general.email'   => 'required|email',
+            'general.subject' => 'required',
+            'general.message' => 'required',
+        ]);
+
+        // Save / send mail
+    }
+
+    public function submitFeedback()
+    {
+        $this->activeTab = 'feedback';
+
+        $this->validate([
+            'feedback.name'    => 'required',
+            'feedback.phone'   => 'required',
+            'feedback.email'   => 'required|email',
+            'feedback.rating'  => 'required',
+            'feedback.subject' => 'required',
+            'feedback.message' => 'required',
+        ]);
+
+        // Save feedback
+    }
+
 
     public function submit()
     {

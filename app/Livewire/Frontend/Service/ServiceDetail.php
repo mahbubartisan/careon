@@ -178,39 +178,41 @@ class ServiceDetail extends Component
     {
         $data = $this->bookingForm;
 
+        dd($data);
+
         // Calculate all needed values
-        $carePrice     = $this->getCarePrice($data['packageType'], $data['care']);
-        $locationPrice = $this->getLocationPrice($data['location']);
-        $hours         = $this->getHours($data['care']);
-        $totalPrice    = $this->getTotalPrice($data['packageType'], $data['care'], $data['location']);
+        // $carePrice     = $this->getCarePrice($data['packageType'], $data['care']);
+        // $locationPrice = $this->getLocationPrice($data['location']);
+        // $hours         = $this->getHours($data['care']);
+        // $totalPrice    = $this->getTotalPrice($data['packageType'], $data['care'], $data['location']);
 
-        // Extra values you requested
-        $serviceName     = $this->service->name;
-        $locationGroup   = $this->getLocationGroup($data['location']);
-        $packageName     = $this->getPackageName($data['packageType']);
-        $careLevelName   = $this->getCareLevelName($data['care']);
+        // // Extra values you requested
+        // $serviceName     = $this->service->name;
+        // $locationGroup   = $this->getLocationGroup($data['location']);
+        // $packageName     = $this->getPackageName($data['packageType']);
+        // $careLevelName   = $this->getCareLevelName($data['care']);
 
-        // Call controller
-        $controller = app(BkashTokenizePaymentController::class);
+        // // Call controller
+        // $controller = app(BkashTokenizePaymentController::class);
 
-        $response = $controller->createPayment(new \Illuminate\Http\Request([
-            'booking_id'        => $bookingId,
-            'total_price'       => $totalPrice,
-            'care_price'        => $carePrice,
-            'location_price'    => $locationPrice,
-            'hours'             => $hours,
+        // $response = $controller->createPayment(new \Illuminate\Http\Request([
+        //     'booking_id'        => $bookingId,
+        //     'total_price'       => $totalPrice,
+        //     'care_price'        => $carePrice,
+        //     'location_price'    => $locationPrice,
+        //     'hours'             => $hours,
 
-            // NEWLY ADDED FIELDS
-            'service_name'      => $serviceName,
-            'location_group'    => $locationGroup,
-            'package_name'      => $packageName,
-            'care_level_name'   => $careLevelName,
+        //     // NEWLY ADDED FIELDS
+        //     'service_name'      => $serviceName,
+        //     'location_group'    => $locationGroup,
+        //     'package_name'      => $packageName,
+        //     'care_level_name'   => $careLevelName,
 
-            // Full form
-            'booking_form'      => $this->bookingForm,
-        ]));
+        //     // Full form
+        //     'booking_form'      => $this->bookingForm,
+        // ]));
 
-        return $response;
+        // return $response;
     }
 
 
