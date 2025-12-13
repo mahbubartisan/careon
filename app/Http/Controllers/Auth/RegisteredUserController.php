@@ -67,7 +67,7 @@ class RegisteredUserController extends Controller
         // Send verification email
         Mail::to($user->email)->send(new VerifyUserEmail($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
         return redirect()->intended(RouteServiceProvider::User_HOME);
     }
