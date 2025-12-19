@@ -22,7 +22,7 @@
             <!-- Provider Call Notice -->
             <div class="mb-6 rounded-xl border border-orange-300 bg-orange-50 p-6 text-center">
                 <h2 class="text-xl font-bold text-gray-900">
-                    Your Service Provider Will Call You Soon
+                    We Will Call You Soon
                 </h2>
                 <p class="mt-1 text-base text-gray-500">
                     Our team is currently assigning the best available nurse to your

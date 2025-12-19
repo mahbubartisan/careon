@@ -175,7 +175,7 @@
 
                 <tr>
                     <td style="padding: 10px; background: #f9fafb; border: 1px solid #e5e7eb;">
-                        <strong>Time</strong>
+                        <strong>Service Time</strong>
                     </td>
                     <td style="padding: 10px; border: 1px solid #e5e7eb;">
                         {{ $booking->time }}
