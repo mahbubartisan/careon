@@ -50,6 +50,7 @@ class ServiceDetail extends Component
         'payment_type' => '',
     ];
 
+   
     public function mount($slug)
     {
         $this->service = Service::with([
@@ -214,10 +215,6 @@ class ServiceDetail extends Component
 
         // return $response;
     }
-
-
-
-
 
     private function generateBookingId($serviceName)
     {

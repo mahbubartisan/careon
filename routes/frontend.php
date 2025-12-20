@@ -8,8 +8,10 @@ use App\Livewire\Frontend\CareProvider\CareProvider;
 use App\Livewire\Frontend\Contact\Contact;
 use App\Livewire\Frontend\Home\HomePage;
 use App\Livewire\Frontend\PriceCalculator\PriceCalculator;
+use App\Livewire\Frontend\Service\MedicalTest;
 use App\Livewire\Frontend\Service\Service;
 use App\Livewire\Frontend\Service\ServiceDetail;
+use App\Livewire\Frontend\Service\ServiceEntry;
 use Illuminate\Support\Facades\Route;
 
 Route::as('frontend.')->group(function () {
@@ -17,10 +19,15 @@ Route::as('frontend.')->group(function () {
     Route::get('/about-us', About::class)->name('about');
     Route::get('/contact-us', Contact::class)->name('contact-us');
     Route::get('/services', Service::class)->name('service');
-    Route::get('/service/{slug}', ServiceDetail::class)->name('service-detail');
+    Route::get('/special-care/{slug}', ServiceDetail::class)->name('service.detail');
     Route::get('/health-tips', Blog::class)->name('blogs');
     Route::get('/health-tips/{slug}', BlogDetail::class)->name('blog-detail');
     Route::get('/provider-signup', CareProvider::class)->name('provider-signup');
     Route::get('/price-calculator', PriceCalculator::class)->name('price-calculation');
     Route::get('/confirmation', BookingConfirmation::class)->name('confirmation');
+
+   
+    Route::get('/diagnostic/{slug}', MedicalTest::class)->name('service.medical');
+    // Route::get('/service/home-service/{service}', HomeServiceForm::class)->name('service.home');
+    // Route::get('/service/appointment/{service}', AppointmentForm::class)->name('service.appointment');
 });

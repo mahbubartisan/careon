@@ -23,7 +23,9 @@ class MedicalTestForm extends Form
             
             'service_desc' => 'required|string|max:255',
 
-            'image' => 'required|image|max:1024', // 1MB max
+            'image' => $this->serviceId
+            ? 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024'   // optional on update
+            : 'required|image|mimes:jpg,jpeg,png,webp|max:1024',  // required on create
 
             'tests.*.test_name' => 'required|string|max:255',
             'tests.*.price' => 'required|numeric|min:0',
@@ -44,9 +46,10 @@ class MedicalTestForm extends Form
             'service_desc.required' => 'Service description is required.',
             'service_desc.max' => 'Service description cannot exceed 255 characters.',
 
-            'image.required' => 'Service image is required.',
-            'image.image' => 'The uploaded file must be an image.',
-            'image.max' => 'Image size must not exceed 2MB.',
+            'image.required' => 'Pleas upload an image.',
+            'image.image' => 'The file must be a valid image.',
+            'image.mimes' => 'Image must be JPG, JPEG, PNG, or WEBP.',
+            'image.max' => 'Image size cannot exceed 2MB.',
 
             'tests.*.test_name.required' => 'Test name is required.',
             'tests.*.test_name.string' => 'Test name must be a valid text.',

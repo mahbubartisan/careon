@@ -14,6 +14,8 @@
             </ol>
         </nav>
     </div>
+
+    <!-- Form Container -->
     <div class="rounded-md bg-white px-6 pb-3 pt-6 shadow dark:bg-[#132337]">
         <h2 class="mb-4 text-lg font-semibold tracking-tight text-gray-800 dark:text-gray-200">
             Medical Test Service Information
@@ -27,7 +29,7 @@
                         <!-- Service Type -->
                         <div>
                             <label for="service_type_id" class="block text-sm text-gray-700 dark:text-gray-400">
-                                ServiceType*
+                                ServiceType <span class="text-red-500">*</span>
                             </label>
                             <select wire:model="form.service_type_id" id="service_type_id"
                                 class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-[11px] text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300">
@@ -45,7 +47,7 @@
                         <!-- Service Name -->
                         <div>
                             <label for="service_name" class="block text-sm text-gray-700 dark:text-gray-400">
-                                Service Name*
+                                Service Name <span class="text-red-500">*</span>
                             </label>
                             <input type="text" wire:model="form.service_name" id="service_name"
                                 placeholder="Enter Service Name"
@@ -59,7 +61,7 @@
                     <!-- Image Upload -->
                     <div>
                         <label for="image" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Service Image*
+                            Service Image <span class="text-red-500">*</span>
                         </label>
                         <input type="file" wire:model="form.image" id="image"
                             class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
@@ -71,7 +73,7 @@
                     <!-- Service Description -->
                     <div>
                         <label for="service_desc" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Service Description*
+                            Service Description <span class="text-red-500">*</span>
                         </label>
                         <textarea rows="4" wire:model="form.service_desc" id="service_desc" placeholder="Enter Service Description"
                             class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300"></textarea>
@@ -84,96 +86,118 @@
                 <h2 class="text-lg font-semibold tracking-tight text-gray-900">
                     Medical Tests
                 </h2>
-                @foreach ($form->tests as $index => $test)
-                    <div class="relative space-y-4 rounded-xl border p-4 dark:border-[#1b2f46] dark:bg-[#102030]">
 
-                        @if (count($form->tests) > 1)
-                            <button type="button" wire:click="removeTest({{ $index }})"
-                                class="absolute right-4 top-4 text-sm text-red-500">
-                                Remove
-                            </button>
-                        @endif
+                <div class="rounded-lg border bg-white p-4">
+                    <div class="space-y-4">
+                        @foreach ($form->tests as $index => $test)
+                            <div class="relative">
+                                <!-- Trash icon (only when more than one row) -->
+                                @if (count($form->tests) > 1)
+                                    <button type="button" wire:click="removeTest({{ $index }})"
+                                        class="absolute right-0 top-0 flex h-full items-start pt-8 text-red-500">
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M10 11v6" />
+                                            <path d="M14 11v6" />
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                                            <path d="M3 6h18" />
+                                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                        </svg>
+                                    </button>
+                                @endif
 
-                        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                                <div class="grid grid-cols-1 gap-4 pr-8 md:grid-cols-2">
+                                    <!-- Test Name -->
+                                    <div>
+                                        <label class="mb-1 block text-sm font-medium text-gray-700">
+                                            Test Name <span class="text-red-500">*</span>
+                                        </label>
 
-                            <!-- Test Name -->
-                            <div>
-                                <label class="block text-sm text-gray-700 dark:text-gray-400">
-                                    Test Name*
-                                </label>
+                                        <input type="text" wire:model="form.tests.{{ $index }}.test_name"
+                                            placeholder="Test Name"
+                                            class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-sky-500 focus:outline-none">
 
-                                <input type="text" wire:model="form.tests.{{ $index }}.test_name"
-                                    placeholder="Test Name"
-                                    class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+                                        @error("form.tests.$index.test_name")
+                                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                        @enderror
+                                    </div>
 
-                                @error("form.tests.$index.test_name")
-                                    <span class="text-xs text-red-500">{{ $message }}</span>
-                                @enderror
+                                    <!-- Price -->
+                                    <div>
+                                        <label class="mb-1 block text-sm font-medium text-gray-700">
+                                            Price <span class="text-red-500">*</span>
+                                        </label>
+
+                                        <input type="number" wire:model.defer="form.tests.{{ $index }}.price"
+                                            placeholder="Price"
+                                            class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-sky-500 focus:outline-none">
+
+                                        @error("form.tests.$index.price")
+                                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
                             </div>
+                        @endforeach
 
-                            <!-- Price -->
-                            <div>
-                                <label class="block text-sm text-gray-700 dark:text-gray-400">
-                                    Price (৳)*
-                                </label>
-
-                                <input type="number" wire:model="form.tests.{{ $index }}.price"
-                                    placeholder="1000"
-                                    class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
-
-                                @error("form.tests.$index.price")
-                                    <span class="text-xs text-red-500">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                        </div>
+                        <!-- Add Button -->
+                        <button type="button" wire:click="addTest"
+                            class="rounded-full bg-sky-700 px-4 py-2 text-sm font-medium text-white hover:bg-sky-800">
+                            + Add Test
+                        </button>
                     </div>
-                @endforeach
-
-
-                <button type="button" wire:click="addTest"
-                    class="rounded-full bg-sky-700 px-3 py-1.5 text-sm text-white">
-                    + Add Test
-                </button>
-
+                </div>
 
                 <h2 class="text-lg font-semibold tracking-tight text-gray-900">
                     Labs
                 </h2>
-                @foreach ($form->labs as $index => $lab)
-                    <div class="relative space-y-4 rounded-xl border p-4 dark:border-[#1b2f46] dark:bg-[#102030]">
 
-                        @if (count($form->labs) > 1)
-                            <button type="button" wire:click="removeLab({{ $index }})"
-                                class="absolute right-4 top-4 text-sm text-red-500">
-                                Remove
-                            </button>
-                        @endif
+                <div class="space-y-4 rounded-xl border p-4 dark:border-[#1b2f46] dark:bg-[#102030]">
+                    @foreach ($form->labs as $index => $lab)
+                        <div class="relative">
 
-                        <!-- Lab Name -->
-                        <div>
-                            <label class="block text-sm text-gray-700 dark:text-gray-400">
-                                Lab Name*
-                            </label>
+                            <!-- Remove icon -->
+                            @if (count($form->labs) > 1)
+                                <button type="button" wire:click="removeLab({{ $index }})"
+                                    class="absolute right-0 top-9 flex items-center text-red-500 hover:text-red-600">
+                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M10 11v6" />
+                                        <path d="M14 11v6" />
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                                        <path d="M3 6h18" />
+                                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                    </svg>
+                                </button>
+                            @endif
 
-                            <input type="text" wire:model="form.labs.{{ $index }}.lab_name"
-                                placeholder="Lab Name"
-                                class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+                            <!-- Lab Name -->
+                            <div class="pr-8">
+                                <label class="block text-sm text-gray-700 dark:text-gray-400">
+                                    Lab Name <span class="text-red-500">*</span>
+                                </label>
 
-                            @error("form.labs.$index.lab_name")
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
+                                <input type="text" wire:model.defer="form.labs.{{ $index }}.lab_name"
+                                    placeholder="Lab Name"
+                                    class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+
+                                @error("form.labs.$index.lab_name")
+                                    <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                         </div>
+                    @endforeach
 
-                    </div>
-                @endforeach
-
-
-                <button type="button" wire:click="addLab"
-                    class="rounded-full bg-sky-700 px-3 py-1.5 text-sm text-white">
-                    + Add Lab
-                </button>
-
+                    <!-- Add Button-->
+                    <button type="button" wire:click="addLab"
+                        class="rounded-full bg-sky-700 px-3 py-1.5 text-sm text-white">
+                        + Add Lab
+                    </button>
+                </div>
             </div>
 
             <!-- Create Button -->

@@ -249,7 +249,7 @@
                                 </p>
 
                                 <div class="mt-5">
-                                    <a href="{{ route("frontend.service-detail", $service->slug) }}"
+                                    {{-- <a href="{{ route("frontend.service-detail", $service->slug) }}"
                                         class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#17A884] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#139673]">
                                         <span>View Details &amp; Book</span>
 
@@ -257,7 +257,11 @@
                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                         </svg>
-                                    </a>
+                                    </a> --}}
+                                    <button wire:click="redirectToServiceForm('{{ $service->slug }}')"
+                                        class="btn-primary">
+                                        Book Now
+                                    </button>
                                 </div>
                             </div>
                         </div>

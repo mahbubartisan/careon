@@ -105,17 +105,34 @@ class EditMedicalTest extends Component
 
         DB::transaction(function () {
 
-            // eplace image if uploaded
-            if ($this->form->image) {
-                $image = $this->uploadMedia($this->form->image, 'images/service', 80);
-                $this->service->image = $image->id;
+            $service = Service::findOrFail($this->form->serviceId);
+
+            // replace image if uploaded
+            if ($this->form->image && !is_int($this->form->image)) {
+                // Delete the old media if it exists
+                if ($service->image) {
+                    $this->deleteMedia($service->image);
+                }
+    
+                // Upload the new image
+                $newPhoto = $this->uploadMedia(
+                    $this->form->image,
+                    'images/service',
+                    80
+                );
+    
+                $newPhotoId = $newPhoto->id;
+            } else {
+                $newPhotoId = $service->image; // keep the existing image
             }
 
+
             // Update service
-            $this->service->update([
+            $service->update([
                 'service_type_id' => $this->form->service_type_id,
                 'name' => $this->form->service_name,
                 'slug' => str()->slug($this->form->service_name),
+                'image'       => $newPhotoId,
                 'short_desc' => $this->form->service_desc,
             ]);
 
@@ -126,7 +143,7 @@ class EditMedicalTest extends Component
                         'id' => $test['id'] ?? null,
                     ],
                     [
-                        'service_id' => $this->service->id,
+                        'service_id' => $service->id,
                         'name' => $test['test_name'],
                         'price' => $test['price'],
                     ]
@@ -140,14 +157,14 @@ class EditMedicalTest extends Component
                         'id' => $lab['id'] ?? null,
                     ],
                     [
-                        'service_id' => $this->service->id,
+                        'service_id' => $service->id,
                         'name' => $lab['lab_name'],
                     ]
                 );
             }
         });
 
-        session()->flash('success', 'Medical test updated successfully!');
+        session()->flash('success', 'Service updated successfully!');
         return redirect()->route('medical.test');
     }
 
