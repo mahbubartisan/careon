@@ -397,19 +397,19 @@
                 </div>
             @endcanany
 
-            <!-- Medical Care Manage -->
-            @canany(["view medical test", "create medical test", "edit medical test", "delete medical test"])
-                <div x-data="{ open: {{ request()->routeIs("medical.test", "create.medical.test", "edit.medical.test") ? "true" : "false" }} }">
+            <!-- Medical Service Manage -->
+            @canany(["view medical service", "create medical service", "edit medical service", "delete medical service"])
+                <div x-data="{ open: {{ request()->routeIs("medical.service", "create.medical.service", "edit.medical.service") ? "true" : "false" }} }">
                     <a href="#" @click.prevent="open = !open"
                         class="flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-600"
                         :class="open ||
-                            {{ request()->routeIs("medical.test", "create.medical.test", "edit.medical.test") ? true : false }} ?
+                            {{ request()->routeIs("medical.service", "create.medical.service", "edit.medical.service") ? true : false }} ?
                             'bg-blue-50 text-blue-600 dark:bg-[#233A57] dark:text-blue-600' :
                             'text-gray-400 hover:text-blue-600'">
                         <span aria-hidden="true">
                             <svg class="mr-1 h-5 w-5 transition-colors"
                                 :class="open ||
-                                    {{ request()->routeIs("medical.test", "create.medical.test", "edit.medical.test") ? true : false }} ?
+                                    {{ request()->routeIs("medical.service", "create.medical.service", "edit.medical.service") ? true : false }} ?
                                     'text-blue-600' : 'text-gray-400 dark:text-gray-100'"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -421,15 +421,15 @@
                         </span>
                         <span class="ml-2"
                             :class="open ||
-                                {{ request()->routeIs("medical.test", "create.medical.test", "edit.medical.test") ? true : false }} ?
+                                {{ request()->routeIs("medical.service", "create.medical.service", "edit.medical.service") ? true : false }} ?
                                 'text-blue-600' :
                                 'text-gray-400 hover:text-blue-500 dark:text-gray-100'">
-                            Medical Care Manage
+                            Medical Service Manage
                         </span>
                         <span aria-hidden="true" class="ml-auto">
                             <svg class="h-3.5 w-3.5 transform transition-transform"
                                 :class="(open ||
-                                    {{ request()->routeIs("medical.test", "create.medical.test", "edit.medical.test") ? true : false }}
+                                    {{ request()->routeIs("medical.service", "create.medical.service", "edit.medical.service") ? true : false }}
                                 ) ?
                                 'text-blue-600 rotate-180' : 'text-gray-400 dark:text-gray-100'"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -442,26 +442,25 @@
                     <div x-show="open" class="mt-2 space-y-2" role="menu" aria-label="Components"
                         style="display: none">
                         <ul class="ml-2">
-                            <!-- Medical Test -->
+                            <!-- Medical Service -->
                             @canany([
-                                "view medical test",
-                                "create medical test",
-                                "edit medical test",
+                                "view medical service",
+                                "create medical service",
+                                "edit medical service",
                                 "delete medical
-                                test"
+                                service"
                                 ])
                                 <li
-                                    class="{{ request()->routeIs("medical.test", "create.medical.test", "edit.medical.test") ? "text-blue-600 dark:text-blue-600" : "text-gray-400 dark:text-gray-100" }} group flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-500">
+                                    class="{{ request()->routeIs("medical.service", "create.medical.service", "edit.medical.service") ? "text-blue-600 dark:text-blue-600" : "text-gray-400 dark:text-gray-100" }} group flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-500">
                                     <span
-                                        class="{{ request()->routeIs("medical.test", "create.medical.test", "edit.medical.test") ? "text-blue-500" : "text-gray-400 group-hover:text-blue-500" }} mr-2 list-item list-inside list-disc text-sm">
+                                        class="{{ request()->routeIs("medical.service", "create.medical.service", "edit.medical.service") ? "text-blue-500" : "text-gray-400 group-hover:text-blue-500" }} mr-2 list-item list-inside list-disc text-sm">
                                     </span>
-                                    <a href="{{ route("medical.test") }}" @click="open = true"
-                                        class="{{ request()->routeIs("medical.test", "create.medical.test", "edit.medical.test") ? "text-blue-600" : "group-hover:text-blue-500" }} flex-grow">
-                                        Medical Test
+                                    <a href="{{ route("medical.service") }}" @click="open = true"
+                                        class="{{ request()->routeIs("medical.service", "create.medical.service", "edit.medical.service") ? "text-blue-600" : "group-hover:text-blue-500" }} flex-grow">
+                                        Medical Service
                                     </a>
                                 </li>
                             @endcanany
-
                         </ul>
                     </div>
 

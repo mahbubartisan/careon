@@ -89,6 +89,7 @@ class CreateService extends Component
                 'image' => $imagePath,
                 'service_type_id' => $this->form->service_type_id,
                 'short_desc' => $this->form->short_desc,
+                'form_key' => 'special-care',
                 'badge' => $this->form->badge ?? 0,
                 'status' => $this->form->status ?? 1,
             ]);

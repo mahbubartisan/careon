@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Livewire\Backend\Service;
+namespace App\Livewire\Backend\MedicalService;
 
-use App\Livewire\Forms\ServiceForm;
-use App\Models\Service as ModelsService;
+use App\Livewire\Forms\MedicalServiceForm;
+use App\Models\Service;
 use App\Traits\MediaTrait;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Service extends Component
+class MedicalService extends Component
 {
     use WithPagination, MediaTrait;
 
-    #[Title('Special Services')]
+    #[Title('Medical Service')]
 
-    public ServiceForm $form;
+    public MedicalServiceForm $form;
 
     public function toggleStatus($id)
     {
-        $service = ModelsService::findOrFail($id);
+        $service = Service::findOrFail($id);
         $service->status = !$service->status;
         $service->save();
 
@@ -28,7 +28,7 @@ class Service extends Component
 
     public function delete($id)
     {
-        $service = ModelsService::findOrFail($id);
+        $service = Service::findOrFail($id);
 
         // Delete all care options of this service
         $service->careOptions()->delete();
@@ -50,16 +50,12 @@ class Service extends Component
 
     public function render()
     {
-        $services = ModelsService::with('media')
-            ->where(function ($q) {
-                $q->where('service_id', 'like', '%' . $this->form->search . '%')
-                    ->orWhere('name', 'like', '%' . $this->form->search . '%');
-            })
-            ->latest()
-            ->paginate($this->form->rowsPerPage);
-
-        return view('livewire.backend.service.service', [
-            'services' => $services,
+        $services = Service::with('media')
+            ->where('service_type_id', 3)
+            ->where('name', 'like', '%' . $this->form->search . '%')
+            ->get();
+        return view('livewire.backend.medical-service.medical-service', [
+            'services' => $services
         ])->extends('livewire.backend.layouts.app');
     }
 }

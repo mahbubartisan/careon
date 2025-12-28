@@ -244,9 +244,9 @@
                                     {{ $service->name }}
                                 </h4>
 
-                                <p class="mt-2 text-base text-gray-500 sm:mx-0">
+                                <div class="ql-editor mt-2 text-base text-gray-500 sm:mx-0">
                                     {!! $service->short_desc !!}
-                                </p>
+                                </div>
 
                                 <div class="mt-5">
                                     {{-- <a href="{{ route("frontend.service-detail", $service->slug) }}"
@@ -259,8 +259,8 @@
                                         </svg>
                                     </a> --}}
                                     <button wire:click="redirectToServiceForm('{{ $service->slug }}')"
-                                        class="btn-primary">
-                                        Book Now
+                                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#17A884] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#139673]">
+                                        View Details &amp; Book
                                     </button>
                                 </div>
                             </div>
@@ -268,7 +268,6 @@
                     </div>
                 @endforeach
             @endforeach
-
         </div>
 
     </section>
@@ -284,10 +283,10 @@
             </p>
 
             <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a href="contact.html" class="rounded-xl bg-[#1D64B4] px-7 py-3 text-sm font-medium text-white">
+                <a href="{{ route('frontend.contact-us') }}" class="rounded-xl bg-[#1D64B4] px-7 py-3 text-sm font-medium text-white">
                     Contact Support
                 </a>
-                <a href="book.html"
+                <a href="#"
                     class="rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 hover:bg-amber-500">
                     Book Now
                 </a>

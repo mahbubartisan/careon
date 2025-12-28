@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Backend\MedicalCare\MedicalTest;
+namespace App\Livewire\Backend\MedicalService;
 
-use App\Livewire\Forms\MedicalTestForm;
+use App\Livewire\Forms\MedicalServiceForm;
 use App\Models\Lab;
 use App\Models\MedicalTest;
 use App\Models\Service;
@@ -13,13 +13,15 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class CreateMedicalTest extends Component
+class CreateMedicalService extends Component
 {
     use WithFileUploads, MediaTrait;
 
-    #[Title('Create Medical Test')]
+    #[Title('Create Medical Service')]
 
-    public MedicalTestForm $form;
+    public MedicalServiceForm $form;
+
+    public $selectedFormType = null; // medical_test, home_service, appointment
 
     public function mount()
     {
@@ -72,7 +74,7 @@ class CreateMedicalTest extends Component
 
         DB::transaction(function () {
 
-            // 📸 Image Upload
+            // Image Upload
             if ($this->form->image) {
                 $image = $this->uploadMedia($this->form->image, 'images/service', 80);
                 $imagePath = $image->id;
@@ -86,6 +88,9 @@ class CreateMedicalTest extends Component
                 'name' => $this->form->service_name,
                 'slug' => str()->slug($this->form->service_name),
                 'short_desc' => $this->form->service_desc,
+                'form_key' => $this->form->formType,
+                'badge' => $this->form->badge ?? 0,
+                'status' => $this->form->status ?? 1,
             ]);
 
             // Medical Tests
@@ -107,7 +112,7 @@ class CreateMedicalTest extends Component
         });
 
         session()->flash('success', 'Service created successfully!');
-        return redirect()->route('medical.test');
+        return redirect()->route('medical.service');
     }
 
     private function generateServiceId($name)
@@ -125,8 +130,26 @@ class CreateMedicalTest extends Component
         return $prefix . $random;
     }
 
+    public function updatedFormType($value)
+    {
+        if ($value === 'medical-test') {
+            // Initialize medical fields
+            $this->form->tests = [
+                ['test_name' => '', 'price' => ''],
+            ];
+
+            $this->form->labs = [
+                ['lab_name' => ''],
+            ];
+        } else {
+            // Clear medical-only data
+            $this->form->tests = [];
+            $this->form->labs = [];
+        }
+    }
+
     public function render()
     {
-        return view('livewire.backend.medical-care.medical-test.create-medical-test')->extends('livewire.backend.layouts.app');
+        return view('livewire.backend.medical-service.create-medical-service')->extends('livewire.backend.layouts.app');
     }
 }

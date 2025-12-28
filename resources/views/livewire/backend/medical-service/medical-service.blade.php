@@ -2,7 +2,7 @@
     <!-- Breadcrumb Start -->
     <div class="my-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-300">
-            Medical Test
+            Medical Service
         </h2>
         <nav>
             <ol class="flex items-center gap-2">
@@ -10,21 +10,21 @@
                     <a class="text-[13.5px] text-gray-500 dark:text-blue-200" href="{{ route("dashboard") }}">Dashboard
                         /</a>
                 </li>
-                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Medical Test</li>
+                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Medical Service</li>
             </ol>
         </nav>
     </div>
     <!-- Breadcrumb End -->
     <div class="my-5 flex justify-end">
         @can("create location")
-            <a href="{{ route('create.medical.test') }}"
+            <a href="{{ route("create.medical.service") }}"
                 class="inline-flex items-center justify-center rounded-md bg-blue-500 px-3.5 py-2.5 text-sm text-white shadow-lg transition-colors duration-500 hover:bg-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="mr-2 h-5 w-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
-                Add Test
+                Add Medical Care
             </a>
         @endcan
     </div>
@@ -69,7 +69,10 @@
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                             Name
                         </th>
-                        @if (auth()->user()->can("edit medical test") || auth()->user()->can("delete medical test"))
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                            Status
+                        </th>
+                        @if (auth()->user()->can("edit medical service") || auth()->user()->can("delete medical service"))
                             <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                 Action
                             </th>
@@ -80,16 +83,25 @@
                     @forelse ($services as $index => $service)
                         <tr>
                             <td class="whitespace-nowrap px-6 py-4">{{ $index + 1 }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="whitespace-nowrap px-6 py-4">
                                 <img src="{{ asset(@$service->media?->path) }}" alt="{{ $service->name }}"
-                                    class="w-12 h-12 object-contain rounded-full border border-gray-300" />
+                                    class="h-12 w-12 rounded-full border border-gray-300 object-contain" />
                             </td>
                             <td class="whitespace-nowrap px-6 py-4">{{ $service->name }}</td>
                             <td class="whitespace-nowrap px-6 py-4">
+                                <label class="inline-flex cursor-pointer items-center">
+                                    <input type="checkbox" wire:click="toggleStatus({{ $service->id }})"
+                                        @checked($service->status == 1) class="peer sr-only">
+
+                                    <div
+                                        class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-500 peer-checked:after:translate-x-full peer-focus:outline-none">
+                                    </div>
+                                </label>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
                                 <div class="flex items-center space-x-2">
-                                    @can("edit medical test")
-                                        <a href="{{ route("edit.medical.test", $service->id) }}"
-                                            title="Edit">
+                                    @can("edit medical service")
+                                        <a href="{{ route("edit.medical.service", $service->id) }}" title="Edit">
                                             <!-- Edit Icon -->
                                             <svg class="h-5 w-5 text-gray-600 transition-colors duration-300 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-600"
                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -102,6 +114,23 @@
                                                 <path d="M16 5l3 3" />
                                             </svg>
                                         </a>
+                                    @endcan
+                                    @can("delete medical service")
+                                        <button type="button" wire:click="delete({{ $service->id }})"
+                                            wire:confirm='Are you sure to delete?' title="Delete">
+                                            <!-- Delete Icon -->
+                                            <svg class="h-5 w-5 text-gray-600 transition-colors duration-300 hover:text-red-600 dark:text-gray-300 dark:hover:text-red-600"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M4 7l16 0" />
+                                                <path d="M10 11l0 6" />
+                                                <path d="M14 11l0 6" />
+                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                            </svg>
+                                        </button>
                                     @endcan
                                 </div>
                             </td>

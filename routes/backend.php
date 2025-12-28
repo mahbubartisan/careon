@@ -23,9 +23,9 @@ use App\Livewire\Backend\Location\Location;
 use App\Livewire\Backend\LocationGroup\CreateLocationGroup;
 use App\Livewire\Backend\LocationGroup\EditLocationGroup;
 use App\Livewire\Backend\LocationGroup\LocationGroup;
-use App\Livewire\Backend\MedicalCare\MedicalTest\CreateMedicalTest;
-use App\Livewire\Backend\MedicalCare\MedicalTest\EditMedicalTest;
-use App\Livewire\Backend\MedicalCare\MedicalTest\MedicalTest;
+use App\Livewire\Backend\MedicalService\CreateMedicalService;
+use App\Livewire\Backend\MedicalService\EditMedicalService;
+use App\Livewire\Backend\MedicalService\MedicalService;
 use App\Livewire\Backend\Package\CreatePackage;
 use App\Livewire\Backend\Package\EditPackage;
 use App\Livewire\Backend\Package\Package;
@@ -106,11 +106,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/create-service-price', CreateServicePrice::class)->name('create.service.price');
     Route::get('/service-price/{serviceId}/edit', EditServicePrice::class)->name('edit.service.price');
     
-    // Medical Care Routes
-    Route::get('/medical-test', MedicalTest::class)->name('medical.test');
-    Route::get('/create-medical-test', CreateMedicalTest::class)->name('create.medical.test');
-    Route::get('/medical-test/{serviceId}/edit', EditMedicalTest::class)->name('edit.medical.test');
-
+    // Medical Service Routes
+    Route::get('/medical-service', MedicalService::class)->name('medical.service');
+    Route::get('/create-medical-service', CreateMedicalService::class)->name('create.medical.service');
+    Route::get('/medical-service/{serviceId}/edit', EditMedicalService::class)->name('edit.medical.service');
+    
     // Booking Routes
     Route::get('/bookings', Booking::class)->name('booking');
     Route::get('/booking/{bookingId}', BookingDetail::class)->name('booking.detail');

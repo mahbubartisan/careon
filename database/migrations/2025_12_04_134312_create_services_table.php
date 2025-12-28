@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->boolean('badge')->default(false);
             $table->text('short_desc');
+            $table->text('form_key')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

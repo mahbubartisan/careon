@@ -5,9 +5,9 @@ namespace App\Livewire\Forms;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class MedicalTestForm extends Form
+class MedicalServiceForm extends Form
 {
-    public $serviceId, $service_type_id, $image, $service_name, $service_desc, $test_name, $price, $lab_name;
+    public $serviceId, $service_type_id, $image, $service_name, $service_desc, $test_name, $price, $lab_name, $formType;
     public $serviceTypes = [];
     public $tests = [];
     public $labs = [];
@@ -27,10 +27,10 @@ class MedicalTestForm extends Form
             ? 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024'   // optional on update
             : 'required|image|mimes:jpg,jpeg,png,webp|max:1024',  // required on create
 
-            'tests.*.test_name' => 'required|string|max:255',
-            'tests.*.price' => 'required|numeric|min:0',
+            'tests.*.test_name' => 'nullable|string|max:255',
+            'tests.*.price' => 'nullable|numeric|min:0',
 
-            'labs.*.lab_name' => 'required|string|max:255',
+            'labs.*.lab_name' => 'nullable|string|max:255',
         ];
     }
 
