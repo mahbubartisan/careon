@@ -26,7 +26,7 @@ class Service extends Model
         return $this->hasMany(CareOption::class);
     }
     
-    public function medicalTests()
+    public function diagnostics()
     {
         return $this->hasMany(MedicalTest::class);
     }

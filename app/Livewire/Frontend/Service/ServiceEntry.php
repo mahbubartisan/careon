@@ -11,21 +11,24 @@ class ServiceEntry extends Component
 {
     public Service $service;
 
-    public function mount($slug)
-    {
-        $service = Service::where('slug', $slug)->firstOrFail();
+    // public function mount($slug)
+    // {
+    //     $service = Service::where('slug', $slug)->firstOrFail();
 
-        return match ($service->form_key) {
+    //     return match ($service->form_key) {
 
-            'special-care'
-                => redirect()->route('frontend.service.special-care', $service),
+    //         'special-care'
+    //             => redirect()->route('frontend.service.detail', $service),
 
-            'medical-test'
-                => redirect()->route('frontend.service.medical-test', $service),
+    //         'medical-test'
+    //             => redirect()->route('frontend.service.diagnostic', $service),
+                
+    //         'ambulance-support'
+    //             => redirect()->route('frontend.service.ambulance', $service),
 
-            default => abort(404),
-        };
-    }
+    //         default => abort(404),
+    //     };
+    // }
 
     // public function render()
     // {

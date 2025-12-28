@@ -26,7 +26,7 @@ class EditMedicalService extends Component
     {
         $this->form->serviceId = $serviceId;
 
-        $service = Service::with(['medicalTests', 'labs'])->findOrFail($this->form->serviceId);
+        $service = Service::with(['diagnostics', 'labs'])->findOrFail($this->form->serviceId);
 
         // Dropdown data
         $this->form->serviceTypes = ServiceType::all();
@@ -37,17 +37,17 @@ class EditMedicalService extends Component
         $this->form->service_desc = $service->short_desc;
         $this->form->formType = $service->form_key;
 
-        // Load medical data only if medical test
-        if ($this->form->formType === 'medical-test') {
-            $this->form->tests = $service->medicalTests->map(fn($t) => [
+        // Load medical data only if diagnostic
+        if ($this->form->formType === 'diagnostic') {
+            $this->form->tests = $service->diagnostics->map(fn($t) => [
                 'id' => $t->id,
-                'test_name' => $t->test_name,
+                'test_name' => $t->name,
                 'price' => $t->price,
             ])->toArray();
 
             $this->form->labs = $service->labs->map(fn($l) => [
                 'id' => $l->id,
-                'lab_name' => $l->lab_name,
+                'lab_name' => $l->name,
             ])->toArray();
         }
 
@@ -152,31 +152,37 @@ class EditMedicalService extends Component
                 'badge' => $this->form->badge ?? 0,
             ]);
 
-            // Sync Medical Tests
-            foreach ($this->form->tests as $test) {
-                MedicalTest::updateOrCreate(
-                    [
-                        'id' => $test['id'] ?? null,
-                    ],
-                    [
-                        'service_id' => $service->id,
-                        'name' => $test['test_name'],
-                        'price' => $test['price'],
-                    ]
-                );
-            }
+            /**
+             * Insert Tests & Labs ONLY if Medical Test form
+             */
+            if ($this->form->formType === 'diagnostic') {
 
-            // Sync Labs
-            foreach ($this->form->labs as $lab) {
-                Lab::updateOrCreate(
-                    [
-                        'id' => $lab['id'] ?? null,
-                    ],
-                    [
-                        'service_id' => $service->id,
-                        'name' => $lab['lab_name'],
-                    ]
-                );
+                // Sync Medical Tests
+                foreach ($this->form->tests as $test) {
+                    MedicalTest::updateOrCreate(
+                        [
+                            'id' => $test['id'] ?? null,
+                        ],
+                        [
+                            'service_id' => $service->id,
+                            'name' => $test['test_name'],
+                            'price' => $test['price'],
+                        ]
+                    );
+                }
+
+                // Sync Labs
+                foreach ($this->form->labs as $lab) {
+                    Lab::updateOrCreate(
+                        [
+                            'id' => $lab['id'] ?? null,
+                        ],
+                        [
+                            'service_id' => $service->id,
+                            'name' => $lab['lab_name'],
+                        ]
+                    );
+                }
             }
         });
 
@@ -186,7 +192,7 @@ class EditMedicalService extends Component
 
     public function updatedFormType($value)
     {
-        if ($value === 'medical-test') {
+        if ($value === 'diagnostic') {
             // If switching TO medical test
             if (empty($this->form->tests)) {
                 $this->form->tests = [

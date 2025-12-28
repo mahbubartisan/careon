@@ -330,7 +330,7 @@
 
                                     <span
                                         class="absolute right-4 top-4 rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-700">
-                                        From ৳ {{ number_format($test->price) }}
+                                        From ৳ {{ number_format((float) $test->price) }}
                                     </span>
 
                                     <p class="font-semibold">{{ $test->name }}</p>

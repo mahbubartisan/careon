@@ -1177,8 +1177,6 @@
     </style>
 
 
-
-
     @push("title")
         {{ $service->name }}
     @endpush

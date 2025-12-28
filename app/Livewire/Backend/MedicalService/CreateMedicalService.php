@@ -75,6 +75,7 @@ class CreateMedicalService extends Component
         DB::transaction(function () {
 
             // Image Upload
+            $imagePath = null;
             if ($this->form->image) {
                 $image = $this->uploadMedia($this->form->image, 'images/service', 80);
                 $imagePath = $image->id;
@@ -82,38 +83,45 @@ class CreateMedicalService extends Component
 
             // Create Service
             $service = Service::create([
-                'service_id'  => $this->generateServiceId($this->form->service_name),
-                'image' => $imagePath,
+                'service_id'      => $this->generateServiceId($this->form->service_name),
+                'image'           => $imagePath,
                 'service_type_id' => $this->form->service_type_id,
-                'name' => $this->form->service_name,
-                'slug' => str()->slug($this->form->service_name),
-                'short_desc' => $this->form->service_desc,
-                'form_key' => $this->form->formType,
-                'badge' => $this->form->badge ?? 0,
-                'status' => $this->form->status ?? 1,
+                'name'            => $this->form->service_name,
+                'slug'            => str()->slug($this->form->service_name),
+                'short_desc'      => $this->form->service_desc,
+                'form_key'        => $this->form->formType,
+                'badge'           => $this->form->badge ?? 0,
+                'status'          => $this->form->status ?? 1,
             ]);
 
-            // Medical Tests
-            foreach ($this->form->tests as $test) {
-                MedicalTest::create([
-                    'service_id' => $service->id,
-                    'name' => $test['test_name'],
-                    'price' => $test['price'],
-                ]);
-            }
+            /**
+             * Insert Tests & Labs ONLY if Medical Test form
+             */
+            if ($this->form->formType === 'diagnostic') {
 
-            // Labs
-            foreach ($this->form->labs as $lab) {
-                Lab::create([
-                    'service_id' => $service->id,
-                    'name' => $lab['lab_name'],
-                ]);
+                // Medical Tests
+                foreach ($this->form->tests as $test) {
+                    MedicalTest::create([
+                        'service_id' => $service->id,
+                        'name'       => $test['test_name'],
+                        'price'      => (float) $test['price'], // ensure numeric
+                    ]);
+                }
+
+                // Labs
+                foreach ($this->form->labs as $lab) {
+                    Lab::create([
+                        'service_id' => $service->id,
+                        'name'       => $lab['lab_name'],
+                    ]);
+                }
             }
         });
 
         session()->flash('success', 'Service created successfully!');
         return redirect()->route('medical.service');
     }
+
 
     private function generateServiceId($name)
     {
@@ -132,7 +140,7 @@ class CreateMedicalService extends Component
 
     public function updatedFormType($value)
     {
-        if ($value === 'medical-test') {
+        if ($value === 'diagnostic') {
             // Initialize medical fields
             $this->form->tests = [
                 ['test_name' => '', 'price' => ''],

@@ -8,7 +8,7 @@ use App\Models\Service;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class MedicalTest extends Component
+class Diagnostic extends Component
 {
     use WithPagination;
 
@@ -42,7 +42,7 @@ class MedicalTest extends Component
             ->orderBy('name')
             ->paginate(6);
 
-        return view('livewire.frontend.service.medical-test', [
+        return view('livewire.frontend.service.diagnostic', [
             'tests' => $tests,
             'labs'  => Lab::orderBy('name')->get(),
             'pagination' => $this->paginationWindow($tests),

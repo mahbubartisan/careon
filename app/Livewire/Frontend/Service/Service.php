@@ -20,8 +20,13 @@ class Service extends Component
                     'slug' => $service->slug
                 ]);
 
-            case 'medical-test':
-                return redirect()->route('frontend.service.medical', [
+            case 'diagnostic':
+                return redirect()->route('frontend.service.diagnostic', [
+                    'slug' => $service->slug
+                ]);
+                
+            case 'ambulance':
+                return redirect()->route('frontend.service.ambulance', [
                     'slug' => $service->slug
                 ]);
 

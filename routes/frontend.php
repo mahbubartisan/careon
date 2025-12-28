@@ -8,10 +8,10 @@ use App\Livewire\Frontend\CareProvider\CareProvider;
 use App\Livewire\Frontend\Contact\Contact;
 use App\Livewire\Frontend\Home\HomePage;
 use App\Livewire\Frontend\PriceCalculator\PriceCalculator;
-use App\Livewire\Frontend\Service\MedicalTest;
+use App\Livewire\Frontend\Service\AmbulanceSupport;
+use App\Livewire\Frontend\Service\Diagnostic;
 use App\Livewire\Frontend\Service\Service;
 use App\Livewire\Frontend\Service\ServiceDetail;
-use App\Livewire\Frontend\Service\ServiceEntry;
 use Illuminate\Support\Facades\Route;
 
 Route::as('frontend.')->group(function () {
@@ -27,7 +27,6 @@ Route::as('frontend.')->group(function () {
     Route::get('/confirmation', BookingConfirmation::class)->name('confirmation');
 
    
-    Route::get('/diagnostic/{slug}', MedicalTest::class)->name('service.medical');
-    // Route::get('/service/home-service/{service}', HomeServiceForm::class)->name('service.home');
-    // Route::get('/service/appointment/{service}', AppointmentForm::class)->name('service.appointment');
+    Route::get('/diagnostic/{slug}', Diagnostic::class)->name('service.diagnostic');
+    Route::get('/ambulance/{slug}', AmbulanceSupport::class)->name('service.ambulance');
 });

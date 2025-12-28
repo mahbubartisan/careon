@@ -2,7 +2,7 @@
     <!-- Breadcrumb Start -->
     <div class="my-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-300">
-            Create Medical Care Service
+            Create Medical Service
         </h2>
         <nav>
             <ol class="flex items-center gap-2">
@@ -10,7 +10,7 @@
                     <a class="text-[13.5px] text-gray-500 dark:text-blue-200" href="{{ route("dashboard") }}">Dashboard
                         /</a>
                 </li>
-                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Create Medical Care Service</li>
+                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Create Medical Service</li>
             </ol>
         </nav>
     </div>
@@ -18,7 +18,7 @@
     <!-- Form Container -->
     <div class="rounded-md bg-white px-6 pb-3 pt-6 shadow dark:bg-[#132337]">
         <h2 class="mb-4 text-lg font-semibold tracking-tight text-gray-800 dark:text-gray-200">
-            Medical Care Service Information
+            Medical Service Information
         </h2>
 
         <form method="post">
@@ -82,8 +82,8 @@
                             <select wire:model.live="form.formType" id="formType"
                                 class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-[11px] text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300">
                                 <option value="" hidden>-- Select One --</option>
-                                <option value="medical-test">Medical Test</option>
-                                <option value="abulance-support">Ambulance Support</option>
+                                <option value="diagnostic">Diagnostic</option>
+                                <option value="ambulance">Ambulance Support</option>
                                 <option value="appointment">Appointment</option>
                             </select>
 
@@ -106,7 +106,7 @@
                     </div>
                 </div>
 
-                @if ($form->formType === "medical-test")
+                @if ($form->formType === "diagnostic")
                     <h2 class="text-lg font-semibold tracking-tight text-gray-900">
                         Medical Tests
                     </h2>
