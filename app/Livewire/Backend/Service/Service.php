@@ -50,7 +50,7 @@ class Service extends Component
 
     public function render()
     {
-        $services = ModelsService::with('media')
+        $services = ModelsService::with('media')->where('service_type_id', 1)
             ->where(function ($q) {
                 $q->where('service_id', 'like', '%' . $this->form->search . '%')
                     ->orWhere('name', 'like', '%' . $this->form->search . '%');

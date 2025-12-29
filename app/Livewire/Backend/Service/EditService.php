@@ -7,6 +7,7 @@ use App\Models\CareLevel;
 use App\Models\CareOption;
 use App\Models\Service;
 use App\Models\ServiceCareLevel;
+use App\Models\ServiceType;
 use App\Traits\MediaTrait;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Title;
@@ -25,6 +26,8 @@ class EditService extends Component
     {
         $this->form->serviceId = $serviceId;
         $this->form->careLevels = CareLevel::select('id', 'name')->get();
+        $this->form->serviceTypes = ServiceType::select('id', 'name')->get();
+        $this->form->service_type_id = 1;
 
         if ($this->form->serviceId) {
             $service = Service::with([
@@ -36,7 +39,7 @@ class EditService extends Component
 
             $this->form->name = $service->name;
             $this->form->short_desc = $service->short_desc;
-            $this->form->badge = (bool) $service->badge;
+            $this->form->badge = $service->badge;
 
             // Store into form.care_levels
             $this->form->care_levels = $service->serviceCareLevels->map(function ($item) {

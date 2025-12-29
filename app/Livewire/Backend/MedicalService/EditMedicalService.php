@@ -35,6 +35,7 @@ class EditMedicalService extends Component
         $this->form->service_type_id = $service->service_type_id;
         $this->form->service_name = $service->name;
         $this->form->service_desc = $service->short_desc;
+        $this->form->badge = $service->badge;
         $this->form->formType = $service->form_key;
 
         // Load medical data only if diagnostic

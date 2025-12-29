@@ -7,7 +7,7 @@ use Livewire\Form;
 
 class ServiceForm extends Form
 {
-    public $serviceId, $care_level_id, $name, $service_type_id, $image, $badge = false, $short_desc, $status = true;
+    public $serviceId, $care_level_id, $name, $service_type_id, $image, $badge = 0, $short_desc, $status = true;
     public $search = '';
     public $rowsPerPage = 20;
     public $serviceTypes = [];

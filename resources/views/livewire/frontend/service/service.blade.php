@@ -230,7 +230,14 @@
                                 class="absolute right-3 top-3 rounded-full bg-[#1f64ad] px-3 py-0.5 text-xs font-semibold text-white shadow-sm hover:bg-[#1f64ad]/80">
                                 Most Popular
                             </span>
+                        @elseif ($service->badge == 2)
+                            <span
+                                class="absolute right-3 top-3 rounded-full bg-[#1f64ad] px-3 py-0.5 text-xs font-semibold text-white shadow-sm hover:bg-[#1f64ad]/80">
+                                24/7
+                            </span>
                         @endif
+
+
 
                         <div class="flex flex-col sm:flex-row sm:items-start sm:space-x-5 sm:text-left">
                             <div
@@ -283,7 +290,8 @@
             </p>
 
             <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a href="{{ route('frontend.contact-us') }}" class="rounded-xl bg-[#1D64B4] px-7 py-3 text-sm font-medium text-white">
+                <a href="{{ route("frontend.contact-us") }}"
+                    class="rounded-xl bg-[#1D64B4] px-7 py-3 text-sm font-medium text-white">
                     Contact Support
                 </a>
                 <a href="#"

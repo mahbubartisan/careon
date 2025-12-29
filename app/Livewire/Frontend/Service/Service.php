@@ -29,6 +29,11 @@ class Service extends Component
                 return redirect()->route('frontend.service.ambulance', [
                     'slug' => $service->slug
                 ]);
+                
+            case 'appointment':
+                return redirect()->route('frontend.service.appointment', [
+                    'slug' => $service->slug
+                ]);
 
             default:
                 abort(404);

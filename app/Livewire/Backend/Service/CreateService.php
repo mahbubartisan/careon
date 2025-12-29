@@ -26,6 +26,8 @@ class CreateService extends Component
     public function mount()
     {
         $this->form->serviceTypes = ServiceType::select('id', 'name')->get();
+        $this->form->service_type_id = 1;
+        
         $this->form->careLevels = CareLevel::select('id', 'name')
             ->get()
             ->unique('name')

@@ -50,10 +50,13 @@ class MedicalService extends Component
 
     public function render()
     {
-        $services = Service::with('media')
-            ->where('service_type_id', 3)
-            ->where('name', 'like', '%' . $this->form->search . '%')
-            ->get();
+        $services = Service::with('media')->where('service_type_id', 3)
+            ->where(function ($q) {
+                $q->where('service_id', 'like', '%' . $this->form->search . '%')
+                    ->orWhere('name', 'like', '%' . $this->form->search . '%');
+            })
+            ->latest()
+            ->paginate($this->form->rowsPerPage);
         return view('livewire.backend.medical-service.medical-service', [
             'services' => $services
         ])->extends('livewire.backend.layouts.app');

@@ -7,7 +7,7 @@ use Livewire\Form;
 
 class MedicalServiceForm extends Form
 {
-    public $serviceId, $service_type_id, $image, $service_name, $service_desc, $test_name, $price, $lab_name, $formType;
+    public $serviceId, $service_type_id, $image, $service_name, $service_desc, $test_name, $price, $lab_name, $formType, $badge = 0, $status = true;
     public $serviceTypes = [];
     public $tests = [];
     public $labs = [];

@@ -21,11 +21,14 @@ class CreateMedicalService extends Component
 
     public MedicalServiceForm $form;
 
-    public $selectedFormType = null; // medical_test, home_service, appointment
+    public $selectedFormType = null;
 
     public function mount()
     {
         $this->form->serviceTypes = ServiceType::all();
+
+        // Preselect Medical Care Services
+        $this->form->service_type_id = 3;
 
         $this->form->tests = [
             [

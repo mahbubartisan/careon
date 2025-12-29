@@ -22,6 +22,23 @@
             <div class="space-y-4">
                 <div class="space-y-4 rounded-xl border p-4 dark:border-[#1b2f46] dark:bg-[#102030]">
 
+                    <!-- Service Type -->
+                    <div>
+                        <label for="service_type_id" class="block text-sm text-gray-700 dark:text-gray-400">Service
+                            Type*</label>
+                        <select wire:model="form.service_type_id" disabled id="service_type_id"
+                            class="mt-2 w-full cursor-not-allowed rounded-md border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300">
+                            <option value="">-- Select a Service Type --</option>
+                            @foreach ($form->serviceTypes as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+
+                        @error("form.service_type_id")
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
                     <!-- Service Name -->
                     <div>
                         <label for="name" class="block text-sm text-gray-700 dark:text-gray-400">
@@ -180,15 +197,39 @@
                         Featured Status
                     </h2>
 
-                    <!-- Most Popular Checkbox -->
+                    <!-- Checkboxes -->
                     <div class="rounded-xl border p-4">
-                        <label class="flex cursor-pointer select-none items-center space-x-2">
-                            <input type="checkbox" wire:model="form.badge"
-                                class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700">
-                            <span class="text-sm text-gray-700 dark:text-gray-300">
+
+                        <div class="flex gap-4">
+
+                            <!-- Most Popular -->
+                            <label
+                                class="{{ $form->badge == 1
+                                    ? "border-green-400 bg-green-50 text-green-600"
+                                    : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50" }} flex cursor-pointer items-center gap-3 rounded-full border px-4 py-2 text-sm font-medium transition">
+
+                                <span
+                                    class="{{ $form->badge == 1 ? "bg-green-500" : "bg-gray-300" }} h-3 w-3 rounded-full">
+                                </span>
+
+                                <input type="radio" wire:model.live="form.badge" value="1" class="hidden">
                                 Most Popular
-                            </span>
-                        </label>
+                            </label>
+
+                            <!-- 24/7 -->
+                            <label
+                                class="{{ $form->badge == 2
+                                    ? "border-green-400 bg-green-50 text-green-600"
+                                    : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50" }} flex cursor-pointer items-center gap-3 rounded-full border px-4 py-2 text-sm font-medium transition">
+
+                                <span
+                                    class="{{ $form->badge == 2 ? "bg-green-500" : "bg-gray-300" }} h-3 w-3 rounded-full">
+                                </span>
+
+                                <input type="radio" wire:model.live="form.badge" value="2" class="hidden">
+                                24/7
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>

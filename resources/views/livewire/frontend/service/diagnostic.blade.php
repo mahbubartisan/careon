@@ -472,7 +472,7 @@
 
                         <!-- Full Name -->
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-700">
+                            <label class="mb-1 block text-sm font-medium text-gray-900">
                                 Full Name
                             </label>
                             <input type="text" placeholder="Enter full name"
@@ -481,7 +481,7 @@
 
                         <!-- Phone -->
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-700">
+                            <label class="mb-1 block text-sm font-medium text-gray-900">
                                 Phone Number
                             </label>
                             <input type="text" placeholder="01XXXXXXXXX"
@@ -490,7 +490,7 @@
 
                         <!-- Email -->
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-700">
+                            <label class="mb-1 block text-sm font-medium text-gray-900">
                                 Email
                             </label>
                             <input type="email" placeholder="example@email.com"
@@ -501,7 +501,7 @@
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 
                             <div>
-                                <label class="mb-1 block text-sm font-medium text-gray-700">
+                                <label class="mb-1 block text-sm font-medium text-gray-900">
                                     Age
                                 </label>
                                 <input type="number" placeholder="Age"
@@ -509,12 +509,12 @@
                             </div>
 
                             <div>
-                                <label class="mb-1 block text-sm font-medium text-gray-700">
+                                <label class="mb-1 block text-sm font-medium text-gray-900">
                                     Gender
                                 </label>
                                 <select
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
-                                    <option>Select gender</option>
+                                    <option>-- Select gender --</option>
                                     <option>Male</option>
                                     <option>Female</option>
                                     <option>Other</option>
@@ -525,7 +525,7 @@
 
                         <!-- Address -->
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-700">
+                            <label class="mb-1 block text-sm font-medium text-gray-900">
                                 Address
                             </label>
                             <textarea rows="3" placeholder="Enter address"
@@ -534,7 +534,7 @@
 
                         <!-- Note -->
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-700">
+                            <label class="mb-1 block text-sm font-medium text-gray-900">
                                 Special Instructions (Optional)
                             </label>
                             <textarea rows="2" placeholder="Any additional notes"

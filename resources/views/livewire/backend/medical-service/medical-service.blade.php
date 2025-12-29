@@ -61,10 +61,10 @@
                 <thead class="bg-white dark:bg-[#132337]">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                            #
+                            Service ID
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                            Icon
+                            Image
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                             Name
@@ -82,7 +82,7 @@
                 <tbody class="divide-y divide-gray-200 bg-white dark:divide-[#233A57] dark:bg-[#132337]">
                     @forelse ($services as $index => $service)
                         <tr>
-                            <td class="whitespace-nowrap px-6 py-4">{{ $index + 1 }}</td>
+                            <td class="whitespace-nowrap px-6 py-4">#{{ $service->service_id }}</td>
                             <td class="whitespace-nowrap px-6 py-4">
                                 <img src="{{ asset(@$service->media?->path) }}" alt="{{ $service->name }}"
                                     class="h-12 w-12 rounded-full border border-gray-300 object-contain" />
@@ -142,6 +142,64 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        <div class="mt-4 flex flex-col items-center justify-between gap-y-3 sm:flex-row">
+            <!-- Showing Entries Info -->
+            <div>
+                <p class="text-sm text-gray-700 dark:text-gray-700">
+                    Showing <span>{{ $services->firstItem() }}</span> to
+                    <span>{{ $services->lastItem() }}</span>
+                    of <span>{{ $services->total() }}</span> entries
+                </p>
+            </div>
+
+            <!-- Pagination Links -->
+            <div>
+                <nav class="relative z-0 inline-flex flex-wrap -space-x-px rounded-md bg-white text-sm font-medium text-gray-700 shadow-sm dark:bg-gray-800 dark:text-gray-700"
+                    aria-label="Pagination">
+
+                    <!-- Previous Button -->
+                    @if ($services->onFirstPage())
+                        <span
+                            class="relative inline-flex cursor-not-allowed items-center rounded-l-md border border-gray-600/10 px-2 py-2 text-gray-400 dark:border-gray-600/45">
+                            <span>Previous</span>
+                        </span>
+                    @else
+                        <a href="#" wire:click.prevent="previousPage"
+                            class="relative inline-flex items-center rounded-l-md border border-gray-600/10 px-2 py-2 hover:bg-gray-100 dark:border-gray-600/45 dark:hover:bg-gray-700">
+                            <span>Previous</span>
+                        </a>
+                    @endif
+
+                    <!-- Pagination Numbers -->
+                    @foreach ($services->links()->elements[0] as $page => $url)
+                        @if ($page == $services->currentPage())
+                            <span
+                                class="relative inline-flex items-center border border-gray-600/10 bg-blue-500 px-4 py-2 text-white dark:border-gray-600/45">
+                                {{ $page }}
+                            </span>
+                        @else
+                            <a href="#" wire:click.prevent="gotoPage({{ $page }})"
+                                class="relative inline-flex items-center border border-gray-600/10 px-4 py-2 hover:bg-gray-100 dark:border-gray-600/45 dark:hover:bg-gray-700">
+                                {{ $page }}
+                            </a>
+                        @endif
+                    @endforeach
+
+                    <!-- Next Button -->
+                    @if ($services->hasMorePages())
+                        <a href="#" wire:click.prevent="nextPage"
+                            class="relative inline-flex items-center rounded-r-md border border-gray-600/10 px-2 py-2 hover:bg-gray-100 dark:border-gray-600/45 dark:hover:bg-gray-700">
+                            <span>Next</span>
+                        </a>
+                    @else
+                        <span
+                            class="relative inline-flex cursor-not-allowed items-center rounded-r-md border border-gray-600/10 px-2 py-2 text-gray-400 dark:border-gray-600/45">
+                            <span>Next</span>
+                        </span>
+                    @endif
+                </nav>
+            </div>
         </div>
     </div>
 </div>

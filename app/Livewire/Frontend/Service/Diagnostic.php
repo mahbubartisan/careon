@@ -30,7 +30,7 @@ class Diagnostic extends Component
     public function mount($slug)
     {
         $this->service = Service::with([
-            'type',
+            'type'
         ])->where('slug', $slug)
             ->where('status', 1)
             ->firstOrFail();
