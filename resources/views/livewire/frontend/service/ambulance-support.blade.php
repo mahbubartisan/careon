@@ -68,7 +68,7 @@
 
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-900">Patient Age *</label>
-                                <input type="number" wire:model="form.patient_age" placeholder="Age"
+                                <input type="number" wire:model="form.patient_age" placeholder="Enter age (e.g. 32)"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
                                 @error("form.patient_age")
                                     <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
@@ -80,9 +80,9 @@
                                 <select wire:model="form.gender"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
                                     <option value="" hidden>-- Select one --</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
+                                    @foreach (\App\Enums\Gender::values() as $gender)
+                                        <option value="{{ $gender }}">{{ $gender }}</option>
+                                    @endforeach
                                 </select>
                                 @error("form.gender")
                                     <span class="mt-1 text-xs text-red-500">{{ $message }}</span>

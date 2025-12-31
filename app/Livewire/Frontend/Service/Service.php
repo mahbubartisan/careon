@@ -31,7 +31,7 @@ class Service extends Component
                 ]);
                 
             case 'appointment':
-                return redirect()->route('frontend.service.appointment', [
+                return redirect()->route('frontend.service.consultation', [
                     'slug' => $service->slug
                 ]);
 

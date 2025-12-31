@@ -2,13 +2,11 @@
 
 namespace App\Enums;
 
-enum JerseySize: string
+enum Gender: string
 {
-    case S = 'S/36';
-    case M = 'M/38';
-    case L = 'L/40';
-    case XL = 'XL/42';
-    case XXL = 'XXL/44';
+    case MALE   = 'Male';
+    case FEMALE = 'Female';
+    case OTHER  = 'Other';
 
     public static function values(): array
     {

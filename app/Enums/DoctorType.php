@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum BloodGroup: string
+enum DoctorType: string
 {
     case GENERAL_PHYSICIAN = 'General Physician';
     case CARDIOLOGIST      = 'Cardiologist';

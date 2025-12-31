@@ -484,7 +484,7 @@
                             <label class="mb-1 block text-sm font-medium text-gray-900">
                                 Phone Number
                             </label>
-                            <input type="text" placeholder="01XXXXXXXXX"
+                            <input type="number" placeholder="01XXXXXXXXX"
                                 class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
                         </div>
 
@@ -504,7 +504,7 @@
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
                                     Age
                                 </label>
-                                <input type="number" placeholder="Age"
+                                <input type="number" placeholder="Enter age (e.g. 32)"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
                             </div>
 
@@ -514,10 +514,10 @@
                                 </label>
                                 <select
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
-                                    <option>-- Select gender --</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
+                                    <option>-- Select one --</option>
+                                    @foreach (\App\Enums\Gender::values() as $gender)
+                                        <option value="{{ $gender }}">{{ $gender }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
