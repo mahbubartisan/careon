@@ -14,17 +14,17 @@
             <!-- Label: Service Type -->
             <span
                 class="mb-3 inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
-                {{ optional($service->type)->name }}
+                {{ optional(@$service->type)->name }}
             </span>
 
             <!-- Title -->
             <h1 class="mb-2 text-3xl font-bold text-gray-900">
-                {{ $service->name }}
+                {{ @$service->name }}
             </h1>
 
             <!-- Short Description -->
             <p class="max-w-7xl text-gray-600">
-                {{ $service->short_desc }}
+                {{ @$service->short_desc }}
             </p>
         </div>
 
@@ -322,7 +322,7 @@
                     <div class="space-y-3">
                         @foreach ($tests as $test)
                             <label class="block cursor-pointer">
-                                <input type="checkbox" wire:model.live="selectedTests" value="{{ $test->id }}"
+                                <input type="checkbox" wire:model.live="selectedTests" value="{{ $test->name }}"
                                     class="peer hidden">
 
                                 <div
@@ -419,7 +419,7 @@
                     <div class="space-y-3">
                         @foreach ($labs as $lab)
                             <label class="block cursor-pointer">
-                                <input type="radio" wire:model="selectedLab" value="{{ $lab->id }}"
+                                <input type="radio" wire:model="selectedLab" value="{{ $lab->name }}"
                                     class="peer hidden">
                                 <div
                                     class="rounded-xl border p-4 transition peer-checked:border-teal-500 peer-checked:bg-teal-50">
@@ -468,57 +468,79 @@
                     </div>
 
                     <!-- Form -->
-                    <form class="space-y-5">
+                    <form class="space-y-4">
 
                         <!-- Full Name -->
                         <div>
                             <label class="mb-1 block text-sm font-medium text-gray-900">
-                                Full Name
+                                Full Name *
                             </label>
-                            <input type="text" placeholder="Enter full name"
+                            <input type="text" wire:model.defer="form.patient_name" placeholder="Enter full name"
                                 class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
+                            @error("form.patient_name")
+                                <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
 
-                        <!-- Phone -->
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-900">
-                                Phone Number
-                            </label>
-                            <input type="number" placeholder="01XXXXXXXXX"
-                                class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
-                        </div>
+                        <!-- Phone & Email -->
+                        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
 
-                        <!-- Email -->
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-900">
-                                Email
-                            </label>
-                            <input type="email" placeholder="example@email.com"
-                                class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
+                            <!-- Phone -->
+                            <div>
+                                <label class="mb-1 block text-sm font-medium text-gray-900">
+                                    Phone Number *
+                                </label>
+                                <input type="number" wire:model="form.phone" placeholder="01XXXXXXXXX"
+                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
+                                @error("form.phone")
+                                    <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <label class="mb-1 block text-sm font-medium text-gray-900">
+                                    Email *
+                                </label>
+                                <input type="email" wire:model="form.email" placeholder="example@email.com"
+                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
+                                @error("form.email")
+                                    <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                         </div>
 
                         <!-- Age & Gender -->
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
 
+                            <!-- Age -->
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
-                                    Age
+                                    Age *
                                 </label>
-                                <input type="number" placeholder="Enter age (e.g. 32)"
+                                <input type="number" wire:model="form.patient_age" placeholder="Enter age (e.g. 32)"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
+                                @error("form.patient_age")
+                                    <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
 
+                            <!-- Gender -->
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
-                                    Gender
+                                    Gender *
                                 </label>
-                                <select
+                                <select wire:model="form.gender"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
-                                    <option>-- Select one --</option>
+                                    <option value="">-- Select one --</option>
                                     @foreach (\App\Enums\Gender::values() as $gender)
                                         <option value="{{ $gender }}">{{ $gender }}</option>
                                     @endforeach
                                 </select>
+                                @error("form.gender")
+                                    <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
 
                         </div>
@@ -526,10 +548,13 @@
                         <!-- Address -->
                         <div>
                             <label class="mb-1 block text-sm font-medium text-gray-900">
-                                Address
+                                Address *
                             </label>
-                            <textarea rows="3" placeholder="Enter address"
-                                class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none"></textarea>
+                            <input wire:model="form.address" placeholder="Enter address"
+                                class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
+                            @error("form.address")
+                                <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Note -->
@@ -537,28 +562,39 @@
                             <label class="mb-1 block text-sm font-medium text-gray-900">
                                 Special Instructions (Optional)
                             </label>
-                            <textarea rows="2" placeholder="Any additional notes"
+                            <textarea rows="2" wire:model="form.notes" placeholder="Any additional notes"
                                 class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none"></textarea>
+                            @error("form.notes")
+                                <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Actions -->
-                        <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+                        <div class="flex flex-col gap-4 pt-2 sm:flex-row">
 
-                            <button type="button" type="button"
-                                @click="step = 1; window.scrollTo({ top: 0, behavior: 'smooth' })"
-                                class="w-full rounded-xl border border-gray-300 py-3 text-gray-700 transition hover:bg-gray-50 sm:w-1/2">
+                            <!-- Back -->
+                            <button type="button" @click="step = 1; window.scrollTo({ top: 0, behavior: 'smooth' })"
+                                class="w-full rounded-xl border border-gray-300 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50 sm:w-1/2">
                                 Back
                             </button>
 
-                            <button type="submit"
-                                class="w-full rounded-xl bg-teal-500 py-3 text-white transition hover:bg-teal-600 sm:w-1/2">
-                                Confirm
-                            </button>
+                            <!-- Confirm -->
+                            @auth
+                                <button type="button" wire:click="book"
+                                    class="w-full rounded-xl bg-teal-500 px-8 py-3 text-sm font-medium text-white transition hover:bg-teal-600 sm:w-1/2">
+                                    Confirm
+                                </button>
+                            @else
+                                <button type="button" wire:click="redirectToLogin"
+                                    class="w-full rounded-xl bg-teal-500 px-8 py-3 text-sm font-medium text-white transition hover:bg-teal-600 sm:w-1/2">
+                                    Confirm
+                                </button>
+                            @endauth
 
                         </div>
 
-                    </form>
 
+                    </form>
                 </div>
             </div>
         </div>
@@ -594,6 +630,6 @@
     </section>
 
     @push("title")
-        CareOn - {{ $service->name }}
+        CareOn - {{ @$service->name }}
     @endpush
 </div>

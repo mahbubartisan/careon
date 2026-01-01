@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Booking;
+use App\Models\Feedback;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,21 +10,20 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class BookingMail extends Mailable
+class FeedbackMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $booking;
-    public $recipientType;
+    public $feedback;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Booking $booking, $recipientType = 'admin')
+    public function __construct(Feedback $feedback)
     {
-        $this->booking = $booking;
-        $this->recipientType = $recipientType;
+        $this->feedback = $feedback;
     }
+    
 
     /**
      * Get the message envelope.
@@ -32,7 +31,7 @@ class BookingMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'CareOn - Booking Confirmation',
+            subject: 'New Feedback Received',
         );
     }
 
@@ -42,9 +41,9 @@ class BookingMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.booking', // ← return view, not component
+            view: 'email.feedback-mail',
             with: [
-                'booking' => $this->booking,
+                'feedback' => $this->feedback,
             ]
         );
     }

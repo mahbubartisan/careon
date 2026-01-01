@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\AmbulanceRequest;
+use App\Models\DiagnosticBooking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,20 +10,21 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AmbulanceRequestMail extends Mailable
+class DiagnosticMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $booking;
+    public $recipientType;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(AmbulanceRequest $booking)
+    public function __construct(DiagnosticBooking $booking, $recipientType = 'admin')
     {
         $this->booking = $booking;
+        $this->recipientType = $recipientType;
     }
-
 
     /**
      * Get the message envelope.
@@ -31,7 +32,7 @@ class AmbulanceRequestMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Ambulance Support Received',
+            subject: 'Diagnostic Booking Confirmation',
         );
     }
 
@@ -41,7 +42,7 @@ class AmbulanceRequestMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.ambulance-request-mail', // ← return view, not component
+            view: 'email.diagnostic-mail', // ← return view, not component
             with: [
                 'booking' => $this->booking,
             ]

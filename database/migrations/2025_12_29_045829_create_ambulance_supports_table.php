@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ambulance_requests', function (Blueprint $table) {
+        Schema::create('ambulance_supports', function (Blueprint $table) {
             $table->id();
-            $table->string('booking_code')->unique();
+            $table->string('booking_id')->unique();
+            $table->unsignedBigInteger('user_id')->nullable();
             // Patient info
             $table->string('patient_name');
             $table->unsignedTinyInteger('patient_age');

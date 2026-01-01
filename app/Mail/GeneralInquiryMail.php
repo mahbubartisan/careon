@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Booking;
+use App\Models\GeneralInquiry;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,20 +10,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class BookingMail extends Mailable
+class GeneralInquiryMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $booking;
-    public $recipientType;
+    public $inquiry;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Booking $booking, $recipientType = 'admin')
+    public function __construct(GeneralInquiry $inquiry)
     {
-        $this->booking = $booking;
-        $this->recipientType = $recipientType;
+        $this->inquiry = $inquiry;
     }
 
     /**
@@ -32,7 +30,7 @@ class BookingMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'CareOn - Booking Confirmation',
+            subject: 'New General Inquiry Received',
         );
     }
 
@@ -42,9 +40,9 @@ class BookingMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.booking', // ← return view, not component
+            view: 'email.general-inquiry-mail',
             with: [
-                'booking' => $this->booking,
+                'inquiry' => $this->inquiry,
             ]
         );
     }

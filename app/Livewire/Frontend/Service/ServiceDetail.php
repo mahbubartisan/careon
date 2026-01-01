@@ -50,7 +50,7 @@ class ServiceDetail extends Component
         'payment_type' => '',
     ];
 
-   
+
     public function mount($slug)
     {
         $this->service = Service::with([
@@ -160,17 +160,14 @@ class ServiceDetail extends Component
         ]);
 
 
-        $adminEmail = 'admin@example.com';
-
         // Send to user
         Mail::to(auth()->user()->email)
-            ->send(new BookingMail($booking));
+            ->send(new BookingMail($booking, 'user'));
 
         // Send to admin
-        Mail::to($adminEmail)
-            ->send(new BookingMail($booking));
+        Mail::to(config('mail.admin_address'))
+            ->send(new BookingMail($booking, 'admin'));
 
-        // session()->flash('success', 'Booking successful!');
         session()->put('booking_id', $booking->id);
         return redirect()->route('frontend.confirmation');
     }

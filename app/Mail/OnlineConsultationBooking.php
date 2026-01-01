@@ -15,13 +15,15 @@ class OnlineConsultationBooking extends Mailable
     use Queueable, SerializesModels;
 
     public $booking;
+    public $recipientType;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(DoctorConsultation $booking)
+    public function __construct(DoctorConsultation $booking, $recipientType = 'user')
     {
         $this->booking = $booking;
+        $this->recipientType = $recipientType;
     }
 
     /**
@@ -30,7 +32,7 @@ class OnlineConsultationBooking extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Online Doctor Consultation Booked',
+            subject: 'Booking Confirmation for Online Consultation',
         );
     }
 

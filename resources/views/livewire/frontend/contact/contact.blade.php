@@ -152,37 +152,55 @@
                 <form x-show="tab === 'general'" wire:key="general-form" y-transition class="space-y-4">
                     <div class="grid gap-4 lg:grid-cols-2">
                         <div>
-                            <label class="mb-1 block text-sm font-medium leading-none">পূর্ণ নাম | Full Name *</label>
-                            <input type="text"
-                                class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                            <label class="mb-1 block text-sm font-medium">পূর্ণ নাম | Full Name *</label>
+                            <input type="text" wire:model="generalForm.name"
+                                class="@error("generalForm.name") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
                                 placeholder="Your name" />
+                            @error("generalForm.name")
+                                <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div>
-                            <label class="mb-1 block text-sm font-medium leading-none">ফোন নম্বর | Phone Number *</label>
-                            <input type="text"
-                                class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                            <label class="mb-1 block text-sm font-medium">ফোন নম্বর | Phone Number
+                                *</label>
+                            <input type="number" wire:model="generalForm.phone"
+                                class="@error("generalForm.phone") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
                                 placeholder="+880 1XXX-XXXXXX" />
+                            @error("generalForm.phone")
+                                <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div>
-                        <label class="mb-1 block text-sm font-medium leading-none">ইমেইল | Email Address *</label>
-                        <input type="email" class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                        <label class="mb-1 block text-sm font-medium">ইমেইল | Email Address *</label>
+                        <input type="email" wire:model="generalForm.email"
+                            class="@error("generalForm.email") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
                             placeholder="your@email.com" />
+                        @error("generalForm.email")
+                            <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div>
-                        <label class="mb-1 block text-sm font-medium leading-none">বিষয় | Subject *</label>
-                        <input type="text" class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                        <label class="mb-1 block text-sm font-medium">বিষয় | Subject *</label>
+                        <input type="text" wire:model="generalForm.subject"
+                            class="@error("generalForm.subject") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
                             placeholder="What's this about?" />
+                        @error("generalForm.subject")
+                            <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div>
-                        <label class="mb-1 block text-sm font-medium leading-none">বার্তা | Message *</label>
-                        <textarea class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none" rows="6"
+                        <label class="mb-1 block text-sm font-medium">বার্তা | Message *</label>
+                        <textarea wire:model="generalForm.message" class="@error("generalForm.message") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none" rows="6"
                             placeholder="Tell us how we can help you... | আমা কীভাবে আপাকে সাহায্য করতে পারি..."></textarea>
+                        @error("generalForm.message")
+                            <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="text-xs text-gray-500">
                         * Required fields | * প্রয়োজনীয় তথ্য
                     </div>
-                    <button type="submit"
+                    <button type="button" wire:click="submitGeneralInquiry"
                         class="w-full rounded-lg bg-[#00B686] py-3 text-sm font-medium text-white hover:bg-[#00976F]">
                         Send Message | বার্তা পাঠান
                     </button>
@@ -192,50 +210,58 @@
                 <form x-show="tab === 'feedback'" wire:key="feedback-form" y-transition class="space-y-4">
                     <div class="grid gap-4 lg:grid-cols-2">
                         <div>
-                            <label class="block text-sm font-medium leading-none mb-1">পূর্ণ নাম | Full Name *</label>
-                                <input
-                                type="text"
-                                wire:model.defer="feedback.name"
-                                class="w-full rounded-xl px-3 py-2.5 text-sm focus:outline-none border
-                                       @error('feedback.name') border-red-500 @enderror"
-                                placeholder="Your name"
-                            />
-                            @error('feedback.name')
+                            <label class="mb-1 block text-sm font-medium">পূর্ণ নাম | Full Name *</label>
+                            <input type="text" wire:model="feedbackForm.name"
+                                class="@error("feedbackForm.name") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                                placeholder="Your name" />
+                            @error("feedbackForm.name")
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
                         <div>
-                            <label class="mb-1 block text-sm font-medium leading-none">ফোন নম্বর | Phone Number *</label>
-                            <input type="text"
-                                class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                            <label class="mb-1 block text-sm font-medium">
+                                ফোন নম্বর | Phone Number *
+                            </label>
+                            <input type="number" wire:model="feedbackForm.phone"
+                                class="@error("feedbackForm.phone") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
                                 placeholder="+880 1XXX-XXXXXX" />
+                            @error("feedbackForm.phone")
+                                <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div>
-                        <label class="mb-1 block text-sm font-medium leading-none">ইমেইল | Email Address *</label>
-                        <input type="email" class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                        <label class="mb-1 block text-sm font-medium">ইমেইল | Email Address *</label>
+                        <input type="email" wire:model="feedbackForm.email"
+                            class="@error("feedbackForm.email") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
                             placeholder="your@email.com" />
+                        @error("feedbackForm.email")
+                            <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div>
-                        <label class="mb-1 block text-sm font-medium leading-none">Which service did you use?</label>
-                        <select class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none">
-                            <option value="" selected disabled hidden>
-                                Select service
+                        <label class="mb-1 block text-sm font-medium">Which service did you use?</label>
+                        <select wire:model="feedbackForm.service" class="@error("feedbackForm.service") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none">
+                            <option value="" hidden>
+                                -- Select one --
                             </option>
-                            <option value="nursing">Nursing Care</option>
-                            <option value="doctor">Doctor-on-Call</option>
-                            <option value="physio">Physiotherapy</option>
-                            <option value="nanny">Nanny &amp; Baby Care</option>
-                            <option value="elderly">Elderly Care</option>
-                            <option value="attendant">Patient Attendant</option>
-                            <option value="diagnostics">Sample Collection</option>
-                            <option value="ambulance">Ambulance Service</option>
+                            <option value="Nursing Care">Nursing Care</option>
+                            <option value="Doctor-on-Call">Doctor-on-Call</option>
+                            <option value="Physiotherapy">Physiotherapy</option>
+                            <option value="Nanny & Baby Care">Nanny & Baby Care</option>
+                            <option value="Elderly Care">Elderly Care</option>
+                            <option value="Patient Attendant">Patient Attendant</option>
+                            <option value="Sample Collection">Sample Collection</option>
+                            <option value="Ambulance Service">Ambulance Service</option>
                         </select>
+                        @error("feedbackForm.service")
+                            <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div>
-                        <label class="mb-1 block text-sm font-medium leading-none">রেটিং | Rating *</label>
-                        <select class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none">
-                            <option value="" selected disabled hidden>
+                        <label class="mb-1 block text-sm font-medium">রেটিং | Rating *</label>
+                        <select wire:model="feedbackForm.rating" class="@error("feedbackForm.rating") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none">
+                            <option value="" hidden>
                                 How satisfied were you?
                             </option>
                             <option>⭐⭐⭐⭐⭐ Excellent</option>
@@ -244,21 +270,30 @@
                             <option>⭐⭐ Poor</option>
                             <option>⭐ Very Poor</option>
                         </select>
+                        @error("feedbackForm.rating")
+                            <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                        @enderror   
                     </div>
                     <div>
-                        <label class="mb-1 block text-sm font-medium leading-none">বিষয় | Subject *</label>
-                        <input type="text" class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                        <label class="mb-1 block text-sm font-medium">বিষয় | Subject *</label>
+                        <input type="text" wire:model="feedbackForm.subject" class="@error("feedbackForm.subject") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
                             placeholder="Brief summary of your feedback" />
+                        @error("feedbackForm.subject")  
+                            <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div>
-                        <label class="mb-1 block text-sm font-medium leading-none">বার্তা | Message *</label>
-                        <textarea class="w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none" rows="6"
+                        <label class="mb-1 block text-sm font-medium">বার্তা | Message *</label>
+                        <textarea wire:model="feedbackForm.message" class="@error("feedbackForm.message") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none" rows="6"
                             placeholder="Share your experience with us... | আপনার অভি্ঞতা শেয়ার করুন..."></textarea>
+                        @error("feedbackForm.message")
+                            <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="text-xs text-gray-500">
                         * Required fields | * প্রয়োজনীয় তথ্য
                     </div>
-                    <button type="submit"
+                    <button type="button" wire:click="submitFeedback"
                         class="w-full rounded-lg bg-[#00B686] py-3 text-sm font-medium text-white hover:bg-[#00976F]">
                         Submit Feedback | মতামত পাঠান
                     </button>

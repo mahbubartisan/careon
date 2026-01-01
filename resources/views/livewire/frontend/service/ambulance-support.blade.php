@@ -32,18 +32,15 @@
             <div class="rounded-xl border p-6">
                 <h2 class="mb-6 flex items-center gap-3 text-2xl font-semibold text-gray-900">
                     <!-- Icon Circle -->
-                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-teal-500">
-                        <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="M10 10H6" />
-                            <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
-                            <path
-                                d="M19 18h2a1 1 0 0 0 1-1v-3.28a1 1 0 0 0-.684-.948l-1.923-.641a1 1 0 0 1-.578-.502l-1.539-3.076A1 1 0 0 0 16.382 8H14" />
-                            <path d="M8 8v4" />
-                            <path d="M9 18h6" />
-                            <circle cx="17" cy="18" r="2" />
-                            <circle cx="7" cy="18" r="2" />
+                    <span class="flex h-12 w-12 items-center justify-center rounded-full bg-teal-500 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <title xmlns="">ambulance</title>
+                            <g fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11 18h4M13.5 8h.943c1.31 0 1.966 0 2.521.315c.556.314.926.895 1.667 2.056c.52.814 1.064 1.406 1.831 1.931c.772.53 1.14.789 1.343 1.204c.195.398.195.869.195 1.811c0 1.243 0 1.864-.349 2.259l-.046.049c-.367.375-.946.375-2.102.375H19M5 18c-1.414 0-2.121 0-2.56-.44C2 17.122 2 16.415 2 15V8c0-1.414 0-2.121.44-2.56C2.878 5 3.585 5 5 5h5.5c1.414 0 2.121 0 2.56.44c.44.439.44 1.146.44 2.56v10H9m13-3h-1M8 9v4m2-2H6" />
+                                <circle cx="17" cy="18" r="2" />
+                                <circle cx="7" cy="18" r="2" />
+                            </g>
                         </svg>
                     </span>
 
@@ -91,7 +88,7 @@
 
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
-                                    Email Address
+                                    Email Address *</label>
                                 </label>
                                 <input type="email" wire:model="form.email" placeholder="Email Address"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
@@ -134,26 +131,30 @@
                         <h3 class="mb-4 text-lg font-medium text-gray-700">Pickup & Destination</h3>
 
                         <div class="space-y-4">
-                            <div>
-                                <label class="mb-1 block text-sm font-medium text-gray-900">Pickup Address *</label>
-                                <textarea wire:model="form.pickup_address" rows="2" placeholder="Pickup location"
-                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none"></textarea>
-                                @error("form.pickup_address")
-                                    <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
-                                @enderror
-                            </div>
+                            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                                <div>
+                                    <label class="mb-1 block text-sm font-medium text-gray-900">
+                                        Pickup Address *
+                                    </label>
+                                    <input type="text" wire:model="form.pickup_address" placeholder="Pickup location"
+                                        class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
+                                    @error("form.pickup_address")
+                                        <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-                            <div>
-                                <label class="mb-1 block text-sm font-medium text-gray-900">
-                                    Destination Address *
-                                </label>
-                                <textarea wire:model="form.destination_address" rows="2" placeholder="Hospital or destination"
-                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none"></textarea>
-                                @error("form.destination_address")
-                                    <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
-                                @enderror
+                                <div>
+                                    <label class="mb-1 block text-sm font-medium text-gray-900">
+                                        Destination Address *
+                                    </label>
+                                    <input type="text" wire:model="form.destination_address"
+                                        placeholder="Hospital or destination"
+                                        class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
+                                    @error("form.destination_address")
+                                        <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -167,13 +168,11 @@
                                 <select wire:model="form.ambulance_type"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
                                     <option value="" hidden>-- Select one --</option>
-                                    <option>ICU</option>
-                                    <option>NICU</option>
-                                    <option>AC</option>
-                                    <option>Air</option>
-                                    <option>Freezer</option>
-                                    <option>None-AC</option>
+                                    @foreach (\App\Enums\AmbulanceType::values() as $type)
+                                        <option value="{{ $type }}">{{ $type }}</option>
+                                    @endforeach
                                 </select>
+
                                 @error("form.ambulance_type")
                                     <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
                                 @enderror
@@ -193,7 +192,8 @@
                             </div>
 
                             <div>
-                                <label class="mb-1 block text-sm font-medium text-gray-900">Pickup Date & Time *</label>
+                                <label class="mb-1 block text-sm font-medium text-gray-900">Pickup Date & Time
+                                    *</label>
                                 <input type="datetime-local" wire:model="form.pickup_datetime"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
                                 @error("form.pickup_datetime")
@@ -245,10 +245,17 @@
                     @endauth --}}
                     <!-- Submit -->
                     <div class="flex justify-end">
-                        <button type="button" wire:click="store"
-                            class="rounded-xl bg-teal-500 px-6 py-3 text-white transition hover:bg-teal-600">
-                            Request Ambulance
-                        </button>
+                        @auth
+                            <button type="button" wire:click.prevent="book"
+                                class="rounded-xl bg-teal-500 px-8 py-3 text-sm font-medium text-white transition hover:bg-teal-600">
+                                Book Consultation
+                            </button>
+                        @else
+                            <button type="button" wire:click="redirectToLogin"
+                                class="rounded-xl bg-teal-500 px-8 py-3 text-sm font-medium text-white transition hover:bg-teal-600">
+                                Book Consultation
+                            </button>
+                        @endauth
                     </div>
 
                 </form>

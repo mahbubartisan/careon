@@ -11,6 +11,12 @@ use App\Livewire\Backend\Blog\CreateBlog;
 use App\Livewire\Backend\Blog\EditBlog;
 use App\Livewire\Backend\Booking\Booking;
 use App\Livewire\Backend\Booking\BookingDetail;
+use App\Livewire\Backend\BookingManage\AmbulanceBooking;
+use App\Livewire\Backend\BookingManage\AmbulanceBookingDetail;
+use App\Livewire\Backend\BookingManage\ConsultationBooking;
+use App\Livewire\Backend\BookingManage\ConsultationBookingDetail;
+use App\Livewire\Backend\BookingManage\DiagnosticBooking;
+use App\Livewire\Backend\BookingManage\DiagnosticBookingDetail;
 use App\Livewire\Backend\CareLevel\CareLevel;
 use App\Livewire\Backend\CareLevel\CreateCareLevel;
 use App\Livewire\Backend\CareLevel\EditCareLevel;
@@ -111,6 +117,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/create-medical-service', CreateMedicalService::class)->name('create.medical.service');
     Route::get('/medical-service/{serviceId}/edit', EditMedicalService::class)->name('edit.medical.service');
     
+    // Manage Booking Routes
+    Route::get('/diagnostic-bookings', DiagnosticBooking::class)->name('diagnostic.booking');
+    Route::get('/diagnostic-booking/{bookingId}', DiagnosticBookingDetail::class)->name('diagnostic.booking.detail');
+
+    Route::get('/ambulance-bookings', AmbulanceBooking::class)->name('ambulance.booking');
+    Route::get('/ambulance-booking/{bookingId}', AmbulanceBookingDetail::class)->name('ambulance.booking.detail');
+    
+    Route::get('/consultation-bookings', ConsultationBooking::class)->name('consultation.booking');
+    Route::get('/consultation-booking/{bookingId}', ConsultationBookingDetail::class)->name('consultation.booking.detail');
+
     // Booking Routes
     Route::get('/bookings', Booking::class)->name('booking');
     Route::get('/booking/{bookingId}', BookingDetail::class)->name('booking.detail');

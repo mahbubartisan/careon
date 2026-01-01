@@ -116,6 +116,19 @@
                 us.
             </p>
 
+            <p class="subtitle">
+                @if ($recipientType === "admin")
+                    A new special care service booking has just been placed.
+                    Below are the complete booking and patient details.
+                @else
+                    Hello {{ $booking->patient_name }},<br>
+                    Thank you for choosing <span style="color: #16a34a; font-weight: 600">CareOn</span>.
+                    Your booking has been successfully created.
+                    Our team is arranging the service and will contact you shortly.
+                    Please find your booking details below.
+                @endif
+            </p>
+
             <h2 class="section-title">Booking Details</h2>
 
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top: 10px;">
@@ -169,7 +182,7 @@
                         <strong>Date</strong>
                     </td>
                     <td style="padding: 10px; border: 1px solid #e5e7eb;">
-                        {{ \Carbon\Carbon::parse($booking->date)->format('F j, Y') }}
+                        {{ \Carbon\Carbon::parse($booking->date)->format("F j, Y") }}
                     </td>
                 </tr>
 
@@ -214,10 +227,16 @@
 
 
             <div class="footer">
-                Warm regards,<br>
-                <strong>The CareOn Team</strong><br>
+                @if ($recipientType === "admin")
+                    This is an automated system notification.<br>
+                    Please review the booking details and take necessary action as soon as possible.
+                @else
+                    This is an automated confirmation message.<br>
+                    If you have any questions, feel free to contact our support team.
+                @endif
+
                 <br>
-                Need help? Reply to this email anytime — we're here for you.
+                <strong>CareOn System</strong>
             </div>
 
         </div>

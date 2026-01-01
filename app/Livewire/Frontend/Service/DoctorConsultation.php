@@ -58,13 +58,14 @@ class DoctorConsultation extends Component
             'problem'            => $this->form->problem,
         ]);
 
-        $this->reset();
-        
-        // Send email notification
-        $adminEmail = 'admin@example.com';
+        $this->form->reset(); // Only reset form
+
         // Send to admin
-        Mail::to($adminEmail)
-            ->send(new OnlineConsultationBooking($booking));
+        Mail::to(config('mail.admin_address'))
+            ->send(new OnlineConsultationBooking($booking, 'admin'));
+
+        Mail::to($booking->email)
+            ->send(new OnlineConsultationBooking($booking, 'user'));
 
         session()->forget('consultation_form');
         // Flash success message

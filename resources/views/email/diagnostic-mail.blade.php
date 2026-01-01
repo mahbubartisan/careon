@@ -5,12 +5,12 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Ambulance Request Mail</title>
+        <title>Diagnostic Booking Confirmation</title>
 
         <style>
             body {
                 font-family: Arial, sans-serif;
-                background: #f4f5f7;
+                background-color: #f4f5f7;
                 margin: 0;
                 padding: 20px;
             }
@@ -18,7 +18,7 @@
             .container {
                 max-width: 600px;
                 margin: 0 auto;
-                background: #ffffff;
+                background-color: #ffffff;
                 border-radius: 12px;
                 padding: 32px;
                 border: 1px solid #e5e7eb;
@@ -56,7 +56,7 @@
                 font-weight: bold;
                 color: #111827;
                 border-left: 4px solid #2563eb;
-                padding-left: 8px;
+                padding-left: 10px;
             }
 
             table {
@@ -70,10 +70,11 @@
                 border: 1px solid #e5e7eb;
                 font-size: 14px;
                 color: #374151;
+                vertical-align: top;
             }
 
             td.label {
-                background: #f9fafb;
+                background-color: #f9fafb;
                 font-weight: bold;
                 width: 40%;
                 color: #111827;
@@ -86,11 +87,13 @@
 
             .note-box {
                 margin-top: 30px;
-                background: #fef2f2;
-                border-left: 5px solid #dc2626;
+                background-color: #eff6ff;
+                border-left: 5px solid #2563eb;
                 padding: 20px;
-                color: #7f1d1d;
+                color: #1e3a8a;
                 border-radius: 6px;
+                font-size: 14px;
+                line-height: 1.6;
             }
 
             .footer {
@@ -109,104 +112,96 @@
 
             <div class="header">
                 <div class="logo">CareOn</div>
-                <h1 class="title">Ambulance Support Details</h1>
+                <div class="title">Diagnostic Booking Details</div>
             </div>
 
             <p class="subtitle">
-                A new ambulance booking has just been placed. Below are the complete booking and patient details.
+                @if ($recipientType === 'admin')
+                    A new diagnostic service booking has been placed.
+                    Below are the complete booking and patient details.
+                @else
+                    Hello {{ $booking->patient_name }},<br>
+                    Thank you for choosing <span style="color: #16a34a; font-weight: 600">CareOn</span>.
+                    Your diagnostic service booking has been successfully confirmed.
+                    Please find your booking details below.
+                @endif
             </p>
-
-            <h2 class="section-title">Booking Information</h2>
-
+            
+            <!-- BOOKING INFORMATION -->
+            <div class="section-title">Booking Information</div>
             <table>
                 <tr>
                     <td class="label">Booking Code</td>
                     <td>#{{ $booking->booking_id }}</td>
                 </tr>
-
                 <tr>
-                    <td class="label">Booking Type</td>
-                    <td>{{ ucfirst($booking->booking_type) }}</td>
+                    <td class="label">Diagnostic Center</td>
+                    <td>{{ $booking->lab }}</td>
                 </tr>
-
                 <tr>
-                    <td class="label">Ambulance Type</td>
-                    <td>{{ ucfirst($booking->ambulance_type) }}</td>
-                </tr>
-
-                <tr>
-                    <td class="label">Pickup Date & Time</td>
-                    <td>
-                        {{ \Carbon\Carbon::parse($booking->pickup_datetime)
-                            ->timezone(config('app.timezone'))
-                            ->format('F d, Y • h:i A') }}
-                    </td>                    
+                    <td class="label">Total Price</td>
+                    <td class="highlight">৳ {{ number_format($booking->total_price) }}</td>
                 </tr>
             </table>
 
-            <h2 class="section-title">Patient Information</h2>
+            <!-- TEST DETAILS -->
+            <div class="section-title">Selected Tests</div>
+            <table>
+                <tr>
+                    <td class="label">Tests</td>
+                    <td>
+                        @foreach ($booking->tests as $test)
+                            • {{ $test }}<br>
+                        @endforeach
+                    </td>
+                </tr>
+            </table>
 
+            <!-- PATIENT INFORMATION -->
+            <div class="section-title">Patient Information</div>
             <table>
                 <tr>
                     <td class="label">Patient Name</td>
                     <td>{{ $booking->patient_name }}</td>
                 </tr>
-
                 <tr>
                     <td class="label">Age</td>
                     <td>{{ $booking->patient_age }}</td>
                 </tr>
-
                 <tr>
                     <td class="label">Gender</td>
                     <td>{{ ucfirst($booking->gender) }}</td>
                 </tr>
-
                 <tr>
                     <td class="label">Email Address</td>
                     <td>{{ $booking->email }}</td>
                 </tr>
-            </table>
-
-            <h2 class="section-title">Contact Details</h2>
-
-            <table>
-                <tr>
-                    <td class="label">Contact Person</td>
-                    <td>{{ $booking->contact_person }}</td>
-                </tr>
-
                 <tr>
                     <td class="label">Phone Number</td>
                     <td>{{ $booking->phone }}</td>
                 </tr>
-            </table>
-
-            <h2 class="section-title">Route Details</h2>
-
-            <table>
                 <tr>
-                    <td class="label">Pickup Address</td>
-                    <td>{{ $booking->pickup_address }}</td>
+                    <td class="label">Address</td>
+                    <td>{{ $booking->address }}</td>
                 </tr>
-
-                <tr>
-                    <td class="label">Destination Address</td>
-                    <td>{{ $booking->destination_address }}</td>
-                </tr>
-            </table>
-
+            </table> 
+            
+            <!-- NOTES -->
             @if ($booking->notes)
-                <div class="note-box">
-                    <strong>Additional Notes:</strong><br>
-                    {{ $booking->notes ?? "N/A" }}
-                </div>
-            @endif
-
+                <div class="note-box"> <strong>Special Instructions:</strong><br> {{ $booking->notes }} </div>
+            @endif 
+            
+            <!-- FOOTER -->
             <div class="footer">
-                This is an automated notification.<br>
-                Please take an action as soon as possible.
-                <br><br>
+                @if ($recipientType === "admin")
+                    This is an automated system notification.<br>
+                    Please review the booking and proceed accordingly.
+                @else
+                    This is an automated confirmation message.<br>
+                    If you have any questions, feel free to contact our support team.
+                @endif
+
+                <br>
                 <strong>CareOn System</strong>
             </div>
 

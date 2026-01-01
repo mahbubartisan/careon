@@ -2,9 +2,14 @@
 
 namespace App\Livewire\Frontend\Service;
 
+use App\Livewire\Forms\DiagnosticBookingForm;
+use App\Mail\DiagnosticMail;
+use App\Models\DiagnosticBooking;
 use App\Models\Lab;
-use App\Models\MedicalTest as ModelsMedicalTest;
+use App\Models\MedicalTest as MedicalTest;
 use App\Models\Service;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,12 +17,11 @@ class Diagnostic extends Component
 {
     use WithPagination;
 
-    public $search = '';
+    public DiagnosticBookingForm $form;
+
     public $service;
-
-
-    public $selectedTests = [];
-    public $selectedLab = null;
+    public $selectedLab, $selectedTests = [];
+    public $search = '';
 
     protected $updatesQueryString = ['search', 'page'];
 
@@ -36,9 +40,80 @@ class Diagnostic extends Component
             ->firstOrFail();
     }
 
+    public function redirectToLogin()
+    {
+        // Validate before redirect so user sees errors
+        $this->validate();
+
+        // Redirect to login
+        return redirect()->route('login');
+    }
+
+    public function book()
+    {
+        $this->validate();
+
+        try {
+            // Fetch selected tests
+            $tests = MedicalTest::whereIn('name', $this->selectedTests)->get();
+            // Calculate total price
+            $totalPrice = $tests->sum('price');
+            // Generate booking ID
+            $bookingId = $this->generateBookingId($this->service->name);
+
+            // Create booking
+            $booking = DiagnosticBooking::create([
+                'booking_id'    => $bookingId,
+                'user_id'       => auth()->id(),
+                'patient_name'  => $this->form->patient_name,
+                'patient_age'   => $this->form->patient_age,
+                'gender'        => $this->form->gender,
+                'phone'         => $this->form->phone,
+                'email'         => $this->form->email,
+                'address'       => $this->form->address,
+                'lab'           => $this->selectedLab,
+                'tests'         => $this->selectedTests, // JSON stored
+                'total_price'   => $totalPrice,
+                'notes'         => $this->form->notes ?? null,
+            ]);
+
+
+            $this->form->reset(); // Only reset form
+
+            // Send to admin
+            Mail::to(config('mail.admin_address'))
+                ->send(new DiagnosticMail($booking, 'admin'));
+
+            Mail::to($booking->email)
+                ->send(new DiagnosticMail($booking, 'user'));
+
+            // session()->flash('success', 'Diagnostic booking placed successfully.');
+
+            // return redirect()->route('diagnostic.confirm', $booking->id);
+        } catch (\Throwable $e) {
+            report($e);
+            $this->addError('general', 'Something went wrong. Please try again.');
+        }
+    }
+
+    private function generateBookingId($serviceName)
+    {
+        // Short prefix from service name: "Nursing Care" → "NC"
+        $prefix = strtoupper(
+            collect(explode(' ', $serviceName))
+                ->map(fn($w) => substr($w, 0, 1))
+                ->join('')
+        );
+
+        // Six–digit numeric code
+        $random = random_int(100000, 999999);
+
+        return $prefix . $random;
+    }
+
     public function render()
     {
-        $tests = ModelsMedicalTest::where('name', 'like', "%{$this->search}%")
+        $tests = MedicalTest::where('name', 'like', "%{$this->search}%")
             ->orderBy('name')
             ->paginate(6);
 

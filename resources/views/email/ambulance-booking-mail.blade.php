@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Doctor Consultation Booking Confirmation</title>
+        <title>Ambulance Booking Confirmation</title>
 
         <style>
             body {
@@ -79,15 +79,17 @@
                 color: #111827;
             }
 
+            .highlight {
+                color: #16a34a;
+                font-weight: bold;
+            }
+
             .note-box {
                 margin-top: 30px;
-                background: #eff6ff;
-                /* light blue background */
-                border-left: 5px solid #2563eb;
-                /* blue border */
+                background: #fef2f2;
+                border-left: 5px solid #dc2626;
                 padding: 20px;
-                color: #1e3a8a;
-                /* dark blue text */
+                color: #7f1d1d;
                 border-radius: 6px;
             }
 
@@ -105,26 +107,25 @@
 
         <div class="container">
 
-            <!-- Header -->
             <div class="header">
                 <div class="logo">CareOn</div>
-                <h1 class="title">Online Consultation Booking Details</h1>
+                <h1 class="title">Ambulance Booking Details</h1>
             </div>
 
             <p class="subtitle">
-                @if ($recipientType === 'admin')
-                    A new online doctor consultation appointment has been booked.
-                    Below are the complete consultation and patient details.
+                @if ($recipientType === "admin")
+                    A new ambulance booking has just been placed.
+                    Below are the complete booking and patient details.
                 @else
                     Hello {{ $booking->patient_name }},<br>
                     Thank you for choosing <span style="color: #16a34a; font-weight: 600">CareOn</span>.
-                    Your online doctor consultation appointment has been successfully booked.
-                    Below are the details of your consultation.
+                    Your ambulance booking has been successfully confirmed.
+                    Our team is arranging the service and will contact you shortly.
+                    Please find your booking details below.
                 @endif
             </p>
-            
-            <!-- Booking Info -->
-            <h2 class="section-title">Consultation Information</h2>
+
+            <h2 class="section-title">Booking Information</h2>
 
             <table>
                 <tr>
@@ -133,26 +134,23 @@
                 </tr>
 
                 <tr>
-                    <td class="label">Doctor Type</td>
-                    <td>{{ $booking->doctor_type }}</td>
+                    <td class="label">Booking Type</td>
+                    <td>{{ ucfirst($booking->booking_type) }}</td>
                 </tr>
 
                 <tr>
-                    <td class="label">Appointment Date</td>
-                    <td>
-                        {{ \Carbon\Carbon::parse($booking->appointment_date)->format("F d, Y") }}
-                    </td>
+                    <td class="label">Ambulance Type</td>
+                    <td>{{ ucfirst($booking->ambulance_type) }}</td>
                 </tr>
 
                 <tr>
-                    <td class="label">Appointment Time</td>
+                    <td class="label">Pickup Date & Time</td>
                     <td>
-                        {{ \Carbon\Carbon::parse($booking->appointment_time)->format("h:i A") }}
+                        {{ \Carbon\Carbon::parse($booking->pickup_datetime)->timezone(config("app.timezone"))->format("F d, Y • h:i A") }}
                     </td>
                 </tr>
             </table>
 
-            <!-- Patient Info -->
             <h2 class="section-title">Patient Information</h2>
 
             <table>
@@ -175,6 +173,15 @@
                     <td class="label">Email Address</td>
                     <td>{{ $booking->email }}</td>
                 </tr>
+            </table>
+
+            <h2 class="section-title">Contact Details</h2>
+
+            <table>
+                <tr>
+                    <td class="label">Contact Person</td>
+                    <td>{{ $booking->contact_person }}</td>
+                </tr>
 
                 <tr>
                     <td class="label">Phone Number</td>
@@ -182,13 +189,27 @@
                 </tr>
             </table>
 
-            <!-- Problem Description -->
-            <div class="note-box">
-                <strong>Problem Description:</strong><br>
-                {{ $booking->problem ?? "N/A" }}
-            </div>
+            <h2 class="section-title">Route Details</h2>
 
-            <!-- Footer -->
+            <table>
+                <tr>
+                    <td class="label">Pickup Address</td>
+                    <td>{{ $booking->pickup_address }}</td>
+                </tr>
+
+                <tr>
+                    <td class="label">Destination Address</td>
+                    <td>{{ $booking->destination_address }}</td>
+                </tr>
+            </table>
+
+            @if ($booking->notes)
+                <div class="note-box">
+                    <strong>Additional Notes:</strong><br>
+                    {{ $booking->notes ?? "N/A" }}
+                </div>
+            @endif
+
             <div class="footer">
                 @if ($recipientType === "admin")
                     This is an automated system notification.<br>
@@ -201,6 +222,7 @@
                 <br>
                 <strong>CareOn System</strong>
             </div>
+
         </div>
 
     </body>
