@@ -322,9 +322,11 @@
                     <div class="space-y-3">
                         @foreach ($tests as $test)
                             <label class="block cursor-pointer">
-                                <input type="checkbox" wire:model.live="selectedTests" value="{{ $test->name }}"
-                                    class="peer hidden">
-
+                                {{-- <input type="checkbox" wire:model.live="selectedTests.{{ $test->name }}"
+                                    value="{{ $test->price }}" class="peer hidden"> --}}
+                                <input type="checkbox"
+                                    wire:change="toggleTest('{{ $test->name }}', {{ $test->price }})"
+                                    @checked(isset($selectedTests[$test->name])) class="peer hidden">
                                 <div
                                     class="relative rounded-xl border p-4 transition hover:bg-teal-50 peer-checked:border-teal-500 peer-checked:bg-teal-50">
 
@@ -338,6 +340,33 @@
                             </label>
                         @endforeach
                     </div>
+
+                    {{-- <div class="space-y-3">
+                        @foreach ($tests as $test)
+                            <label class="block cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    wire:model.live="selectedTests['{{ $test->name }}']"
+                                    value="{{ $test->price }}"
+                                    class="peer hidden"
+                                >
+                    
+                                <div
+                                    class="relative rounded-xl border p-4 transition hover:bg-teal-50
+                                    peer-checked:border-teal-500 peer-checked:bg-teal-50">
+                    
+                                    <span
+                                        class="absolute right-4 top-4 rounded-full bg-teal-100
+                                        px-3 py-1 text-xs font-semibold text-teal-700">
+                                        From ৳ {{ number_format($test->price) }}
+                                    </span>
+                    
+                                    <p class="font-semibold">{{ $test->name }}</p>
+                                </div>
+                            </label>
+                        @endforeach
+                    </div> --}}
+
 
                     <div class="mt-10 flex flex-col gap-4 border-t pt-4 md:flex-row md:items-center md:justify-between">
 
@@ -434,7 +463,9 @@
                         class="w-full rounded-xl bg-teal-500 py-3 text-white hover:bg-teal-600">
                         Continue
                     </button> --}}
-                    <button @click="step = 2; window.scrollTo({ top: 0, behavior: 'smooth' })"
+
+
+                    {{-- <button @click="step = 2; window.scrollTo({ top: 0, behavior: 'smooth' })"
                         class="{{ count($selectedTests) > 0 ? "bg-teal-500 hover:bg-teal-600" : "bg-gray-300 cursor-not-allowed" }} w-full rounded-xl py-3 font-semibold text-white transition-colors"
                         {{ count($selectedTests) === 0 ? "disabled" : "" }}>
                         Continue
@@ -449,7 +480,29 @@
 
                             <span>Select at least one test to continue</span>
                         </span>
+                    @endif --}}
+                    @php
+                        $hasTests = count($this->selectedTests) > 0;
+                    @endphp
+
+                    <button @click="step = 2; window.scrollTo({ top: 0, behavior: 'smooth' })"
+                        class="{{ $hasTests ? "bg-teal-500 hover:bg-teal-600" : "bg-gray-300 cursor-not-allowed" }} w-full rounded-xl py-3 font-semibold text-white transition-colors"
+                        {{ $hasTests ? "" : "disabled" }}>
+                        Continue
+                    </button>
+
+                    @if (!$hasTests)
+                        <span
+                            class="mt-2 inline-flex items-center gap-1.5 rounded-md bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01M12 3a9 9 0 100 18 9 9 0 000-18z" />
+                            </svg>
+                            <span>Select at least one test to continue</span>
+                        </span>
                     @endif
+
+
                 </div>
             </div>
 

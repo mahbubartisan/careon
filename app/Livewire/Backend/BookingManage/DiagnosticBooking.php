@@ -16,17 +16,26 @@ class DiagnosticBooking extends Component
 
     public BookingForm $form;
 
+    
     public function render()
     {
-        $bookings = ModelsDiagnosticBooking::with('user')
+            $bookings = ModelsDiagnosticBooking::with('user')
             ->when($this->form->search, function ($query) {
-                $query->where(function ($q) {
-                    $q->where('id', 'like', "%{$this->form->search}%")
-                        ->orWhere('booking_id', 'like', "%{$this->form->search}%");
-                    // ->orWhere('contact_person', 'like', "%{$this->form->search}%")
-                    // ->orWhere('patient_name', 'like', "%{$this->form->search}%")
-                    // ->orWhere('phone', 'like', "%{$this->form->search}%")
-                    // ->orWhere('pickup_datetime', 'like', "%{$this->form->search}%");
+                $search = $this->form->search;
+
+                $query->where(function ($q) use ($search) {
+
+                    $q->where('id', 'like', "%{$search}%")
+                        ->orWhere('booking_id', 'like', "%{$search}%")
+                        ->orWhere('patient_name', 'like', "%{$search}%")
+                        ->orWhere('phone', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('address', 'like', "%{$search}%")
+
+                        // Search by related user name
+                        ->orWhereHas('user', function ($userQuery) use ($search) {
+                            $userQuery->where('name', 'like', "%{$search}%");
+                        });
                 });
             })
             ->latest()

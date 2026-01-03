@@ -55,9 +55,9 @@ class Diagnostic extends Component
 
         try {
             // Fetch selected tests
-            $tests = MedicalTest::whereIn('name', $this->selectedTests)->get();
+            // $tests = MedicalTest::whereIn('name', $this->selectedTests)->get();
             // Calculate total price
-            $totalPrice = $tests->sum('price');
+            $totalPrice = array_sum($this->selectedTests);
             // Generate booking ID
             $bookingId = $this->generateBookingId($this->service->name);
 
@@ -109,6 +109,15 @@ class Diagnostic extends Component
         $random = random_int(100000, 999999);
 
         return $prefix . $random;
+    }
+
+    public function toggleTest($name, $price)
+    {
+        if (isset($this->selectedTests[$name])) {
+            unset($this->selectedTests[$name]);
+        } else {
+            $this->selectedTests[$name] = (int) $price;
+        }
     }
 
     public function render()
