@@ -397,7 +397,7 @@
                 </div>
             @endcanany
 
-            <!-- Medical Service Manage -->
+            <!-- Medical Care Manage -->
             @canany([
                 "view medical service",
                 "create medical service",
@@ -430,7 +430,7 @@
                                 {{ request()->routeIs("medical.service", "create.medical.service", "edit.medical.service") ? true : false }} ?
                                 'text-blue-600' :
                                 'text-gray-400 hover:text-blue-500 dark:text-gray-100'">
-                            Medical Service Manage
+                            Medical Care Manage
                         </span>
                         <span aria-hidden="true" class="ml-auto">
                             <svg class="h-3.5 w-3.5 transform transition-transform"
@@ -485,15 +485,21 @@
                             'text-gray-400 hover:text-blue-600'">
                         <span aria-hidden="true">
                             <svg class="mr-1 h-5 w-5 transition-colors"
-                                :class="open ||
-                                    {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail") ? true : false }} ?
-                                    'text-blue-600' : 'text-gray-400 dark:text-gray-100'"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" />
-                                <path d="M6.453 15h11.094" />
-                                <path d="M8.5 2h7" />
+                            :class="open ||
+                                {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail") ? true : false }} ?
+                                'text-blue-600' : 'text-gray-400 dark:text-gray-100'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M8 2v4" />
+                                <path d="M16 2v4" />
+                                <rect width="18" height="18" x="3" y="4" rx="2" />
+                                <path d="M3 10h18" />
+                                <path d="M8 14h.01" />
+                                <path d="M12 14h.01" />
+                                <path d="M16 14h.01" />
+                                <path d="M8 18h.01" />
+                                <path d="M12 18h.01" />
+                                <path d="M16 18h.01" />
                             </svg>
                         </span>
                         <span class="ml-2"

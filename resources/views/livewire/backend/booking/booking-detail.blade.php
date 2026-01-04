@@ -183,6 +183,18 @@
     </div>
     <!-- Breadcrumb End -->
 
+    <div class="mb-5 flex justify-end">
+        <button type="button" wire:click="downloadInvoice"
+            class="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+            </svg>
+            Download Invoice
+        </button>
+    </div>
+
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
 
         <!-- LEFT CARD -->
@@ -373,7 +385,7 @@
     </div>
 
     <!-- BACK BUTTON -->
-    <div class="mt-8">
+    <div class="my-5">
         <a href="{{ route("booking") }}"
             class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm">
 

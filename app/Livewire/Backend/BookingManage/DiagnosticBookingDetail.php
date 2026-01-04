@@ -3,6 +3,7 @@
 namespace App\Livewire\Backend\BookingManage;
 
 use App\Models\DiagnosticBooking;
+use App\Models\Settings;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -21,45 +22,40 @@ class DiagnosticBookingDetail extends Component
         $this->booking = DiagnosticBooking::with('user')->findOrFail($this->bookingId);
     }
 
-    // public function downloadInvoice()
-    // {
-    //     $booking = $this->booking; // assuming booking is already loaded
-
-    //     $pdf = Pdf::loadView('pdf.diagnostic-invoice', [
-    //         'booking' => $booking,
-    //     ])->setPaper('a4');
-
-    //     return response()->streamDownload(
-    //         fn() => print($pdf->output()),
-    //         'Diagnostic-Invoice-' . $booking->booking_id . '.pdf'
-    //     );
-    // }
-
     public function downloadInvoice()
-{
-    $booking = $this->booking;
+    {
+        $booking = $this->booking;
 
-    $html = view('pdf.diagnostic-invoice', [
-        'booking' => $booking,
-    ])->render();
+        $settings = Settings::with('siteLogo')->first();
 
-    $mpdf = new Mpdf([
-        'mode' => 'utf-8',
-        'format' => 'A4',
-        'autoLangToFont' => true,   // 🔥 REQUIRED
-        'autoScriptToLang' => true // 🔥 REQUIRED
-    ]);
+        // Absolute path for mPDF
+        $logoPath = null;
 
-    $mpdf->WriteHTML($html);
+        if ($settings && $settings->siteLogo) {
+            $logoPath = $settings->siteLogo->path;
+        }
 
-    return response()->streamDownload(
-        function () use ($mpdf) {
-            echo $mpdf->Output('', 'S');
-        },
-        'Diagnostic-Invoice-' . $booking->booking_id . '.pdf'
-    );
-}
+        $html = view('pdf.diagnostic-invoice', [
+            'booking' => $booking,
+            'logoPath' => $logoPath,
+        ])->render();
 
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'autoLangToFont' => true,
+            'autoScriptToLang' => true
+        ]);
+
+        $mpdf->WriteHTML($html);
+
+        return response()->streamDownload(
+            function () use ($mpdf) {
+                echo $mpdf->Output('', 'S');
+            },
+            'Diagnostic-Invoice-' . $booking->booking_id . '.pdf'
+        );
+    }
 
     public function render()
     {

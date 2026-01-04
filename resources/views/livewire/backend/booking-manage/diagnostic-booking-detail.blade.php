@@ -69,8 +69,8 @@
                         @foreach ($booking->tests as $name => $price)
                             <li>
                                 <div class="flex justify-between gap-4">
-                                    <span class="text-gray-800">{{ $name }}</span>
-                                    <span class="font-semibold text-indigo-700">
+                                    <span class="font-semibold text-gray-900">{{ $name }}</span>
+                                    <span class="font-semibold text-teal-600">
                                         ৳ {{ number_format((float) $price) }}
                                     </span>
                                 </div>
@@ -79,11 +79,9 @@
                     </ul>
                 </div>
                 
-
-
                 <div class="flex justify-between">
                     <span class="text-gray-500">Total Price</span>
-                    <span class="font-semibold text-emerald-600">
+                    <span class="font-semibold text-teal-600">
                         ৳ {{ number_format($booking->total_price) }}
                     </span>
                 </div>
