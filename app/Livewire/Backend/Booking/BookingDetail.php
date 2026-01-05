@@ -52,7 +52,7 @@ class BookingDetail extends Component
             function () use ($mpdf) {
                 echo $mpdf->Output('', 'S');
             },
-            'special-care-invoice-' . $booking->booking_id . '.pdf'
+            str()->slug($booking->service_name) . '-' . now()->format('d-m-Y') . '.pdf'
         );
     }
 

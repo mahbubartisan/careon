@@ -169,7 +169,7 @@
     <!-- Breadcrumb Start -->
     <div class="my-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-300">
-            Booking Detail
+           {{ $form->booking->service_name }} Booking Detail
         </h2>
         <nav>
             <ol class="flex items-center gap-2">

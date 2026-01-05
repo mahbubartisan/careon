@@ -53,7 +53,7 @@ class DiagnosticBookingDetail extends Component
             function () use ($mpdf) {
                 echo $mpdf->Output('', 'S');
             },
-            'diagnostic-invoice-' . $booking->booking_id . '.pdf'
+            str()->slug($booking->service_name) . '-' . now()->format('d-m-Y') . '.pdf'
         );
     }
 
