@@ -55,7 +55,7 @@ class AmbulanceBookingDetail extends Component
             function () use ($mpdf) {
                 echo $mpdf->Output('', 'S');
             },
-            'Ambulance-Support-Invoice-' . $booking->booking_id . '.pdf'
+            'ambulance-support-invoice-' . $booking->booking_id . '.pdf'
         );
     }
 

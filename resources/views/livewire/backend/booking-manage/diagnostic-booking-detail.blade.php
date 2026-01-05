@@ -18,11 +18,12 @@
 
     <div class="mb-5 flex justify-end">
         <button type="button" wire:click="downloadInvoice"
-            class="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+            class="inline-flex items-center gap-1.5 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 17V3" />
+                <path d="m6 11 6 6 6-6" />
+                <path d="M19 21H5" />
             </svg>
             Download Invoice
         </button>
@@ -62,10 +63,10 @@
                     </span>
                 </div> --}}
 
-                <div class="flex justify-between items-start">
+                <div class="flex items-start justify-between">
                     <span class="text-gray-500">Selected Tests</span>
-                
-                    <ul class="max-w-xs list-disc pl-5 space-y-2 text-sm">
+
+                    <ul class="max-w-xs list-disc space-y-2 pl-5 text-sm">
                         @foreach ($booking->tests as $name => $price)
                             <li>
                                 <div class="flex justify-between gap-4">
@@ -78,7 +79,7 @@
                         @endforeach
                     </ul>
                 </div>
-                
+
                 <div class="flex justify-between">
                     <span class="text-gray-500">Total Price</span>
                     <span class="font-semibold text-teal-600">
@@ -170,18 +171,17 @@
 
 
     <!-- BACK BUTTON -->
-    <div class="mt-8">
+    <div class="my-5">
         <a href="{{ route("diagnostic.booking") }}"
-            class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm">
+            class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm">
 
             <!-- SVG Icon -->
             <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-move-left-icon lucide-move-left">
+                >
                 <path d="M6 8L2 12L6 16" />
                 <path d="M2 12H22" />
             </svg>
-
             Back to List
         </a>
     </div>

@@ -53,7 +53,7 @@ class DiagnosticBookingDetail extends Component
             function () use ($mpdf) {
                 echo $mpdf->Output('', 'S');
             },
-            'Diagnostic-Invoice-' . $booking->booking_id . '.pdf'
+            'diagnostic-invoice-' . $booking->booking_id . '.pdf'
         );
     }
 

@@ -377,12 +377,28 @@
                 <tr>
                     <td>
                         <div class="logo">
-                            <img src="{{ $logoPath }}" alt="CareOn" style="width:fit-content; height: 50px;">
+                            <img src="{{ $logoPath }}" alt="CareOn" style="height: 50px;">
                         </div>
                     </td>
-                    <td class="invoice-title">
-                        <h2>Diagnostic Invoice</h2>
-                        <span>Date: {{ $booking->created_at->format("F d, Y") }}</span>
+                    <td class="invoice-title" style="width:100%; border-bottom:2px solid #0f766e; padding-bottom:10px; margin-bottom:18px;">
+                        <h2 style="margin:0; font-size:18px; color:#0c0c0c;">
+                            Diagnostic Service Invoice
+                        </h2>
+                    
+                        <table style="width:100%; margin-top:6px;">
+                            <tr>
+                                <td style="font-size:12px; color:#1c1d1e; text-align:right;">
+                                    <strong>Invoice Date:</strong>
+                                    {{ now()->format('F d, Y') }}
+                                </td>
+                            </tr>
+                            {{-- <tr>
+                                <td style="font-size:12px; color:#6b7280; text-align:right;">
+                                    <strong>Invoice No:</strong>
+                                    INV-{{ $booking->booking_id }}
+                                </td>
+                            </tr> --}}
+                        </table>
                     </td>
                 </tr>
             </table>
@@ -458,7 +474,7 @@
             <!-- FOOTER -->
             <div class="footer">
                 This invoice is system generated and does not require a signature.<br>
-                © {{ date("Y") }} CareOn
+                © {{ date("Y") }} CareOn. All rights reserved.
             </div>
 
         </div>
