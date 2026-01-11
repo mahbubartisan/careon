@@ -13,6 +13,7 @@ class DoctorConsultation extends Component
 {
     public DoctorConsultationForm $form;
 
+    public $bookingFor = 'self';
     public $service;
 
     public function mount($slug)
@@ -23,6 +24,10 @@ class DoctorConsultation extends Component
 
         if (session()->has('consultation_form')) {
             $this->form->fill(session()->get('consultation_form'));
+        }
+
+        if (auth()->check()) {
+            $this->updatedBookingFor('self');
         }
     }
 
@@ -46,6 +51,7 @@ class DoctorConsultation extends Component
         // Store consultation
         $booking = ModelsDoctorConsultation::create([
             'booking_id'         => $bookingId,
+            'service_name'       => $this->service->name,
             'user_id'            => auth()->id(),
             'patient_name'       => $this->form->patient_name,
             'patient_age'        => $this->form->patient_age,
@@ -68,20 +74,18 @@ class DoctorConsultation extends Component
             ->send(new OnlineConsultationBooking($booking, 'user'));
 
         session()->forget('consultation_form');
-        // Flash success message
-        session()->flash('success', 'Consultation booked successfully.');
 
-        // Redirect to confirmation page with ID
-        // return redirect()->route('consultation.confirm', [
-        //     'booking' => $booking->id
-        // ]);
+        session()->put('booking_confirmation', [
+            'model' => get_class($booking),
+            'id'    => $booking->id,
+        ]);
+
+        return redirect()->route('frontend.confirm');
     }
-
-
 
     private function generateBookingId($serviceName)
     {
-        // Short prefix from service name: "Nursing Care" → "NC"
+        // Short prefix from service name
         $prefix = strtoupper(
             collect(explode(' ', $serviceName))
                 ->map(fn($w) => substr($w, 0, 1))
@@ -92,6 +96,32 @@ class DoctorConsultation extends Component
         $random = random_int(100000, 999999);
 
         return $prefix . $random;
+    }
+
+    public function updatedBookingFor($value)
+    {
+        if ($value === 'self' && auth()->check()) {
+            $user = auth()->user();
+
+            $this->form->patient_name = $user->name ?? '';
+            $this->form->email = $user->email ?? '';
+            $this->form->phone = $user->phone ?? '';
+            $this->form->gender = $user->gender ?? '';
+            $this->form->patient_age = $user->age ?? '';
+        }
+
+        if ($value === 'other') {
+            $this->resetPatientFields();
+        }
+    }
+
+    protected function resetPatientFields()
+    {
+        $this->form->patient_name = '';
+        $this->form->patient_age = '';
+        $this->form->gender = '';
+        $this->form->phone = '';
+        $this->form->email = '';
     }
 
     public function render()

@@ -25,7 +25,7 @@ Route::as('frontend.')->group(function () {
     Route::get('/health-tips/{slug}', BlogDetail::class)->name('blog-detail');
     Route::get('/provider-signup', CareProvider::class)->name('provider-signup');
     Route::get('/price-calculator', PriceCalculator::class)->name('price-calculation');
-    Route::get('/confirmation', BookingConfirmation::class)->name('confirmation');
+    Route::get('/booking-confirmation', BookingConfirmation::class)->name('confirm');
 
    
     Route::get('/diagnostic/{slug}', Diagnostic::class)->name('service.diagnostic');

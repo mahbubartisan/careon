@@ -169,7 +169,7 @@ class ServiceDetail extends Component
             ->send(new BookingMail($booking, 'admin'));
 
         session()->put('booking_id', $booking->id);
-        return redirect()->route('frontend.confirmation');
+        return redirect()->route('frontend.confirm');
     }
 
     public function initiateBkashPayment($bookingId)

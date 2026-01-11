@@ -1,8 +1,9 @@
 <div>
     <div class="flex min-h-screen flex-col items-center justify-center px-4 pb-20 pt-28">
-        @php
+        {{-- @php
             $booking = \App\Models\Booking::find(session("booking_id"));
-        @endphp
+        @endphp --}}
+        {{-- @dd($booking->id) --}}
         <!-- Floating Header (Outside Top) -->
         <div class="z-10 -mb-6 flex flex-col items-center">
             <div class="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 shadow-sm">

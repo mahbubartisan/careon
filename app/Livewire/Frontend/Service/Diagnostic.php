@@ -64,6 +64,7 @@ class Diagnostic extends Component
             // Create booking
             $booking = DiagnosticBooking::create([
                 'booking_id'    => $bookingId,
+                'service_name'  => $this->service->name,
                 'user_id'       => auth()->id(),
                 'patient_name'  => $this->form->patient_name,
                 'patient_age'   => $this->form->patient_age,
@@ -87,9 +88,13 @@ class Diagnostic extends Component
             Mail::to($booking->email)
                 ->send(new DiagnosticMail($booking, 'user'));
 
-            // session()->flash('success', 'Diagnostic booking placed successfully.');
+            session()->put('booking_confirmation', [
+                'model' => get_class($booking),
+                'id'    => $booking->id,
+            ]);
 
-            // return redirect()->route('diagnostic.confirm', $booking->id);
+            return redirect()->route('frontend.confirm');
+
         } catch (\Throwable $e) {
             report($e);
             $this->addError('general', 'Something went wrong. Please try again.');

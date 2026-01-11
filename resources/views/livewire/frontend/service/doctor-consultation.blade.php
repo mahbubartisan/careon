@@ -214,6 +214,26 @@
                 </h2>
 
                 <form wire:submit.prevent="book" class="space-y-6">
+                    <!-- Patient Type -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-900">
+                            Booking For *
+                        </label>
+
+                        <div class="flex gap-6">
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="radio" wire:model.live="bookingFor" value="self"
+                                    class="text-teal-500 focus:ring-teal-500">
+                                Self
+                            </label>
+
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="radio" wire:model.live="bookingFor" value="other"
+                                    class="text-teal-500 focus:ring-teal-500">
+                                Someone Else
+                            </label>
+                        </div>
+                    </div>
 
                     <!-- Patient Info -->
                     <div class="space-y-6">

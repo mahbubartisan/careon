@@ -45,6 +45,7 @@ class AmbulanceSupport extends Component
 
         $booking = ModelsAmbulanceSupport::create([
             'booking_id'          => $bookingId,
+            'service_name'        => $this->service->name,
             'user_id'             => auth()->id(),
             'patient_name'        => $this->form->patient_name,
             'patient_age'         => $this->form->patient_age,
@@ -71,8 +72,12 @@ class AmbulanceSupport extends Component
 
         session()->forget('ambulance_booking_form');
 
-        $this->dispatch('toastr:success', 'Request submitted successfully.');
-        // session()->flash('success', 'Request submitted successfully.');
+        session()->put('booking_confirmation', [
+            'model' => get_class($booking),
+            'id'    => $booking->id,
+        ]);
+
+        return redirect()->route('frontend.confirm');
     }
 
     private function generateBookingId($serviceName)
