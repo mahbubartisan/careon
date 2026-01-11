@@ -57,6 +57,8 @@ class RegisteredUserController extends Controller
             'name'     => $request->signup_name,
             'phone'    => $request->signup_phone,
             'email'    => $request->signup_email,
+            'division' => $request->signup_division,
+            'gender'   => $request->signup_gender,
             'password' => Hash::make($request->signup_password),
         ]);
 

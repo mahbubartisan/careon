@@ -10,8 +10,10 @@ class RegisterRequest extends FormRequest
     {
         return [
             'signup_name'     => ['required', 'string', 'max:255'],
-            'signup_phone'    => ['required', 'string', 'max:20', 'unique:users,phone'],
+            'signup_phone'    => ['required', 'max:20', 'unique:users,phone'],
             'signup_email'    => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'signup_gender'   => ['required'],
+            'signup_division' => ['required'],
             'signup_password' => ['required', 'string', 'min:6'],
         ];
     }
@@ -33,6 +35,9 @@ class RegisterRequest extends FormRequest
             'signup_email.email'       => 'Please enter a valid email address.',
             'signup_email.max'         => 'Email cannot be longer than 255 characters.',
             'signup_email.unique'      => 'This email is already registered.',
+
+            'signup_gender.required'   => 'Gender is required.',
+            'signup_division.required' => 'Division is required.',
 
             'signup_password.required' => 'Password is required.',
             'signup_password.string'   => 'Password must be valid text.',

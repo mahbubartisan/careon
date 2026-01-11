@@ -8,6 +8,7 @@ use Livewire\Form;
 class DoctorConsultationForm extends Form
 {
     public $patient_name, $patient_age, $gender, $phone, $email, $doctor_type, $appointment_date, $appointment_time, $problem;
+    public $bookingFor = 'self';
 
     public function rules(): array
     {

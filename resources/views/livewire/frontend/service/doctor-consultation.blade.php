@@ -221,14 +221,14 @@
                         </label>
 
                         <div class="flex gap-6">
-                            <label class="flex items-center gap-2 text-sm">
-                                <input type="radio" wire:model.live="bookingFor" value="self"
+                            <label class="flex items-center gap-2 text-sm cursor-pointer">
+                                <input type="radio" wire:model.live="form.bookingFor" value="self"
                                     class="text-teal-500 focus:ring-teal-500">
                                 Self
                             </label>
 
-                            <label class="flex items-center gap-2 text-sm">
-                                <input type="radio" wire:model.live="bookingFor" value="other"
+                            <label class="flex items-center gap-2 text-sm cursor-pointer">
+                                <input type="radio" wire:model.live="form.bookingFor" value="other"
                                     class="text-teal-500 focus:ring-teal-500">
                                 Someone Else
                             </label>
@@ -243,9 +243,9 @@
 
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-900">Patient Name *</label>
-                                <input type="text" wire:model="form.patient_name"
+                                <input type="text" wire:model="form.patient_name" @disabled($form->bookingFor === "self")
                                     placeholder="Enter patient's full name"
-                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
+                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none disabled:cursor-not-allowed">
                                 @error("form.patient_name")
                                     <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                                 @enderror
@@ -265,8 +265,8 @@
                         <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-900">Gender *</label>
-                                <select wire:model="form.gender"
-                                    class="w-full rounded-xl border border-gray-200 px-4 py-[13px] text-sm focus:border-teal-500 focus:outline-none">
+                                <select wire:model="form.gender" @disabled($form->bookingFor === "self")
+                                    class="w-full rounded-xl border border-gray-200 px-4 py-[13px] text-sm focus:border-teal-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100">
                                     <option value="" hidden>-- Select one --</option>
                                     @foreach (\App\Enums\Gender::values() as $gender)
                                         <option value="{{ $gender }}">{{ $gender }}</option>
@@ -281,8 +281,9 @@
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
                                     Phone Number *
                                 </label>
-                                <input type="number" wire:model="form.phone" placeholder="+880 XXXXXXXX"
-                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
+                                <input type="number" wire:model="form.phone" @disabled($form->bookingFor === "self")
+                                    placeholder="+880 XXXXXXXX"
+                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none disabled:cursor-not-allowed">
                                 @error("form.phone")
                                     <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                                 @enderror
@@ -292,8 +293,9 @@
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
                                     Email *
                                 </label>
-                                <input type="email" wire:model="form.email" placeholder="your@email.com"
-                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
+                                <input type="email" wire:model="form.email" @disabled($form->bookingFor === "self")
+                                    placeholder="your@email.com"
+                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none disabled:cursor-not-allowed">
                                 @error("form.email")
                                     <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                                 @enderror

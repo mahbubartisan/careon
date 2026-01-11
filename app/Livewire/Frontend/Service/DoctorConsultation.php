@@ -13,7 +13,6 @@ class DoctorConsultation extends Component
 {
     public DoctorConsultationForm $form;
 
-    public $bookingFor = 'self';
     public $service;
 
     public function mount($slug)
@@ -27,7 +26,7 @@ class DoctorConsultation extends Component
         }
 
         if (auth()->check()) {
-            $this->updatedBookingFor('self');
+            $this->updatedFormBookingFor('self');
         }
     }
 
@@ -54,6 +53,7 @@ class DoctorConsultation extends Component
             'service_name'       => $this->service->name,
             'user_id'            => auth()->id(),
             'patient_name'       => $this->form->patient_name,
+            'booking_for'        => $this->form->bookingFor ? $this->form->bookingFor : 'self',
             'patient_age'        => $this->form->patient_age,
             'gender'             => $this->form->gender,
             'phone'              => $this->form->phone,
@@ -98,11 +98,10 @@ class DoctorConsultation extends Component
         return $prefix . $random;
     }
 
-    public function updatedBookingFor($value)
+    public function updatedFormBookingFor($value)
     {
         if ($value === 'self' && auth()->check()) {
             $user = auth()->user();
-
             $this->form->patient_name = $user->name ?? '';
             $this->form->email = $user->email ?? '';
             $this->form->phone = $user->phone ?? '';

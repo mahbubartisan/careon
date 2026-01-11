@@ -502,7 +502,6 @@
                         </span>
                     @endif
 
-
                 </div>
             </div>
 
@@ -522,13 +521,34 @@
 
                     <!-- Form -->
                     <form class="space-y-4">
+                        <!-- Patient Type -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-900">
+                                Booking For *
+                            </label>
+
+                            <div class="flex gap-6">
+                                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                                    <input type="radio" wire:model.live="form.bookingFor" value="self"
+                                        class="text-teal-500 focus:ring-teal-500">
+                                    Self
+                                </label>
+
+                                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                                    <input type="radio" wire:model.live="form.bookingFor" value="other"
+                                        class="text-teal-500 focus:ring-teal-500">
+                                    Someone Else
+                                </label>
+                            </div>
+                        </div>
 
                         <!-- Full Name -->
                         <div>
                             <label class="mb-1 block text-sm font-medium text-gray-900">
                                 Full Name *
                             </label>
-                            <input type="text" wire:model.defer="form.patient_name" placeholder="Enter full name"
+                            <input type="text" wire:model.defer="form.patient_name" @disabled($form->bookingFor === "self")
+                                placeholder="Enter full name"
                                 class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
                             @error("form.patient_name")
                                 <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
@@ -543,7 +563,8 @@
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
                                     Phone Number *
                                 </label>
-                                <input type="number" wire:model="form.phone" placeholder="01XXXXXXXXX"
+                                <input type="number" wire:model="form.phone" @disabled($form->bookingFor === "self")
+                                    placeholder="01XXXXXXXXX"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
                                 @error("form.phone")
                                     <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
@@ -555,7 +576,8 @@
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
                                     Email *
                                 </label>
-                                <input type="email" wire:model="form.email" placeholder="example@email.com"
+                                <input type="email" wire:model="form.email"
+                                    @disabled($form->bookingFor === "self") placeholder="example@email.com"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
                                 @error("form.email")
                                     <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
@@ -584,8 +606,8 @@
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
                                     Gender *
                                 </label>
-                                <select wire:model="form.gender"
-                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
+                                <select wire:model="form.gender" @disabled($form->bookingFor === "self")
+                                    class="w-full rounded-xl border border-gray-200 px-4 py-[13px] text-sm focus:border-teal-500 focus:outline-none">
                                     <option value="">-- Select one --</option>
                                     @foreach (\App\Enums\Gender::values() as $gender)
                                         <option value="{{ $gender }}">{{ $gender }}</option>
@@ -601,7 +623,7 @@
                         <!-- Address -->
                         <div>
                             <label class="mb-1 block text-sm font-medium text-gray-900">
-                                Address *
+                                Sample Collection Address *
                             </label>
                             <input wire:model="form.address" placeholder="Enter address"
                                 class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />

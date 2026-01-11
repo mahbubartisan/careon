@@ -183,7 +183,7 @@
             </div>
         </div> --}}
         <div class="rounded-xl border border-gray-200 bg-white p-6 text-gray-800" x-data="{
-            tab: '{{ $errors->has("signup_name") || $errors->has("signup_phone") || $errors->has("signup_email") || $errors->has("signup_password") ? "signup" : "signin" }}'
+            tab: '{{ $errors->has("signup_name") || $errors->has("signup_phone") || $errors->has("signup_email") || $errors->has("signup_gender") || $errors->has("signup_division") || $errors->has("signup_password") ? "signup" : "signin" }}'
         }">
 
             <!-- Tabs -->
@@ -253,7 +253,7 @@
                     @csrf
 
                     <div>
-                        <label class="text-sm font-medium">Full Name</label>
+                        <label class="text-sm font-medium">Full Name *</label>
                         <input type="text" name="signup_name"
                             class="@error("signup_name") border-red-500 @else border-gray-200 @enderror w-full rounded-xl border px-3 py-2.5 text-sm transition duration-300 ease-in-out focus:border-emerald-200 focus:outline-none"
                             placeholder="John Doe" />
@@ -264,8 +264,8 @@
                     </div>
 
                     <div>
-                        <label class="text-sm font-medium">Phone</label>
-                        <input type="text" name="signup_phone"
+                        <label class="text-sm font-medium">Phone *</label>
+                        <input type="number" name="signup_phone"
                             class="@error("signup_phone") border-red-500 @else border-gray-200 @enderror w-full rounded-xl border px-3 py-2.5 text-sm transition duration-300 ease-in-out focus:border-emerald-200 focus:outline-none"
                             placeholder="+880 1XXX-XXXXXX" />
 
@@ -275,7 +275,7 @@
                     </div>
 
                     <div>
-                        <label class="text-sm font-medium">Email</label>
+                        <label class="text-sm font-medium">Email *</label>
                         <input type="email" name="signup_email"
                             class="@error("signup_email") border-red-500 @else border-gray-200 @enderror w-full rounded-xl border px-3 py-2.5 text-sm transition duration-300 ease-in-out focus:border-emerald-200 focus:outline-none"
                             placeholder="your@email.com" />
@@ -286,7 +286,35 @@
                     </div>
 
                     <div>
-                        <label class="text-sm font-medium">Password</label>
+                        <label class="mb-1 block text-sm font-medium text-gray-900">Gender *</label>
+                        <select name="signup_gender"
+                            class="@error("signup_gender") border-red-500 @else border-gray-200 @enderror w-full rounded-xl border border-gray-200 px-4 py-[13px] text-sm focus:border-teal-500 focus:outline-none">
+                            <option value="" hidden>-- Select one --</option>
+                            @foreach (\App\Enums\Gender::values() as $gender)
+                                <option value="{{ $gender }}">{{ $gender }}</option>
+                            @endforeach
+                        </select>
+                        @error("signup_gender")
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-900">Division *</label>
+                        <select name="signup_division"
+                            class="@error("signup_division") border-red-500 @else border-gray-200 @enderror w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none">
+                            <option value="" hidden>-- Select one --</option>
+                            @foreach (\App\Enums\Division::values() as $division)
+                                <option value="{{ $division }}">{{ $division }}</option>
+                            @endforeach
+                        </select>
+                        @error("signup_division")
+                            <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium">Password *</label>
                         <input type="password" name="signup_password"
                             class="@error("signup_password") border-red-500 @else border-gray-200 @enderror w-full rounded-xl border px-3 py-2.5 text-sm transition duration-300 ease-in-out focus:border-emerald-200 focus:outline-none"
                             placeholder="••••••••" />

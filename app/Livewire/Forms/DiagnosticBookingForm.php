@@ -8,6 +8,7 @@ use Livewire\Form;
 class DiagnosticBookingForm extends Form
 {
     public $patient_name, $phone, $email, $address, $patient_age, $gender, $notes;
+    public $bookingFor = 'self';
  
     protected function rules(): array
     {

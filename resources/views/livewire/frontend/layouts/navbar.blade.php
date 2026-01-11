@@ -21,7 +21,7 @@ $settings = App\Models\Settings::with("siteLogo")->first();
                     <a href="{{ route('frontend.about') }}" class="hover:text-[#00B686]">About</a>
                     <a href="{{ route('frontend.contact-us') }}" class="hover:text-[#00B686]">Contact</a>
                     <a href="{{ route('frontend.blogs') }}" class="hover:text-[#00B686]">Health Tips</a>
-                    <a href="{{ route('frontend.price-calculation') }}" class="hover:text-[#00B686]">Price Calculator</a>
+                    {{-- <a href="{{ route('frontend.price-calculation') }}" class="hover:text-[#00B686]">Price Calculator</a> --}}
                 </nav>
 
                 <!-- Right: Buttons (Desktop) -->

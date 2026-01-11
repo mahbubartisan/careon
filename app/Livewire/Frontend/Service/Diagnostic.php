@@ -38,6 +38,10 @@ class Diagnostic extends Component
         ])->where('slug', $slug)
             ->where('status', 1)
             ->firstOrFail();
+
+        if (auth()->check()) {
+            $this->updatedFormBookingFor('self');
+        }
     }
 
     public function redirectToLogin()
@@ -94,7 +98,6 @@ class Diagnostic extends Component
             ]);
 
             return redirect()->route('frontend.confirm');
-
         } catch (\Throwable $e) {
             report($e);
             $this->addError('general', 'Something went wrong. Please try again.');
@@ -123,6 +126,32 @@ class Diagnostic extends Component
         } else {
             $this->selectedTests[$name] = (int) $price;
         }
+    }
+
+    public function updatedFormBookingFor($value)
+    {
+        if ($value === 'self' && auth()->check()) {
+            $user = auth()->user();
+
+            $this->form->patient_name = $user->name ?? '';
+            $this->form->email = $user->email ?? '';
+            $this->form->phone = $user->phone ?? '';
+            $this->form->gender = $user->gender ?? '';
+            $this->form->patient_age = $user->age ?? '';
+        }
+
+        if ($value === 'other') {
+            $this->resetPatientFields();
+        }
+    }
+
+    protected function resetPatientFields()
+    {
+        $this->form->patient_name = '';
+        $this->form->patient_age = '';
+        $this->form->gender = '';
+        $this->form->phone = '';
+        $this->form->email = '';
     }
 
     public function render()
