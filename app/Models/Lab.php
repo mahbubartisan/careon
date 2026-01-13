@@ -10,4 +10,9 @@ class Lab extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function testPrices()
+    {
+        return $this->hasMany(LabWiseTestPrice::class, 'lab_id');
+    }
 }

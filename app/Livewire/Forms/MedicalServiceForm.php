@@ -46,7 +46,7 @@ class MedicalServiceForm extends Form
             'service_desc.required' => 'Service description is required.',
             'service_desc.max' => 'Service description cannot exceed 255 characters.',
 
-            'image.required' => 'Pleas upload an image.',
+            'image.required' => 'Please upload an image.',
             'image.image' => 'The file must be a valid image.',
             'image.mimes' => 'Image must be JPG, JPEG, PNG, or WEBP.',
             'image.max' => 'Image size cannot exceed 2MB.',
@@ -55,13 +55,13 @@ class MedicalServiceForm extends Form
             'tests.*.test_name.string' => 'Test name must be a valid text.',
             'tests.*.test_name.max' => 'Test name cannot exceed 255 characters.',
 
-            'tests.*.price.required' => 'Test price is required.',
-            'tests.*.price.numeric' => 'Test price must be a valid number.',
-            'tests.*.price.min' => 'Test price must be greater than or equal to 0.',
+            // 'tests.*.price.required' => 'Test price is required.',
+            // 'tests.*.price.numeric' => 'Test price must be a valid number.',
+            // 'tests.*.price.min' => 'Test price must be greater than or equal to 0.',
 
-            'labs.*.lab_name.required' => 'Lab name is required.',
-            'labs.*.lab_name.string' => 'Lab name must be valid text.',
-            'labs.*.lab_name.max' => 'Lab name cannot exceed 255 characters.',
+            // 'labs.*.lab_name.required' => 'Lab name is required.',
+            // 'labs.*.lab_name.string' => 'Lab name must be valid text.',
+            // 'labs.*.lab_name.max' => 'Lab name cannot exceed 255 characters.',
         ];
     }
 }

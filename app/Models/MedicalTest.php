@@ -15,4 +15,9 @@ class MedicalTest extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function prices()
+    {
+        return $this->hasMany(LabWiseTestPrice::class, 'test_id');
+    }
 }
