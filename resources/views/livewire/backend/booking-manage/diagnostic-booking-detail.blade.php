@@ -90,14 +90,20 @@
                 <div class="flex justify-between">
                     <span class="text-gray-500">Created By</span>
                     <span class="font-semibold text-gray-900">
-                        {{ @$booking->user?->name ?? "Guest User" }}
+                        {{ @$booking->user?->name }}
                     </span>
                 </div>
 
                 <div class="flex justify-between">
-                    <span class="text-gray-500">Booking Date</span>
+                    <span class="text-gray-500">Preferred Date</span>
                     <span class="font-semibold text-gray-900">
-                        {{ $booking->created_at->format("F j, Y • g:i A") }}
+                        {{ \Carbon\Carbon::parse($booking->collection_date)->format('F d Y') }}
+                    </span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Preferred Time Range</span>
+                    <span class="font-semibold text-gray-900">
+                        {{ $booking->collection_time_range }}
                     </span>
                 </div>
 

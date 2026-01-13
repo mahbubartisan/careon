@@ -7,9 +7,9 @@ use Livewire\Form;
 
 class DiagnosticBookingForm extends Form
 {
-    public $patient_name, $phone, $email, $address, $patient_age, $gender, $notes;
+    public $patient_name, $phone, $email, $address, $patient_age, $gender, $collection_date, $collection_time_range, $notes;
     public $bookingFor = 'self';
- 
+
     protected function rules(): array
     {
         return [
@@ -19,6 +19,8 @@ class DiagnosticBookingForm extends Form
             'email'               => 'required|email|max:255',
             'phone'               => 'required|numeric',
             'address'             => 'required|string|max:500',
+            'collection_date'     => 'required|date|after_or_equal:today',
+            'collection_time_range' => 'required',
             'notes'               => 'nullable|string|max:500',
         ];
     }
@@ -43,10 +45,16 @@ class DiagnosticBookingForm extends Form
 
             'phone.required' => 'Phone number is required.',
             'phone.numeric'  => 'Phone number must contain only numbers.',
-          
+
             'address.required' => 'Address is required.',
             'address.max' => 'Address may not exceed 500 characters.',
-            
+
+            'collection_date.required' => 'Preferred date is required.',
+            'collection_date.date'     => 'Preferred date must be a valid date.',
+            'collection_date.after_or_equal' => 'Preferred date must be today or in the future.',
+
+            'collection_time_range.required' => 'Preferred time range is required.',
+
             'notes.max' => 'Additional notes may not exceed 500 characters.',
         ];
     }

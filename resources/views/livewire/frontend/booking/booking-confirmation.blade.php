@@ -1,14 +1,10 @@
 <div>
     <div class="flex min-h-screen flex-col items-center justify-center px-4 pb-20 pt-28">
-        {{-- @php
-            $booking = \App\Models\Booking::find(session("booking_id"));
-        @endphp --}}
-        {{-- @dd($booking->id) --}}
         <!-- Floating Header (Outside Top) -->
         <div class="z-10 -mb-6 flex flex-col items-center">
-            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 shadow-sm">
+            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-teal-100 shadow-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-9 w-9 text-green-500">
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-9 w-9 text-teal-500">
                     <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
                     <path d="m9 11 3 3L22 4"></path>
                 </svg>
@@ -45,16 +41,16 @@
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-gray-500">Status:</span>
-                        {{-- <span
-                            class="rounded-full border border-blue-200 bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
-                            Confirmed – Provider Assignment in Progress
-                        </span> --}}
-                        @if ($booking->status == 0)
+                        <span
+                            class="rounded-full border border-teal-200 bg-teal-100 px-3 py-1 text-xs font-medium text-teal-800">
+                            Received
+                        </span>
+                        {{-- @if ($booking->status == 0)
                             <span
                                 class="rounded-full border border-yellow-200 bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-700">
                                 Pending
                             </span>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
 
@@ -101,7 +97,7 @@
                 <div class="mb-2 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                        class="mx-auto h-8 w-8 text-green-500">
+                        class="mx-auto h-8 w-8 text-teal-500">
                         <path
                             d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
                         </path>
@@ -111,19 +107,21 @@
                 <span class="text-xs text-gray-500">+8801319552222</span>
             </div>
 
-            <!-- Chat Support -->
-            <div
+            <!-- Need Support -->
+            <a href="{{ route("frontend.contact-us") }}"
                 class="flex flex-col items-center rounded-2xl border border-gray-200 bg-gray-50/20 p-4 text-center transition duration-300 ease-in-out hover:cursor-pointer hover:bg-white hover:shadow-[0_0_25px_rgba(0,0,0,0.1)]">
                 <div class="mb-2 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                        class="mx-auto h-8 w-8 text-green-500">
-                        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+                    <svg class="mx-auto h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 16v-4" />
+                        <path d="M12 8h.01" />
                     </svg>
                 </div>
-                <p class="text-sm font-semibold text-gray-900">Chat Support</p>
+                <p class="text-sm font-semibold text-gray-900">Need Support?</p>
                 <span class="text-xs text-gray-500">Get instant help</span>
-            </div>
+            </a>
 
             <!-- Back to Home -->
             <a href="{{ route("frontend.home-page") }}"
@@ -131,7 +129,7 @@
                 <div class="mb-2 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                        class="mx-auto h-8 w-8 text-green-500">
+                        class="mx-auto h-8 w-8 text-teal-500">
                         <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
                         <path
                             d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z">

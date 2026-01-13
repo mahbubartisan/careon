@@ -528,13 +528,13 @@
                             </label>
 
                             <div class="flex gap-6">
-                                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                                <label class="flex cursor-pointer items-center gap-2 text-sm">
                                     <input type="radio" wire:model.live="form.bookingFor" value="self"
                                         class="text-teal-500 focus:ring-teal-500">
                                     Self
                                 </label>
 
-                                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                                <label class="flex cursor-pointer items-center gap-2 text-sm">
                                     <input type="radio" wire:model.live="form.bookingFor" value="other"
                                         class="text-teal-500 focus:ring-teal-500">
                                     Someone Else
@@ -576,8 +576,8 @@
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
                                     Email *
                                 </label>
-                                <input type="email" wire:model="form.email"
-                                    @disabled($form->bookingFor === "self") placeholder="example@email.com"
+                                <input type="email" wire:model="form.email" @disabled($form->bookingFor === "self")
+                                    placeholder="example@email.com"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
                                 @error("form.email")
                                     <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
@@ -614,6 +614,43 @@
                                     @endforeach
                                 </select>
                                 @error("form.gender")
+                                    <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                        </div>
+
+                        <!-- Date & Time -->
+                        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+
+                            <!-- Preferred Date -->
+                            <div>
+                                <label class="mb-1 block text-sm font-medium text-gray-900">
+                                    Preferred Collection Date *
+                                </label>
+                                <input type="date" wire:model="form.collection_date"
+                                    class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none" />
+                                @error("form.collection_date")
+                                    <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Preferred Time Range -->
+                            <div>
+                                <label class="mb-1 block text-sm font-medium text-gray-900">
+                                    Preferred Time Range *
+                                </label>
+                                <select wire:model="form.collection_time_range"
+                                    class="w-full rounded-xl border border-gray-200 px-4 py-[13px] text-sm focus:border-teal-500 focus:outline-none">
+                                    <option value="">-- Select time range --</option>
+                                    <option value="08:00 AM – 10:00 AM">08:00 AM – 10:00 AM</option>
+                                    <option value="10:00 AM – 12:00 PM">10:00 AM – 12:00 PM</option>
+                                    <option value="12:00 PM – 02:00 PM">12:00 PM – 02:00 PM</option>
+                                    <option value="02:00 PM – 04:00 PM">02:00 PM – 04:00 PM</option>
+                                    <option value="04:00 PM – 06:00 PM">04:00 PM – 06:00 PM</option>
+                                    <option value="08:00 PM – 10:00 PM">08:00 PM – 10:00 PM</option>
+                                </select>
+                                @error("form.collection_time_range")
                                     <span class="mt-1 block text-xs text-red-500">{{ $message }}</span>
                                 @enderror
                             </div>

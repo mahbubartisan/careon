@@ -116,7 +116,7 @@
             </div>
 
             <p class="subtitle">
-                @if ($recipientType === 'admin')
+                @if ($recipientType === "admin")
                     A new diagnostic service booking has been placed.
                     Below are the complete booking and patient details.
                 @else
@@ -126,7 +126,7 @@
                     Please find your booking details below.
                 @endif
             </p>
-            
+
             <!-- BOOKING INFORMATION -->
             <div class="section-title">Booking Information</div>
             <table>
@@ -137,6 +137,14 @@
                 <tr>
                     <td class="label">Diagnostic Center</td>
                     <td>{{ $booking->lab }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Preferred Date</td>
+                    <td>{{ \Carbon\Carbon::parse($booking->collection_date)->format('F d Y') }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Preferred Time Range</td>
+                    <td>{{ $booking->collection_time_range }}</td>
                 </tr>
                 <tr>
                     <td class="label">Total Price</td>
@@ -150,12 +158,17 @@
                 <tr>
                     <td class="label">Tests</td>
                     <td>
-                        @foreach ($booking->tests as $test)
-                            • {{ $test }}<br>
+                        @foreach ($booking->tests as $name => $price)
+                            • {{ $name }}
+                            <span class="text-gray-600">
+                                (৳{{ number_format((float) $price) }})
+                            </span>
+                            <br>
                         @endforeach
                     </td>
                 </tr>
             </table>
+
 
             <!-- PATIENT INFORMATION -->
             <div class="section-title">Patient Information</div>
@@ -184,13 +197,13 @@
                     <td class="label">Address</td>
                     <td>{{ $booking->address }}</td>
                 </tr>
-            </table> 
-            
+            </table>
+
             <!-- NOTES -->
             @if ($booking->notes)
                 <div class="note-box"> <strong>Special Instructions:</strong><br> {{ $booking->notes }} </div>
-            @endif 
-            
+            @endif
+
             <!-- FOOTER -->
             <div class="footer">
                 @if ($recipientType === "admin")
