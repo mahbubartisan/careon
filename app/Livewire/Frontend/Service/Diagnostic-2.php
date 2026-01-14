@@ -20,6 +20,7 @@ class Diagnostic extends Component
     public DiagnosticBookingForm $form;
 
     public $service;
+    public $selectedLab;
     public $labMap;
     public $search = '';
 
@@ -27,10 +28,6 @@ class Diagnostic extends Component
     // public $labs;
     // public ?int $selectedLab = null;
     public array $selectedTests = [];
-
-    public array $selectedTestIds = [];   // [1, 5, 9]
-    public ?int $selectedLab = null;      // lab_id
-    public array $comparison = [];
 
 
     protected $updatesQueryString = ['search', 'page'];
@@ -61,14 +58,27 @@ class Diagnostic extends Component
         $this->selectedLab = $labId;
     }
 
-    public function toggleTest(int $testId)
+    public function toggleTest($testId)
     {
-        if (in_array($testId, $this->selectedTestIds)) {
-            $this->selectedTestIds = array_values(
-                array_diff($this->selectedTestIds, [$testId])
-            );
+        if (!$this->selectedLab) {
+            return;
+        }
+
+        $test = MedicalTest::with('prices')->findOrFail($testId);
+
+        $price = $test->prices
+            ->where('lab_id', $this->selectedLab)
+            ->first()?->price;
+
+        if (!$price) {
+            return;
+        }
+
+        // Toggle test by NAME → PRICE
+        if (isset($this->selectedTests[$test->name])) {
+            unset($this->selectedTests[$test->name]);
         } else {
-            $this->selectedTestIds[] = $testId;
+            $this->selectedTests[$test->name] = $price;
         }
     }
 
@@ -79,36 +89,6 @@ class Diagnostic extends Component
         }
 
         // redirect / emit / store in session
-    }
-
-    public function prepareComparison()
-    {
-        $tests = MedicalTest::with(['prices.lab'])
-            ->whereIn('id', $this->selectedTestIds)
-            ->get();
-
-        $this->comparison = [];
-
-        foreach ($tests as $test) {
-            foreach ($test->prices as $price) {
-                $this->comparison[$test->name][$price->lab_id] = $price->price;
-            }
-        }
-    }
-
-    public function prepareSummary()
-    {
-        $this->selectedTests = [];
-
-        if (!$this->selectedLab) {
-            return;
-        }
-
-        foreach ($this->comparison as $testName => $labs) {
-            if (isset($labs[$this->selectedLab])) {
-                $this->selectedTests[$testName] = (int) $labs[$this->selectedLab];
-            }
-        }
     }
 
     public function redirectToLogin()

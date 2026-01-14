@@ -49,6 +49,7 @@ class Service extends Component
             'diagnostic'   => $this->redirectRoute('frontend.service.diagnostic', ['slug' => $service->slug]),
             'ambulance'    => $this->redirectRoute('frontend.service.ambulance', ['slug' => $service->slug]),
             'appointment'  => $this->redirectRoute('frontend.service.consultation', ['slug' => $service->slug]),
+            // 'doctor-visit'  => $this->redirectRoute('frontend.service.doctor-visit', ['slug' => $service->slug]),
             default        => abort(404),
         };
     }

@@ -38,7 +38,10 @@ class OtpController extends Controller
         // Login user
         Auth::login($user);
 
-
+        // If an intended URL exists, redirect there first
+        if (session()->has('url.intended')) {
+            return redirect()->intended();
+        }
         return redirect()->intended(RouteServiceProvider::User_HOME);
     }
 }

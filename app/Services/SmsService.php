@@ -7,16 +7,6 @@ use Illuminate\Support\Facades\Log;
 
 class SmsService
 {
-    // public static function send($phone, $message)
-    // {
-    //     Http::post(config('services.sms.url'), [
-    //         'api_key'   => config('services.sms.api_key'),
-    //         'sender_id' => config('services.sms.sender_id'),
-    //         'to'        => $phone,
-    //         'message'   => $message,
-    //     ]);
-    // }
-
     public static function send($phone, $message)
     {
         // Force message to be a clean string
@@ -37,17 +27,17 @@ class SmsService
         ];
 
         // Log payload BEFORE sending
-        Log::info('Alpha SMS Payload', $payload);
+        // Log::info('Alpha SMS Payload', $payload);
 
         $response = Http::asForm()->post(
             config('services.sms.url'),
             $payload
         );
 
-        Log::info('Alpha SMS Response', [
-            'status' => $response->status(),
-            'body'   => $response->body(),
-        ]);
+        // Log::info('Alpha SMS Response', [
+        //     'status' => $response->status(),
+        //     'body'   => $response->body(),
+        // ]);
     }
 
     private static function formatPhone($phone)

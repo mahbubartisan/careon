@@ -86,6 +86,7 @@
                                 <option value="diagnostic">Diagnostic</option>
                                 <option value="ambulance">Ambulance Support</option>
                                 <option value="appointment">Appointment</option>
+                                <option value="doctor-visit">Doctor Vist</option>
                             </select>
 
                             @error("form.formType")

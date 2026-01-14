@@ -12,12 +12,6 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-
-    // public function create(): View
-    // {
-    //     return view('auth.login');
-    // }
-
     public function create(): View
     {
         // Only set intended URL if not already set AND user came from frontend

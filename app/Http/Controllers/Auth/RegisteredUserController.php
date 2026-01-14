@@ -91,13 +91,6 @@ class RegisteredUserController extends Controller
 
         SmsService::send($user->phone, $message);
 
-
-        // Send OTP via SMS
-        // SmsService::send(
-        //     $user->phone,
-        //     "Your CareOn verification code is {$otp}. It will expire in 5 minutes."
-        // );
-
         // Redirect to OTP verification page
         return redirect()->route('otp.verify.form', $user->id);
     }

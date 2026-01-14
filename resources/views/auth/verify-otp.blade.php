@@ -6,7 +6,7 @@
 @section("content")
     <div class="flex min-h-screen items-center justify-center">
         <form method="POST" action="{{ route("otp.verify", $user->id) }}"
-            class="mx-auto mt-16 max-w-md space-y-4 rounded bg-white p-6 shadow">
+            class="mx-auto mt-16 max-w-lg space-y-4 border border-gray-200 rounded-lg bg-white p-6 shadow-sm">
             @csrf
 
             <h2 class="text-center text-lg font-semibold">
@@ -17,15 +17,17 @@
                 We sent a 6-digit code to {{ $user->phone }}
             </p>
 
-            <input type="number" name="otp" maxlength="6"
-                class="w-full rounded-xl border border-gray-200 px-3 py-2 text-center text-lg tracking-widest focus:border-teal-200 focus:outline-none"
-                placeholder="Enter OTP">
+            <div>
+                <input type="number" name="otp" maxlength="6"
+                    class="mb-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-center text-base tracking-widest focus:border-teal-200 focus:outline-none"
+                    placeholder="Enter OTP">
 
-            @error("otp")
-                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-            @enderror
+                @error("otp")
+                    <p class="text-xs text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
 
-            <button type="submit" class="w-full rounded bg-[#00B686] py-2 text-white hover:bg-[#00976F]">
+            <button type="submit" class="w-full rounded bg-teal-600 py-2 text-white hover:bg-teal-700">
                 Verify
             </button>
         </form>
