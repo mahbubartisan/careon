@@ -7,6 +7,8 @@ use App\Http\Requests\RegisterRequest;
 use App\Mail\VerifyUserEmail;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Services\SmsService;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,7 +46,7 @@ class RegisteredUserController extends Controller
     //         'email' => $request->email,
     //         'password' => Hash::make($request->password),
     //     ])->assignRole('User');
-        
+
 
     //     Auth::login($user);
     //     return redirect(RouteServiceProvider::User_HOME);
@@ -62,15 +64,41 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->signup_password),
         ]);
 
-        // Assign default user role
+        // // Assign default user role
+        // $user->assignRole('user');
+
+        // // event(new Registered($user));
+        // // Send verification email
+        // Mail::to($user->email)->send(new VerifyUserEmail($user));
+
+        // // Auth::login($user);
+
+        // return redirect()->intended(RouteServiceProvider::User_HOME);
+
+        // Assign role
         $user->assignRole('user');
 
-        // event(new Registered($user));
-        // Send verification email
-        Mail::to($user->email)->send(new VerifyUserEmail($user));
+        // Generate OTP
+        $otp = rand(100000, 999999);
 
-        // Auth::login($user);
+        // Save OTP
+        $user->update([
+            'otp' => $otp,
+            'otp_expires_at' => Carbon::now()->addMinutes(5),
+        ]);
 
-        return redirect()->intended(RouteServiceProvider::User_HOME);
+        $message = "CareOn OTP: {$otp}";
+
+        SmsService::send($user->phone, $message);
+
+
+        // Send OTP via SMS
+        // SmsService::send(
+        //     $user->phone,
+        //     "Your CareOn verification code is {$otp}. It will expire in 5 minutes."
+        // );
+
+        // Redirect to OTP verification page
+        return redirect()->route('otp.verify.form', $user->id);
     }
 }

@@ -47,5 +47,11 @@ return [
         'redirect'      => env('FACEBOOK_REDIRECT_URI'),
     ],
 
+    'sms' => [
+        'api_key' => env('SMS_API_KEY'),
+        'sender_id' => env('SMS_SENDER_ID'),
+        'url' => env('SMS_API_URL'),
+    ],
+
 
 ];

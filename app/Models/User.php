@@ -31,6 +31,9 @@ class User extends Authenticatable
         'status',
         'provider',
         'provider_id',
+        'otp',
+        'otp_expires_at',
+        'phone_verified_at',
     ];
 
     /**

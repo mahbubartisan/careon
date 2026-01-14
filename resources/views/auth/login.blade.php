@@ -3,7 +3,7 @@
 @endphp
 @extends("auth.app")
 @section("title")
-    RCB - Login
+    CareOn - Login
 @endsection
 {{-- @section("content")
     <div class="w-full mt-36 md:mt-32 max-w-md px-5 lg:px-0">
