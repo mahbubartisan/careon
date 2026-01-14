@@ -69,9 +69,6 @@
                         <th class="px-6 py-3 text-xs text-left font-medium uppercase tracking-wider">
                             Permissions
                         </th>
-                        <th class="px-6 py-3 text-xs text-left font-medium uppercase tracking-wider">
-                            Created At
-                        </th>
                         @if (auth()->user()->can("edit role") || auth()->user()->can("delete role"))
                             <th class="px-6 py-3 text-xs text-left font-medium uppercase tracking-wider">
                                 Action
@@ -89,8 +86,6 @@
                                     <span
                                         class="bg-blue-50 text-blue-600 px-2 py-1 rounded">{{ $permission->name }}</span>
                                 @endforeach
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $role->created_at->format("d M Y h:s:i A") }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center space-x-2">

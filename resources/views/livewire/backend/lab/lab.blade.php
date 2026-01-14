@@ -2,7 +2,7 @@
     <!-- Breadcrumb Start -->
     <div class="my-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-300">
-            Permissions
+            Labs
         </h2>
         <nav>
             <ol class="flex items-center gap-2">
@@ -10,13 +10,13 @@
                     <a class="text-[13.5px] text-gray-500 dark:text-blue-200"
                         href="{{ route("dashboard") }}">Dashboard /</a>
                 </li>
-                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Permissions</li>
+                <li class="text-[13.5px] text-gray-700 dark:text-gray-300">Labs</li>
             </ol>
         </nav>
     </div>
     <!-- Breadcrumb End -->
     <div class="my-5 flex justify-end">
-        @can("create permission")
+        @can("create lab")
             <button type="button" wire:click='openModal'
                 class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 px-3.5 py-2.5 rounded-md shadow-lg text-white text-sm transition-colors duration-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -24,7 +24,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
-                Add Permission
+                Add Lab
             </button>
         @endcan
     </div>
@@ -66,7 +66,7 @@
                         <th class="px-6 py-3 text-xs text-left font-medium uppercase tracking-wider">
                             Name
                         </th>
-                        @if (auth()->user()->can("edit permission") || auth()->user()->can("delete permission"))
+                        @if (auth()->user()->can("edit lab") || auth()->user()->can("delete lab"))
                             <th class="px-6 py-3 text-xs text-left font-medium uppercase tracking-wider">
                                 Action
                             </th>
@@ -74,14 +74,14 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-[#132337] divide-y divide-gray-200 dark:divide-[#233A57]">
-                    @forelse ($permissions as $index => $permission)
+                    @forelse ($labs as $index => $lab)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $permissions->firstItem() + $index }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $permission->name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $labs->firstItem() + $index }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $lab->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center space-x-2">
-                                    @can("edit permission")
-                                        <button type="button" wire:click="edit({{ $permission->id }})" title="Edit">
+                                    @can("edit lab")
+                                        <button type="button" wire:click="edit({{ $lab->id }})" title="Edit">
                                             <!-- Edit Icon -->
                                             <svg class="h-5 w-5 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-600 transition-colors duration-300"
                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -95,8 +95,8 @@
                                             </svg>
                                         </button>
                                     @endcan
-                                    @can("delete permission")
-                                        <button type="button" wire:click='delete({{ $permission->id }})'
+                                    @can("delete lab")
+                                        <button type="button" wire:click='delete({{ $lab->id }})'
                                             wire:confirm='Are you sure to delete?' title="Delete">
                                             <!-- Delete Icon -->
                                             <svg class="h-5 w-5 text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-600 transition-colors duration-300"
@@ -127,8 +127,8 @@
             <!-- Showing Entries Info -->
             <div>
                 <p class="text-sm text-gray-700 dark:text-gray-700">
-                    Showing <span>{{ $permissions->firstItem() }}</span> to <span>{{ $permissions->lastItem() }}</span>
-                    of <span>{{ $permissions->total() }}</span> entries
+                    Showing <span>{{ $labs->firstItem() }}</span> to <span>{{ $labs->lastItem() }}</span>
+                    of <span>{{ $labs->total() }}</span> entries
                 </p>
             </div>
 
@@ -138,7 +138,7 @@
                     aria-label="Pagination">
 
                     <!-- Previous Button -->
-                    @if ($permissions->onFirstPage())
+                    @if ($labs->onFirstPage())
                         <span
                             class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-600/10 dark:border-gray-600/45 text-gray-400 cursor-not-allowed">
                             <span>Previous</span>
@@ -151,8 +151,8 @@
                     @endif
 
                     <!-- Pagination Numbers -->
-                    @foreach ($permissions->links()->elements[0] as $page => $url)
-                        @if ($page == $permissions->currentPage())
+                    @foreach ($labs->links()->elements[0] as $page => $url)
+                        @if ($page == $labs->currentPage())
                             <span
                                 class="relative inline-flex items-center px-4 py-2 border border-gray-600/10 dark:border-gray-600/45 bg-blue-500 text-white">
                                 {{ $page }}
@@ -166,7 +166,7 @@
                     @endforeach
 
                     <!-- Next Button -->
-                    @if ($permissions->hasMorePages())
+                    @if ($labs->hasMorePages())
                         <a href="#" wire:click.prevent="nextPage"
                             class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-600/10 dark:border-gray-600/45 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <span>Next</span>
@@ -183,6 +183,6 @@
     </div>
 
     @if ($form->isOpen)
-        @include("livewire.backend.permission.fragments.modal")
+        @include("livewire.backend.lab.fragments.modal")
     @endif
 </div>

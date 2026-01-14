@@ -26,7 +26,7 @@ class PermissionForm extends Form
             'name.required' => 'Permission name field is required.',
             'name.string'   => 'Permission name must be a valid string.',
             'name.max'      => 'Permission name must not be greater than 50 characters.',
-            'name.unique'   => 'This Permission name already exists. Please choose another.',
+            'name.unique'   => 'This Permission name already exists.',
         ];
     }
 }

@@ -23,6 +23,7 @@ use App\Livewire\Backend\CareLevel\EditCareLevel;
 use App\Livewire\Backend\Contact\Contact;
 use App\Livewire\Backend\Contact\ContactDetail;
 use App\Livewire\Backend\Dashboard;
+use App\Livewire\Backend\Lab\Lab;
 use App\Livewire\Backend\Location\CreateLocation;
 use App\Livewire\Backend\Location\EditLocation;
 use App\Livewire\Backend\Location\Location;
@@ -93,7 +94,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/package', Package::class)->name('package');
     Route::get('/create-package', CreatePackage::class)->name('create.package');
     Route::get('/package/{packageId}/edit', EditPackage::class)->name('edit.package');
-    
+
     // Care Level Routes
     Route::get('/care-level', CareLevel::class)->name('care-level');
     Route::get('/create-care-level', CreateCareLevel::class)->name('create.care-level');
@@ -106,36 +107,36 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/service', Service::class)->name('service');
     Route::get('/create-service', CreateService::class)->name('create.service');
     Route::get('/service/{serviceId}/edit', EditService::class)->name('edit.service');
-    
+
     // Service Price Routes
     Route::get('/service-price', ServicePrice::class)->name('service.price');
     Route::get('/create-service-price', CreateServicePrice::class)->name('create.service.price');
     Route::get('/service-price/{serviceId}/edit', EditServicePrice::class)->name('edit.service.price');
-    
+
     // Medical Service Routes
     Route::get('/medical-service', MedicalService::class)->name('medical.service');
     Route::get('/create-medical-service', CreateMedicalService::class)->name('create.medical.service');
     Route::get('/medical-service/{serviceId}/edit', EditMedicalService::class)->name('edit.medical.service');
-    
+
     // Manage Booking Routes
     Route::get('/diagnostic-bookings', DiagnosticBooking::class)->name('diagnostic.booking');
     Route::get('/diagnostic-booking/{bookingId}', DiagnosticBookingDetail::class)->name('diagnostic.booking.detail');
 
     Route::get('/ambulance-bookings', AmbulanceBooking::class)->name('ambulance.booking');
     Route::get('/ambulance-booking/{bookingId}', AmbulanceBookingDetail::class)->name('ambulance.booking.detail');
-    
+
     Route::get('/consultation-bookings', ConsultationBooking::class)->name('consultation.booking');
     Route::get('/consultation-booking/{bookingId}', ConsultationBookingDetail::class)->name('consultation.booking.detail');
 
     // Booking Routes
     Route::get('/bookings', Booking::class)->name('booking');
     Route::get('/booking/{bookingId}', BookingDetail::class)->name('booking.detail');
-    
+
     // Blog Routes
     Route::get('/blog', Blog::class)->name('blog');
     Route::get('/create-blog', CreateBlog::class)->name('create.blog');
     Route::get('/blog/{blogId}/edit', EditBlog::class)->name('edit.blog');
-    
+
     // Advisor Routes
     Route::get('/advisor', Advisor::class)->name('advisor');
     Route::get('/create-advisor', CreateAdvisor::class)->name('create.advisor');
@@ -145,6 +146,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Contact Routes
     Route::get('/contacts', Contact::class)->name('contact');
     Route::get('/contact/{contactId}/detail', ContactDetail::class)->name('view.contact');
+
+    // Lab Route
+    Route::get('/labs', Lab::class)->name('lab');
 
     // Settings
     Route::get('/settings', Settings::class)->name('settings');

@@ -20,15 +20,15 @@
             </p>
 
             <!-- Feature Boxes -->
-            <div class="mx-auto mt-8 grid max-w-5xl grid-cols-2 gap-4 md:grid-cols-4">
+            <div class="mx-auto mt-8 grid max-w-6xl grid-cols-2 gap-4 lg:grid-cols-4">
                 <!-- 1 -->
                 <div class="flex flex-col items-center justify-center rounded-xl bg-[#FAFBFB] p-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-2 h-6 w-6 text-[#17A884]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 14l9-5-9-5-9 5 9 5z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 14l6.16-3.422A12.083 12.083 0 0118 13.5V20l-6 3-6-3v-6.5c0-.61.086-1.203.24-1.778L12 14z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="mb-2 h-8 w-8 flex-shrink-0 text-[#00B686]">
+                        <path
+                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                        </path>
                     </svg>
                     <p class="text-sm font-medium text-gray-900">
                         Certified Healthcare Professionals
@@ -37,30 +37,34 @@
 
                 <!-- 2 -->
                 <div class="flex flex-col items-center justify-center rounded-xl bg-[#FAFBFB] p-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-2 h-6 w-6 text-[#17A884]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 11c0 3.314-2.686 6-6 6S0 14.314 0 11s2.686-6 6-6 6 2.686 6 6z"
-                            transform="translate(6 3)" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="mb-2 h-8 w-8 flex-shrink-0 text-[#00B686]">
+                        <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                        <path d="m9 11 3 3L22 4"></path>
                     </svg>
                     <p class="text-sm font-medium text-gray-900">Background Checked</p>
                 </div>
 
                 <!-- 3 -->
                 <div class="flex flex-col items-center justify-center rounded-xl bg-[#FAFBFB] p-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-2 h-6 w-6 text-[#17A884]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="mb-2 h-8 w-8 flex-shrink-0 text-[#00B686]">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
                     </svg>
                     <p class="text-sm font-medium text-gray-900">Flexible Pricing</p>
                 </div>
 
                 <!-- 4 -->
                 <div class="flex flex-col items-center justify-center rounded-xl bg-[#FAFBFB] p-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-2 h-6 w-6 text-[#17A884]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="mb-2 h-8 w-8 flex-shrink-0 text-[#00B686]">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
                     <p class="text-sm font-medium text-gray-900">24/7 Availability</p>
                 </div>
@@ -227,12 +231,12 @@
                         <!-- badge -->
                         @if ($service->badge == 1)
                             <span
-                                class="absolute right-3 top-3 rounded-full bg-[#1f64ad] px-3 py-0.5 text-xs font-semibold text-white shadow-sm hover:bg-[#1f64ad]/80">
+                                class="absolute right-3 top-3 rounded-full bg-teal-500 px-3 py-0.5 text-xs font-semibold text-white shadow-sm hover:bg-[#1f64ad]/80">
                                 Most Popular
                             </span>
                         @elseif ($service->badge == 2)
                             <span
-                                class="absolute right-3 top-3 rounded-full bg-[#1f64ad] px-3 py-0.5 text-xs font-semibold text-white shadow-sm hover:bg-[#1f64ad]/80">
+                                class="absolute right-3 top-3 rounded-full bg-teal-500 px-3 py-0.5 text-xs font-semibold text-white shadow-sm hover:bg-[#1f64ad]/80">
                                 24/7
                             </span>
                         @endif
@@ -254,15 +258,6 @@
                                 </div>
 
                                 <div class="mt-5">
-                                    {{-- <a href="{{ route("frontend.service-detail", $service->slug) }}"
-                                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#17A884] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#139673]">
-                                        <span>View Details &amp; Book</span>
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </a> --}}
                                     <button wire:click="redirectToServiceForm('{{ $service->slug }}')"
                                         class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#17A884] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#139673]">
                                         View Details &amp; Book
