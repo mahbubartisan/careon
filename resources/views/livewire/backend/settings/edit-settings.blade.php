@@ -20,12 +20,12 @@
             Settings Information
         </h2>
         <form method="post">
-            <div class="rounded-xl border p-4 space-y-4">
+            <div class="space-y-4 rounded-xl border p-4">
                 <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <!-- Site Name -->
                     <div>
                         <label for="name" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Site Name*
+                            Site Name *
                         </label>
                         <input type="text" wire:model="site_name" id="site_name" name="site_name"
                             placeholder="Enter Name"
@@ -37,7 +37,7 @@
                     <!-- Email -->
                     <div>
                         <label for="email" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Email*
+                            Email *
                         </label>
                         <input type="email" wire:model="email" id="email" name="email" placeholder="Enter Email"
                             class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
@@ -51,7 +51,7 @@
                     <!-- Site Logo -->
                     <div>
                         <label for="logo" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Logo*
+                            Logo *
                         </label>
                         <input type="file" wire:model="logo" id="logo" name="logo"
                             class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-[7px] text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
@@ -62,7 +62,7 @@
                     <!-- Fav Icon -->
                     <div>
                         <label for="favIcon" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Fav Icon*
+                            Fav Icon *
                         </label>
                         <input type="file" wire:model="favIcon" id="favIcon" name="favIcon"
                             class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-[7px] text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
@@ -76,7 +76,7 @@
                     <!-- Address -->
                     <div>
                         <label for="address" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Address*
+                            Address *
                         </label>
                         <input type="text" wire:model="address" id="address" name="address"
                             placeholder="Enter Address"
@@ -88,7 +88,7 @@
                     <!-- Phone -->
                     <div>
                         <label for="phone" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Phone*
+                            Phone *
                         </label>
                         <input type="text" wire:model="phone" id="phone" name="phone" placeholder="Enter Phone"
                             class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
@@ -99,7 +99,7 @@
                     <!-- Office Hours -->
                     <div>
                         <label for="office_hours" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Office Hours*
+                            Office Hours *
                         </label>
                         <input type="text" wire:model="office_hours" id="office_hours"
                             placeholder="Enter Office Hours"
@@ -111,7 +111,7 @@
                     <!-- Whatsapp -->
                     <div>
                         <label for="whatsapp" class="block text-sm text-gray-700 dark:text-gray-400">
-                            Whatsapp*
+                            Whatsapp *
                         </label>
                         <input type="text" wire:model="whatsapp" id="whatsapp" placeholder="Enter Whatsapp"
                             class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
@@ -167,6 +167,24 @@
                             placeholder="Enter LinkedIn URL"
                             class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
                     </div>
+                </div>
+
+                <!-- Meta Title -->
+                <div>
+                    <label for="meta_title" class="block text-sm text-gray-700 dark:text-gray-400">
+                        Meta Title
+                    </label>
+                    <input type="text" wire:model="meta_title" id="meta_title" placeholder="Enter Meta Title"
+                        class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300" />
+                </div>
+
+                <!-- Meta Description -->
+                <div>
+                    <label for="meta_description" class="block text-sm text-gray-700 dark:text-gray-400">
+                        Meta Description
+                    </label>
+                    <textarea wire:model="meta_description" id="meta_description" placeholder="Enter Meta Description" rows="4"
+                        class="mt-2 w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800 transition duration-300 ease-in-out focus:border-blue-600 focus:outline-none dark:border-[#233A57] dark:bg-[#132337] dark:text-gray-300"></textarea>
                 </div>
             </div>
 

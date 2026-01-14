@@ -17,7 +17,7 @@ class EditSettings extends Component
     #[Title('Edit Settings')]
 
     public $site_name, $email, $phone, $address, $office_hours, $whatsapp;
-    public $instagram, $twitter, $facebook, $linkedin, $youtube;
+    public $instagram, $twitter, $facebook, $linkedin, $youtube, $meta_title, $meta_description;
     public $logo, $favIcon;
     public $settingId;
 
@@ -30,6 +30,8 @@ class EditSettings extends Component
         $this->phone = $setting->phone;
         $this->office_hours = $setting->office_hours;
         $this->whatsapp = $setting->whatsapp;
+        $this->meta_title = $setting->meta_title;
+        $this->meta_description = $setting->meta_description;
         $this->address = $setting->address;
         $this->instagram = $setting->instagram;
         $this->twitter = $setting->twitter;
@@ -96,6 +98,8 @@ class EditSettings extends Component
             'phone' => $this->phone,
             'office_hours' => $this->office_hours,
             'whatsapp' => $this->whatsapp,
+            'meta_title' => $this->meta_title,
+            'meta_description' => $this->meta_description,
             'address' => $this->address,
             'instagram' => $this->instagram,
             'twitter' => $this->twitter,

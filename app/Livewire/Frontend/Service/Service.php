@@ -9,37 +9,49 @@ use Livewire\Component;
 class Service extends Component
 {
 
+    // public function redirectToServiceForm($slug)
+    // {
+    //     $service = ModelsService::where('slug', $slug)->firstOrFail();
+
+    //     switch ($service->form_key) {
+
+    //         case 'special-care':
+    //             return redirect()->route('frontend.service.detail', [
+    //                 'slug' => $service->slug
+    //             ]);
+
+    //         case 'diagnostic':
+    //             return redirect()->route('frontend.service.diagnostic', [
+    //                 'slug' => $service->slug
+    //             ]);
+
+    //         case 'ambulance':
+    //             return redirect()->route('frontend.service.ambulance', [
+    //                 'slug' => $service->slug
+    //             ]);
+
+    //         case 'appointment':
+    //             return redirect()->route('frontend.service.consultation', [
+    //                 'slug' => $service->slug
+    //             ]);
+
+    //         default:
+    //             abort(404);
+    //     }
+    // }
+
     public function redirectToServiceForm($slug)
     {
         $service = ModelsService::where('slug', $slug)->firstOrFail();
 
-        switch ($service->form_key) {
-
-            case 'special-care':
-                return redirect()->route('frontend.service.detail', [
-                    'slug' => $service->slug
-                ]);
-
-            case 'diagnostic':
-                return redirect()->route('frontend.service.diagnostic', [
-                    'slug' => $service->slug
-                ]);
-                
-            case 'ambulance':
-                return redirect()->route('frontend.service.ambulance', [
-                    'slug' => $service->slug
-                ]);
-                
-            case 'appointment':
-                return redirect()->route('frontend.service.consultation', [
-                    'slug' => $service->slug
-                ]);
-
-            default:
-                abort(404);
-        }
+        match ($service->form_key) {
+            'special-care' => $this->redirectRoute('frontend.service.detail', ['slug' => $service->slug]),
+            'diagnostic'   => $this->redirectRoute('frontend.service.diagnostic', ['slug' => $service->slug]),
+            'ambulance'    => $this->redirectRoute('frontend.service.ambulance', ['slug' => $service->slug]),
+            'appointment'  => $this->redirectRoute('frontend.service.consultation', ['slug' => $service->slug]),
+            default        => abort(404),
+        };
     }
-
 
     public function render()
     {

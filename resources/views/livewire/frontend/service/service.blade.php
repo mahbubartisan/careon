@@ -237,8 +237,6 @@
                             </span>
                         @endif
 
-
-
                         <div class="flex flex-col sm:flex-row sm:items-start sm:space-x-5 sm:text-left">
                             <div
                                 class="mb-6 flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-2xl bg-[#E6F9F3]">

@@ -10,6 +10,16 @@
         {{-- <title>CareOn - Professional Healthcare At Home | Bangladesh</title> --}}
         <title>@stack("title")</title>
         <link rel="website icon" type="png" href="{{ asset(@$settings->favIcon?->path) }}">
+        <!-- Meta -->
+        <meta name="description" content="@yield("description")">
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="@yield("og_title", "CareOn - Professional Healthcare At Home | Bangladesh")">
+        <meta property="og:description" content="@yield("og_description")">
+        <meta property="og:image" content="@yield("og_image", asset("default-og.jpg"))">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:type" content="website">
+
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
             rel="stylesheet" />

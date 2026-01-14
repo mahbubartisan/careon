@@ -42,14 +42,14 @@
                     <!-- Right: Buttons (Desktop) -->
                     <div class="hidden items-center space-x-3 lg:flex">
                         <!-- Search -->
-                        <div class="flex items-center rounded-md border border-gray-300 px-2 py-1">
+                        {{-- <div class="flex items-center rounded-md border border-gray-300 px-2 py-1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                             <span class="ml-1 text-sm text-gray-600">Search</span>
-                        </div>
+                        </div> --}}
 
                         <!-- Register -->
                         <a href="provider-signup.html"
@@ -108,13 +108,13 @@
 
                 <nav class="flex flex-col space-y-4 p-4 text-gray-700">
                     <a href="services.html" class="hover:text-[#00B686]">Services</a>
-                    <a href="#" class="hover:text-[#00B686]">How CareOn Works</a>
+                    {{-- <a href="#" class="hover:text-[#00B686]">How CareOn Works</a> --}}
                     <a href="about.html" class="hover:text-[#00B686]">About</a>
                     <a href="contact.html" class="hover:text-[#00B686]">Contact</a>
 
                     <hr class="my-4" />
 
-                    <a href="#" class="hover:text-[#00B686]">Search</a>
+                    {{-- <a href="#" class="hover:text-[#00B686]">Search</a> --}}
                     <a href="provider-signup.html" class="hover:text-[#00B686]">Register As Care Provider</a>
                     <a href="auth.html" class="hover:text-[#00B686]">Sign In</a>
                     <a href="book.html"
