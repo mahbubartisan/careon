@@ -281,7 +281,7 @@ class Diagnostic extends Component
     {
         $tests = MedicalTest::with('prices')
             ->where('name', 'like', "%{$this->search}%")
-            ->paginate(5)
+            ->paginate(6)
             ->through(function ($test) {
                 return [
                     'id'     => $test->id,

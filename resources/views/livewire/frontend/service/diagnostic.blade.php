@@ -187,7 +187,7 @@
                 <!-- SEARCH -->
                 <div class="relative">
                     <input type="search" placeholder="Search tests..." wire:model.live.debounce.300ms="search"
-                        class="w-full rounded-2xl border border-gray-200 bg-white py-4 pl-12 pr-4 text-sm focus:border-teal-500 focus:ring-teal-500" />
+                        class="w-full rounded-2xl border border-gray-200 bg-white py-4 pl-12 pr-4 text-sm focus:border-teal-500 focus:outline-none" />
 
                     <svg class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -218,7 +218,7 @@
                                     {{ $test["name"] }}
                                 </p>
                                 <p class="text-xs italic text-gray-400">
-                                    Select to compare price
+                                    Click to select this test
                                 </p>
                             </div>
                         </div>
@@ -226,74 +226,75 @@
                 </div>
 
                 <!-- PAGINATION -->
-                {{-- <div class="flex flex-col gap-4 border-t pt-6 lg:flex-row justify-center lg:items-center lg:justify-between">
+                <div class="mt-10 flex flex-col items-center gap-4 border-t pt-6 lg:flex-row lg:items-center lg:justify-between">
 
-                    <div class="flex flex-wrap items-center gap-1 text-sm">
+                    <!-- Left -->
+                    <div class="flex items-center gap-1 text-sm">
+
+                        <!-- PREV -->
                         <button wire:click="previousPage"
-                            class="rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100"
+                            class="px-3 py-2 font-medium text-gray-700 hover:text-teal-600"
                             @disabled($tests->onFirstPage())>
-                            Prev
+                            PREV
                         </button>
 
-                        @for ($i = 1; $i <= $tests->lastPage(); $i++)
-                            <button wire:click="gotoPage({{ $i }})"
-                                class="{{ $tests->currentPage() == $i ? "bg-teal-100 font-semibold text-teal-700" : "hover:bg-gray-100" }} rounded-lg px-3 py-2">
-                                {{ $i }}
-                            </button>
+                        <!-- First Page -->
+                        <button wire:click="gotoPage(1)"
+                            class="{{ $pagination["current"] == 1 ? "bg-teal-100 font-medium text-teal-700" : "hover:bg-gray-100" }} rounded-md px-3 py-2">
+                            1
+                        </button>
+
+                        <!-- Left Ellipsis -->
+                        @if ($pagination["start"] > 2)
+                            <span class="px-2 text-gray-400">…</span>
+                        @endif
+
+                        <!-- Middle Pages -->
+                        @for ($i = $pagination["start"]; $i <= $pagination["end"]; $i++)
+                            @if ($i != 1 && $i != $pagination["last"])
+                                <button wire:click="gotoPage({{ $i }})"
+                                    class="{{ $pagination["current"] == $i ? "bg-teal-100 font-medium text-teal-700" : "hover:bg-gray-100" }} rounded-md px-3 py-2">
+                                    {{ $i }}
+                                </button>
+                            @endif
                         @endfor
 
-                        <button wire:click="nextPage"
-                            class="rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100"
-                            @disabled(!$tests->hasMorePages())>
-                            Next
+                        <!-- Right Ellipsis -->
+                        @if ($pagination["end"] < $pagination["last"] - 1)
+                            <span class="px-2 text-gray-400">…</span>
+                        @endif
+
+                        <!-- Last Page -->
+                        @if ($pagination["last"] > 1)
+                            <button wire:click="gotoPage({{ $pagination["last"] }})"
+                                class="{{ $pagination["current"] == $pagination["last"]
+                                    ? "bg-teal-100 font-medium text-teal-700"
+                                    : "hover:bg-gray-100" }} rounded-md px-3 py-2">
+                                {{ $pagination["last"] }}
+                            </button>
+                        @endif
+
+
+                        <!-- NEXT -->
+                        <button @if ($tests->hasMorePages()) wire:click="nextPage" @endif
+                            {{ !$tests->hasMorePages() ? "disabled" : "" }}
+                            class="{{ !$tests->hasMorePages() ? "cursor-not-allowed text-gray-300" : "text-gray-700 hover:text-teal-600" }} px-3 py-2 font-medium">
+                            NEXT
                         </button>
+
                     </div>
 
+                    <!-- Right Info -->
                     <p class="text-sm text-gray-600">
-                        Showing <span class="font-medium">{{ $tests->firstItem() }}</span>
-                        –
-                        <span class="font-medium">{{ $tests->lastItem() }}</span>
-                        of
-                        <span class="font-medium">{{ $tests->total() }}</span>
-                    </p>
-                </div> --}}
-                <div
-                    class="flex flex-col items-center gap-4 border-t pt-6 lg:flex-row lg:items-center lg:justify-between">
-
-                    <!-- PAGINATION -->
-                    <div class="flex flex-wrap justify-center gap-1 text-sm lg:justify-start">
-                        <button wire:click="previousPage"
-                            class="rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100"
-                            @disabled($tests->onFirstPage())>
-                            Prev
-                        </button>
-
-                        @for ($i = 1; $i <= $tests->lastPage(); $i++)
-                            <button wire:click="gotoPage({{ $i }})"
-                                class="{{ $tests->currentPage() == $i ? "bg-teal-100 font-semibold text-teal-700" : "hover:bg-gray-100" }} rounded-lg px-3 py-2">
-                                {{ $i }}
-                            </button>
-                        @endfor
-
-                        <button wire:click="nextPage"
-                            class="rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100"
-                            @disabled(!$tests->hasMorePages())>
-                            Next
-                        </button>
-                    </div>
-
-                    <!-- INFO -->
-                    <p class="text-center text-sm text-gray-600 lg:text-right">
                         Showing
                         <span class="font-medium">{{ $tests->firstItem() }}</span>
-                        –
+                        to
                         <span class="font-medium">{{ $tests->lastItem() }}</span>
                         of
                         <span class="font-medium">{{ $tests->total() }}</span>
                     </p>
                 </div>
-
-
+                
                 <!-- CONTINUE -->
                 <div class="flex justify-end pt-4">
                     <button @click="step = 2; window.scrollTo({ top: 0, behavior: 'smooth' })"
