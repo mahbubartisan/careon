@@ -474,19 +474,28 @@
             @endcanany
 
             <!-- Booking Manage -->
-            @canany(["diagnostic booking", "diagnostic booking detail", "ambulance booking", "ambulance booking detail",
-                "consultation booking", "consultation booking detail"])
-                <div x-data="{ open: {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail") ? "true" : "false" }} }">
+            @canany([
+                "diagnostic booking",
+                "diagnostic booking detail",
+                "ambulance booking",
+                "ambulance booking detail",
+                "consultation booking",
+                "consultation booking detail",
+                "doctor visit booking",
+                "doctor visit booking
+                detail"
+                ])
+                <div x-data="{ open: {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail", "visit.booking", "visit.booking.detail") ? "true" : "false" }} }">
                     <a href="#" @click.prevent="open = !open"
                         class="flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-600"
                         :class="open ||
-                            {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail") ? true : false }} ?
+                            {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail", "visit.booking", "visit.booking.detail") ? true : false }} ?
                             'bg-blue-50 text-blue-600 dark:bg-[#233A57] dark:text-blue-600' :
                             'text-gray-400 hover:text-blue-600'">
                         <span aria-hidden="true">
                             <svg class="mr-1 h-5 w-5 transition-colors"
                                 :class="open ||
-                                    {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail") ? true : false }} ?
+                                    {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail", "visit.booking", "visit.booking.detail") ? true : false }} ?
                                     'text-blue-600' : 'text-gray-400 dark:text-gray-100'"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -504,7 +513,7 @@
                         </span>
                         <span class="ml-2"
                             :class="open ||
-                                {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail") ? true : false }} ?
+                                {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail", "visit.booking", "visit.booking.detail") ? true : false }} ?
                                 'text-blue-600' :
                                 'text-gray-400 hover:text-blue-500 dark:text-gray-100'">
                             Booking Manage
@@ -512,7 +521,7 @@
                         <span aria-hidden="true" class="ml-auto">
                             <svg class="h-3.5 w-3.5 transform transition-transform"
                                 :class="(open ||
-                                    {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail") ? true : false }}
+                                    {{ request()->routeIs("diagnostic.booking", "diagnostic.booking.detail", "ambulance.booking", "ambulance.booking.detail", "consultation.booking", "consultation.booking.detail", "visit.booking", "visit.booking.detail") ? true : false }}
                                 ) ?
                                 'text-blue-600 rotate-180' : 'text-gray-400 dark:text-gray-100'"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -563,6 +572,20 @@
                                     <a href="{{ route("consultation.booking") }}" @click="open = true"
                                         class="{{ request()->routeIs("consultation.booking", "consultation.booking.detail") ? "text-blue-600" : "group-hover:text-blue-500" }} flex-grow">
                                         Consultation Bookings
+                                    </a>
+                                </li>
+                            @endcanany
+
+                            <!-- Doctor Visit Service -->
+                            @canany(["doctor visit booking", "doctor visit booking detail"])
+                                <li
+                                    class="{{ request()->routeIs("visit.booking", "visit.booking.detail") ? "text-blue-600 dark:text-blue-600" : "text-gray-400 dark:text-gray-100" }} group flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-500">
+                                    <span
+                                        class="{{ request()->routeIs("visit.booking", "visit.booking.detail") ? "text-blue-500" : "text-gray-400 group-hover:text-blue-500" }} mr-2 list-item list-inside list-disc text-sm">
+                                    </span>
+                                    <a href="{{ route("visit.booking") }}" @click="open = true"
+                                        class="{{ request()->routeIs("visit.booking", "visit.booking.detail") ? "text-blue-600" : "group-hover:text-blue-500" }} flex-grow">
+                                        Doctor Visit Bookings
                                     </a>
                                 </li>
                             @endcanany
@@ -685,7 +708,7 @@
             @endcanany
 
             <!-- Customer Support -->
-            {{-- @canany(["general query", "view general query", "feedback", "view feedback"])
+            @canany(["general query", "view general query", "feedback", "view feedback"])
                 <div x-data="{ open: {{ request()->routeIs("general-query", "view.general-query", "feedback", "view.feedback") ? "true" : "false" }} }">
                     <a href="#" @click.prevent="open = !open"
                         class="flex items-center rounded-md p-2 text-sm text-gray-400 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-600"
@@ -698,12 +721,14 @@
                                 :class="open ||
                                     {{ request()->routeIs("general-query", "view.general-query", "feedback", "view.feedback") ? true : false }} ?
                                     'text-blue-600' : 'text-gray-400 dark:text-gray-100'"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+                                <path
+                                    d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+                                <path d="m21 3 1 11h-2" />
+                                <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+                                <path d="M3 4h8" />
                             </svg>
                         </span>
                         <span class="ml-2"
@@ -711,7 +736,7 @@
                                 {{ request()->routeIs("general-query", "view.general-query", "feedback", "view.feedback") ? true : false }} ?
                                 'text-blue-600' :
                                 'text-gray-400 hover:text-blue-500 dark:text-gray-100'">
-                           Customer Support
+                            Customer Support
                         </span>
                         <span aria-hidden="true" class="ml-auto">
                             <svg class="h-3.5 w-3.5 transform transition-transform"
@@ -751,7 +776,7 @@
                                     <span
                                         class="{{ request()->routeIs("feedback", "view.feedback") ? "text-blue-500" : "text-gray-400 group-hover:text-blue-500" }} mr-2 list-item list-inside list-disc text-sm">
                                     </span>
-                                    <a href="{{ route("settings") }}" @click="open = true"
+                                    <a href="{{ route("feedback") }}" @click="open = true"
                                         class="{{ request()->routeIs("feedback", "view.feedback") ? "text-blue-600" : "group-hover:text-blue-500" }} flex-grow">
                                         Feedback
                                     </a>
@@ -760,7 +785,7 @@
                         </ul>
                     </div>
                 </div>
-            @endcanany --}}
+            @endcanany
 
             <!-- Settings -->
             @canany(["view settings", "create settings", "edit settings", "delete settings", "view lab", "create lab",

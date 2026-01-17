@@ -32,7 +32,7 @@ class OnlineConsultationBooking extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Booking Confirmation for Online Consultation',
+            subject: 'Online Consultation Booking Confirmation',
         );
     }
 

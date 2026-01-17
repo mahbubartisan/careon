@@ -17,11 +17,17 @@ use App\Livewire\Backend\BookingManage\ConsultationBooking;
 use App\Livewire\Backend\BookingManage\ConsultationBookingDetail;
 use App\Livewire\Backend\BookingManage\DiagnosticBooking;
 use App\Livewire\Backend\BookingManage\DiagnosticBookingDetail;
+use App\Livewire\Backend\BookingManage\DoctorVisitBooking;
+use App\Livewire\Backend\BookingManage\DoctorVisitBookingDetail;
 use App\Livewire\Backend\CareLevel\CareLevel;
 use App\Livewire\Backend\CareLevel\CreateCareLevel;
 use App\Livewire\Backend\CareLevel\EditCareLevel;
 use App\Livewire\Backend\Contact\Contact;
 use App\Livewire\Backend\Contact\ContactDetail;
+use App\Livewire\Backend\CustomerSupport\Feedback;
+use App\Livewire\Backend\CustomerSupport\FeedbackDetail;
+use App\Livewire\Backend\CustomerSupport\GeneralQuery;
+use App\Livewire\Backend\CustomerSupport\GeneralQueryDetail;
 use App\Livewire\Backend\Dashboard;
 use App\Livewire\Backend\Lab\Lab;
 use App\Livewire\Backend\Location\CreateLocation;
@@ -127,6 +133,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/consultation-bookings', ConsultationBooking::class)->name('consultation.booking');
     Route::get('/consultation-booking/{bookingId}', ConsultationBookingDetail::class)->name('consultation.booking.detail');
+    
+    Route::get('/doctor-visit-bookings', DoctorVisitBooking::class)->name('visit.booking');
+    Route::get('/doctor-visit-booking/{bookingId}', DoctorVisitBookingDetail::class)->name('visit.booking.detail');
 
     // Booking Routes
     Route::get('/bookings', Booking::class)->name('booking');
@@ -143,9 +152,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/advisor/{advisorId}/edit', EditAdvisor::class)->name('edit.advisor');
 
 
-    // Contact Routes
-    Route::get('/contacts', Contact::class)->name('contact');
-    Route::get('/contact/{contactId}/detail', ContactDetail::class)->name('view.contact');
+    // Customer Support Routes
+    Route::get('/general-queries', GeneralQuery::class)->name('general-query');
+    Route::get('/general-query/{queryId}/detail', GeneralQueryDetail::class)->name('view.general-query');
+    Route::get('/feedback', Feedback::class)->name('feedback');
+    Route::get('/feedback/{feedbackId}/detail', FeedbackDetail::class)->name('view.feedback');
 
     // Lab Route
     Route::get('/labs', Lab::class)->name('lab');

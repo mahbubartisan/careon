@@ -53,10 +53,10 @@
                         </div> --}}
 
                         <!-- Register -->
-                        <a href="provider-signup.html"
+                        {{-- <a href="provider-signup.html"
                             class="rounded-xl bg-blue-600 px-3 py-2 text-sm font-medium text-white transition duration-300 ease-in-out hover:bg-blue-600/90">
                             Register As Care Provider
-                        </a>
+                        </a> --}}
 
                         <!-- Sign In -->
                         <a href="{{ route("login") }}"
@@ -108,18 +108,19 @@
                 </div>
 
                 <nav class="flex flex-col space-y-4 p-4 text-gray-700">
-                    <a href="services.html" class="hover:text-[#00B686]">Services</a>
+                    <a href="{{ route('frontend.service') }}" class="hover:text-[#00B686]">Services</a>
                     {{-- <a href="#" class="hover:text-[#00B686]">How CareOn Works</a> --}}
-                    <a href="about.html" class="hover:text-[#00B686]">About</a>
-                    <a href="contact.html" class="hover:text-[#00B686]">Contact</a>
+                    <a href="{{ route('frontend.about') }}" class="hover:text-[#00B686]">About</a>
+                    <a href="{{ route('frontend.contact-us') }}" class="hover:text-[#00B686]">Contact</a>
+                    <a href="{{ route('frontend.blogs') }}" class="hover:text-[#00B686]">Health Tips</a>
 
                     <hr class="my-4" />
 
                     {{-- <a href="#" class="hover:text-[#00B686]">Search</a> --}}
-                    <a href="provider-signup.html" class="hover:text-[#00B686]">Register As Care Provider</a>
-                    <a href="auth.html" class="hover:text-[#00B686]">Sign In</a>
-                    <a href="book.html"
-                        class="mt-2 rounded-md bg-[#00B686] px-4 py-2 text-sm font-medium text-white hover:bg-[#00976F]">
+                    {{-- <a href="provider-signup.html" class="hover:text-[#00B686]">Register As Care Provider</a> --}}
+                    <a href="{{ route('login') }}" class="hover:text-[#00B686]">Sign In</a>
+                    <a href="{{ route('frontend.service') }}"
+                        class="mt-2 rounded-md bg-[#00B686] px-4 py-2 text-sm text-center font-medium text-white hover:bg-[#00976F]">
                         Book Now
                     </a>
                 </nav>

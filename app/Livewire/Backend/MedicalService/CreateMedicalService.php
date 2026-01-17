@@ -203,7 +203,7 @@ class CreateMedicalService extends Component
             }
 
             // Create Service
-            Service::create([
+            $service = Service::create([
                 'service_id'      => $this->generateServiceId($this->form->service_name),
                 'image'           => $imagePath,
                 'service_type_id' => $this->form->service_type_id,
@@ -215,25 +215,28 @@ class CreateMedicalService extends Component
                 'status'          => $this->form->status ?? 1,
             ]);
 
-            foreach ($this->form->tests as $testData) {
+            // Only for diagnostic services
+            if ($this->form->formType === 'diagnostic') {
 
-                // Create or get test
-                $test = MedicalTest::firstOrCreate([
-                    'service_id'      => $this->generateServiceId($this->form->service_name),
-                    'name' => trim($testData['name']),
-                ]);
+                foreach ($this->form->tests as $testData) {
 
-                foreach ($testData['labs'] as $labData) {
+                    // Create or get test
+                    $test = MedicalTest::firstOrCreate([
+                        'name' => trim($testData['name']),
+                    ]);
 
-                    LabWiseTestPrice::updateOrCreate(
-                        [
-                            'test_id' => $test->id,
-                            'lab_id'  => (int) $labData['lab_id'],
-                        ],
-                        [
-                            'price' => (float) $labData['price'],
-                        ]
-                    );
+                    foreach ($testData['labs'] as $labData) {
+
+                        LabWiseTestPrice::updateOrCreate(
+                            [
+                                'test_id' => $test->id,
+                                'lab_id'  => (int) $labData['lab_id'],
+                            ],
+                            [
+                                'price' => (float) $labData['price'],
+                            ]
+                        );
+                    }
                 }
             }
         });

@@ -299,8 +299,8 @@
                 <div class="flex justify-end pt-4">
                     <button @click="step = 2; window.scrollTo({ top: 0, behavior: 'smooth' })"
                         wire:click="prepareComparison"
-                        class="w-full rounded-xl bg-teal-500 px-5 py-3 text-base font-semibold text-white transition hover:bg-teal-600 sm:w-auto">
-                        Continue
+                        class="w-full rounded-xl bg-teal-500 px-5 py-2 text-base font-medium text-white transition hover:bg-teal-600 sm:w-auto">
+                        Continue →
                     </button>
                 </div>
 
@@ -476,7 +476,7 @@
                     </button>
 
                     <button @click="step = 3" wire:click="prepareSummary"
-                        class="{{ $selectedLab ? "hover:bg-teal-600" : "cursor-not-allowed opacity-50" }} rounded-xl bg-teal-500 px-5 py-3 font-semibold text-white transition"
+                        class="{{ $selectedLab ? "hover:bg-teal-600" : "cursor-not-allowed opacity-50" }} rounded-xl bg-teal-500 px-5 py-2 font-medium text-white transition"
                         {{ $selectedLab ? "" : "disabled" }}>
                         Continue →
                     </button>

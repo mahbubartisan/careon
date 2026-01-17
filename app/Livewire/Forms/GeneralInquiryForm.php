@@ -7,7 +7,9 @@ use Livewire\Form;
 
 class GeneralInquiryForm extends Form
 {
-    public $name, $phone, $email, $subject, $message;
+    public $queryId, $name, $phone, $email, $subject, $message;
+    public $search = ''; public $rowsPerPage = 20;
+    public $query;
 
     public function rules(): array
     {

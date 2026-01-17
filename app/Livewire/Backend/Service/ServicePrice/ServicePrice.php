@@ -85,7 +85,7 @@ class ServicePrice extends Component
         $search = trim($this->form->search);
 
         // 1) Build service query (we will paginate services)
-        $serviceQuery = Service::query();
+        $serviceQuery = Service::query()->where('service_type_id', 1);
 
         if ($search !== '') {
             $serviceQuery->where(function ($q) use ($search) {

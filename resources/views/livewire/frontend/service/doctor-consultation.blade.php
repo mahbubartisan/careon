@@ -311,7 +311,7 @@
 
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-900">
-                                    Doctor Type *
+                                    Specilization *
                                 </label>
                                 <select wire:model="form.doctor_type"
                                     class="w-full rounded-xl border border-gray-200 px-4 py-[14px] text-sm focus:border-teal-500 focus:outline-none">

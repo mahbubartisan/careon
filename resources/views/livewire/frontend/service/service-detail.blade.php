@@ -1,6 +1,7 @@
 <div>
     <div x-data="{
         showStepper: false,
+        agree: false,
         step: 1,
         formData: @entangle("bookingForm").live,
         packages: @js($packages),
@@ -1070,7 +1071,7 @@
                         <!-- Payment Options -->
                         <div class="space-y-3">
                             <!-- bKash -->
-                            <label
+                            {{-- <label
                                 class="flex cursor-pointer items-center justify-between rounded-xl border px-4 py-3 transition hover:border-green-600"
                                 :class="formData.payment_type === 'bkash' ? 'border-green-600 bg-green-50' :
                                     'border-gray-200'">
@@ -1081,7 +1082,7 @@
                                 </div>
                                 <span
                                     class="rounded-full bg-green-100 px-2 py-0.5 text-[11px] font-medium text-green-700">Popular</span>
-                            </label>
+                            </label> --}}
 
                             <!-- Cash On Delivery -->
                             <label

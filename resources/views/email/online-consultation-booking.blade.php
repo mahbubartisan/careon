@@ -114,12 +114,12 @@
             <p class="subtitle">
                 @if ($recipientType === 'admin')
                     A new online doctor consultation appointment has been booked.
-                    Below are the complete consultation and patient details.
+                    Below are the complete booking and patient details.
                 @else
                     Hello {{ $booking->patient_name }},<br>
                     Thank you for choosing <span style="color: #16a34a; font-weight: 600">CareOn</span>.
                     Your online doctor consultation appointment has been successfully booked.
-                    Below are the details of your consultation.
+                    Below are the details of your booking.
                 @endif
             </p>
             

@@ -342,10 +342,10 @@
                         Google
                     </a>
 
-                    <a href="{{ route("social.redirect", "facebook") }}"
+                    {{-- <a href="{{ route("social.redirect", "facebook") }}"
                         class="flex h-10 flex-1 items-center justify-center rounded-xl border border-gray-200 text-sm font-medium transition hover:bg-amber-500 hover:text-gray-900">
                         Facebook
-                    </a>
+                    </a> --}}
 
                 </div>
             </div>
@@ -353,13 +353,13 @@
         </div>
 
         <!-- Footer -->
-        <div class="mt-6 text-center text-sm text-gray-500">
+        {{-- <div class="mt-6 text-center text-sm text-gray-500">
             <p>
                 আপনি কি স্বাস্থ্যসেবা পেশাদার? | Are you a healthcare professional?
                 <a href="/provider-signup" class="font-medium text-emerald-600 hover:underline">
                     সেবা প্রদানকারী হিসেবে যোগ দিন | Join as a Provider
                 </a>
             </p>
-        </div>
+        </div> --}}
     </div>
 @endsection

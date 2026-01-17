@@ -7,7 +7,9 @@ use Livewire\Form;
 
 class FeedbackForm extends Form
 {
-    public $name, $phone, $email, $service, $rating, $subject, $message;
+    public $feedbackId, $name, $phone, $email, $service, $rating, $subject, $message;
+    public $search = ''; public $rowsPerPage = 20;
+    public $feedback;
     
     public function rules(): array
     {

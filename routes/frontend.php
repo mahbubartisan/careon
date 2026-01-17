@@ -11,6 +11,7 @@ use App\Livewire\Frontend\PriceCalculator\PriceCalculator;
 use App\Livewire\Frontend\Service\AmbulanceSupport;
 use App\Livewire\Frontend\Service\Diagnostic;
 use App\Livewire\Frontend\Service\DoctorConsultation;
+use App\Livewire\Frontend\Service\DoctorVisit;
 use App\Livewire\Frontend\Service\Service;
 use App\Livewire\Frontend\Service\ServiceDetail;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,5 @@ Route::as('frontend.')->group(function () {
     Route::get('/diagnostic/{slug}', Diagnostic::class)->name('service.diagnostic');
     Route::get('/ambulance/{slug}', AmbulanceSupport::class)->name('service.ambulance');
     Route::get('/consultation/{slug}', DoctorConsultation::class)->name('service.consultation');
+    Route::get('/doctor/{slug}', DoctorVisit::class)->name('service.doctor.visit');
 });

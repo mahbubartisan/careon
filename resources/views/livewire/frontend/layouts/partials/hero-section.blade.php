@@ -13,9 +13,9 @@
         </h1>
 
         <div class="flex flex-col sm:flex-row items-center gap-4 pt-2">
-            <button class="bg-[#00B686] hover:bg-[#00976F] text-white font-medium text-sm px-8 py-3 rounded-xl">
+            <a href="{{ route('frontend.service') }}" class="bg-[#00B686] hover:bg-[#00976F] text-white font-medium text-sm px-8 py-3 rounded-xl">
                 বুক করুন | Book Care Now
-            </button>
+            </a>
             <!-- <button
                 class="bg-white border border-gray-200 hover:bg-amber-500 hover:border-amber-500 text-gray-900 font-medium text-sm px-6 py-3 rounded-xl">
                 How CareOn Works

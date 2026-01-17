@@ -45,12 +45,12 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         $user = Auth::user();
 
-        // Check if email is verified (email_verified_at must NOT be null)
-        if (is_null($user->email_verified_at)) {
+        // Check if phone is verified (phone_verified_at must NOT be null)
+        if (is_null($user->phone_verified_at)) {
             Auth::logout();
 
             return back()->withErrors([
-                'email' => 'Your email is not verified.',
+                'email' => 'Your phone number is not verified yet.',
             ])->withInput();
         }
 
