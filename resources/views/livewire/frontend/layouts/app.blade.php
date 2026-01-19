@@ -210,7 +210,8 @@
         @yield("content")
 
         <!-- Footer -->
-        @include("livewire.frontend.layouts.footer")
+        {{-- @include("livewire.frontend.layouts.footer") --}}
+        @livewire('frontend.footer.footer')
     </body>
 
 </html>

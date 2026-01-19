@@ -9,7 +9,7 @@
         </p>
 
         <div class="mt-6">
-            <a href="services.html"
+            <a href="{{ route("frontend.service") }}"
                 class="bg-white text-[#176F9D] hover:bg-gray-100 font-semibold px-6 py-2 rounded-xl transition-all duration-300">
                 Book Care Now
             </a>

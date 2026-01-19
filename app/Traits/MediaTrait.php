@@ -52,51 +52,32 @@ trait MediaTrait
         return $uploadedImage;
     }
 
-    // New method to handle multiple image uploads
-    // public function uploadMultipleMedia($images, $folderName, $quality = 80)
+    public function uploadMultipleMedia(array $images, string $folderName, int $quality = 80)
+    {
+        $uploadedMedia = [];
+
+        foreach ($images as $image) {
+
+            // Reuse single upload logic for consistency
+            $uploadedMedia[] = $this->uploadMedia(
+                image: $image,
+                folderName: $folderName,
+                quality: $quality
+            );
+        }
+
+        return $uploadedMedia;
+    }
+
+    // public function uploadMultipleMedia(array $images, string $folderName, int $quality = 80)
     // {
-    //     $manager = new ImageManager(Driver::class);
-
-    //     $uploadedImages = [];
-
-    //     // Loop over each image and process it
-    //     foreach ($images as $image) {
-    //         // Get the original filename without extension
-    //         $originalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-
-    //         // Convert the original filename to a slug
-    //         $sluggedName = Str::slug($originalName);
-
-    //         // Append unique identifier (timestamp) to the slugged filename
-    //         $imageName = $sluggedName . '-' . time() . '.webp'; // Add timestamp to ensure unique names
-
-    //         // Define the folder path for the user-specified folder within public
-    //         $folderPath = public_path($folderName);
-
-    //         // Ensure the folder is created if it doesn't exist
-    //         if (!is_dir($folderPath)) {
-    //             mkdir($folderPath, 0755, true); // Create the directory with proper permissions
-    //         }
-
-    //         // Process the image and convert it to webp
-    //         $img = $manager->read($image->getRealPath());
-    //         $encodedImage = $img->encode(new WebpEncoder(quality: $quality)); // Encode as webp with adjustable quality
-
-    //         // Store the image directly in the public folder
-    //         $filePath = $folderPath . '/' . $imageName;
-    //         file_put_contents($filePath, (string) $encodedImage); // Save the encoded image as a string
-
-    //         // Save the image details in the database (optional)
-    //         $uploadedImage = Media::create([
-    //             'name' => $imageName,
-    //             'path' => $folderName . '/' . $imageName,
-    //         ]);
-
-    //         // Add the uploaded image to the list of uploaded images
-    //         $uploadedImages[] = $uploadedImage;
+    //     if (count($images) !== 2) {
+    //         throw new \Exception('Exactly 2 NID images are required.');
     //     }
 
-    //     return $uploadedImages;
+    //     return collect($images)->map(
+    //         fn ($image) => $this->uploadMedia($image, $folderName, $quality)
+    //     )->toArray();
     // }
 
 

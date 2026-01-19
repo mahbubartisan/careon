@@ -10,6 +10,8 @@ use App\Mail\GeneralInquiryMail;
 use App\Models\Contact as ModelsContact;
 use App\Models\Feedback;
 use App\Models\GeneralInquiry;
+use App\Models\Service;
+use App\Models\Settings;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -25,8 +27,16 @@ class Contact extends Component
 
     public $general = [];
     public $feedback = [];
+    public $services;
+    public $settings;
 
     public $showModal = false;
+    
+    public function mount()
+    {
+        $this->services = Service::where('status', 1)->get(['id', 'name', 'status']);
+        $this->settings = Settings::first();
+    }
 
     public function submitGeneralInquiry()
     {

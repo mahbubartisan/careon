@@ -287,7 +287,7 @@
                     class="rounded-xl bg-[#1D64B4] px-7 py-3 text-sm font-medium text-white">
                     Contact Support
                 </a>
-                <a href="#"
+                <a href="{{ route("frontend.service") }}"
                     class="rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 hover:bg-amber-500">
                     Book Now
                 </a>

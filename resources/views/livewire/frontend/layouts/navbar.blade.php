@@ -26,7 +26,8 @@
                 </nav>
 
                 <!-- Right: Buttons (Desktop) -->
-                <div class="hidden items-center space-x-3 lg:flex">
+                <div class="items-center space-x-3 flex">
+                    {{-- <div class="hidden items-center space-x-3 lg:flex"> --}}
                     <!-- Search -->
                     {{-- <div class="flex items-center border border-gray-300 rounded-md px-2 py-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none"
@@ -38,10 +39,10 @@
                     </div> --}}
 
                     <!-- Register -->
-                    {{-- <a href="{{ route("frontend.provider-signup") }}"
+                    <a href="{{ route("frontend.provider-signup") }}"
                         class="rounded-xl bg-teal-700 px-4 py-2 text-sm font-medium text-white transition duration-300 ease-in-out hover:bg-teal-800">
                         Register As Care Provider
-                    </a> --}}
+                    </a>
 
                     <!-- Sign In -->
                     @guest
@@ -50,7 +51,16 @@
                             Sign In
                         </a>
                     @endguest
-                    
+
+                    <!-- Mobile: Hamburger -->
+                    <button @click="open = true" class="text-gray-700 focus:outline-none lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+
                     <!-- Book Now -->
                     <!-- <a href="book.html"
                         class="rounded-md bg-[#00B686] px-4 py-2 text-sm font-medium text-white hover:bg-[#00976F]">
@@ -58,14 +68,6 @@
                     </a> -->
                 </div>
 
-                <!-- Mobile: Hamburger -->
-                <button @click="open = true" class="text-gray-700 focus:outline-none lg:hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
             </div>
         </header>
 
@@ -86,6 +88,7 @@
                     </div>
                     <h2 class="text-lg font-semibold text-gray-900">CareOn</h2>
                 </div>
+
                 <button @click="open = false" class="text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -96,19 +99,19 @@
             </div>
 
             <nav class="flex flex-col space-y-4 p-4 text-gray-700">
-                <a href="{{ route('frontend.service') }}" class="hover:text-[#00B686]">Services</a>
+                <a href="{{ route("frontend.service") }}" class="hover:text-[#00B686]">Services</a>
                 {{-- <a href="#" class="hover:text-[#00B686]">How CareOn Works</a> --}}
-                <a href="{{ route('frontend.about') }}" class="hover:text-[#00B686]">About</a>
-                <a href="{{ route('frontend.contact-us') }}" class="hover:text-[#00B686]">Contact</a>
-                <a href="{{ route('frontend.blogs') }}" class="hover:text-[#00B686]">Health Tips</a>
+                <a href="{{ route("frontend.about") }}" class="hover:text-[#00B686]">About</a>
+                <a href="{{ route("frontend.contact-us") }}" class="hover:text-[#00B686]">Contact</a>
+                <a href="{{ route("frontend.blogs") }}" class="hover:text-[#00B686]">Health Tips</a>
 
                 <hr class="my-4" />
 
                 {{-- <a href="#" class="hover:text-[#00B686]">Search</a> --}}
                 {{-- <a href="provider-signup.html" class="hover:text-[#00B686]">Register As Care Provider</a> --}}
-                <a href="{{ route('login') }}" class="hover:text-[#00B686]">Sign In</a>
-                <a href="{{ route('frontend.service') }}"
-                    class="mt-2 rounded-md bg-[#00B686] px-4 py-2 text-sm text-center font-medium text-white hover:bg-[#00976F]">
+                <a href="{{ route("login") }}" class="hover:text-[#00B686]">Sign In</a>
+                <a href="{{ route("frontend.service") }}"
+                    class="mt-2 rounded-md bg-[#00B686] px-4 py-2 text-center text-sm font-medium text-white hover:bg-[#00976F]">
                     Book Now
                 </a>
             </nav>

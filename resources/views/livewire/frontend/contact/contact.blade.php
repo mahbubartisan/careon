@@ -32,7 +32,7 @@
                     <div>
                         <h3 class="mb-2 font-semibold">Phone | ফোন</h3>
                         <p class="text-sm text-gray-500">
-                            +880 131 955 2222<br /><span class="text-xs">24/7 Support Available</span>
+                            {{ $settings->phone }}<br /><span class="text-xs">24/7 Support Available</span>
                         </p>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     <div>
                         <h3 class="mb-2 font-semibold">WhatsApp | হোয়াটসঅ্যাপ</h3>
                         <p class="text-sm text-gray-500">
-                            +880 131 955 2222<br /><span class="text-xs">Quick responses</span>
+                            {{ $settings->whatsapp }}<br /><span class="text-xs">Quick responses</span>
                         </p>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                     <div>
                         <h3 class="mb-2 font-semibold">Email | ইমেইল</h3>
                         <p class="text-sm text-gray-500">
-                            info@careon.me<br /><span class="text-xs">Response within 24 hours</span>
+                            {{ $settings->email }}<br /><span class="text-xs">Response within 24 hours</span>
                         </p>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                     <div>
                         <h3 class="mb-2 font-semibold">Office Address | অফিস ঠিকানা</h3>
                         <p class="text-sm text-gray-500">
-                            House 06, Road 02, Block L, Banani, Dhaka 1213, Bangladesh
+                            {{ $settings->address }}
                         </p>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                     <div>
                         <h3 class="mb-2 font-semibold">Service Hours | সেবা সময়</h3>
                         <p class="text-sm text-gray-500">
-                            24/7 for emergencies<br /><span class="text-xs">Office 9 AM - 8 PM</span>
+                            24/7 for emergencies<br /><span class="text-xs">{{ $settings->office_hours }}</span>
                         </p>
                     </div>
                 </div>
@@ -191,8 +191,9 @@
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium">বার্তা | Message *</label>
-                        <textarea wire:model="generalForm.message" class="@error("generalForm.message") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none" rows="6"
-                            placeholder="Tell us how we can help you... | আমা কীভাবে আপাকে সাহায্য করতে পারি..."></textarea>
+                        <textarea wire:model="generalForm.message"
+                            class="@error("generalForm.message") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                            rows="6" placeholder="Tell us how we can help you... | আমা কীভাবে আপাকে সাহায্য করতে পারি..."></textarea>
                         @error("generalForm.message")
                             <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
                         @enderror
@@ -241,18 +242,12 @@
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium">Which service did you use?</label>
-                        <select wire:model="feedbackForm.service" class="@error("feedbackForm.service") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none">
-                            <option value="" hidden>
-                                -- Select one --
-                            </option>
-                            <option value="Nursing Care">Nursing Care</option>
-                            <option value="Doctor-on-Call">Doctor-on-Call</option>
-                            <option value="Physiotherapy">Physiotherapy</option>
-                            <option value="Nanny & Baby Care">Nanny & Baby Care</option>
-                            <option value="Elderly Care">Elderly Care</option>
-                            <option value="Patient Attendant">Patient Attendant</option>
-                            <option value="Sample Collection">Sample Collection</option>
-                            <option value="Ambulance Service">Ambulance Service</option>
+                        <select wire:model="feedbackForm.service"
+                            class="@error("feedbackForm.service") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none">
+                            <option value="" hidden>-- Select one --</option>
+                            @foreach ($services as $service)
+                                <option>{{ $service->name }}</option>
+                            @endforeach
                         </select>
                         @error("feedbackForm.service")
                             <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
@@ -260,7 +255,8 @@
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium">রেটিং | Rating *</label>
-                        <select wire:model="feedbackForm.rating" class="@error("feedbackForm.rating") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none">
+                        <select wire:model="feedbackForm.rating"
+                            class="@error("feedbackForm.rating") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none">
                             <option value="" hidden>
                                 How satisfied were you?
                             </option>
@@ -272,20 +268,22 @@
                         </select>
                         @error("feedbackForm.rating")
                             <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
-                        @enderror   
+                        @enderror
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium">বিষয় | Subject *</label>
-                        <input type="text" wire:model="feedbackForm.subject" class="@error("feedbackForm.subject") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                        <input type="text" wire:model="feedbackForm.subject"
+                            class="@error("feedbackForm.subject") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
                             placeholder="Brief summary of your feedback" />
-                        @error("feedbackForm.subject")  
+                        @error("feedbackForm.subject")
                             <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium">বার্তা | Message *</label>
-                        <textarea wire:model="feedbackForm.message" class="@error("feedbackForm.message") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none" rows="6"
-                            placeholder="Share your experience with us... | আপনার অভি্ঞতা শেয়ার করুন..."></textarea>
+                        <textarea wire:model="feedbackForm.message"
+                            class="@error("feedbackForm.message") border-red-500 @enderror w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none"
+                            rows="6" placeholder="Share your experience with us... | আপনার অভি্ঞতা শেয়ার করুন..."></textarea>
                         @error("feedbackForm.message")
                             <span class="mt-1 text-xs text-red-500">{{ $message }}</span>
                         @enderror
